@@ -59,6 +59,7 @@ public class TreeNode {
 
     /**
      * 107. 二叉树的层次遍历 II
+     * BFS
      */
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
@@ -93,5 +94,27 @@ public class TreeNode {
         return lists;
         //or
 //        return res2;
+    }
+
+    /**
+     * 107. 二叉树的层次遍历 II
+     * DFS
+     */
+    public List<List<Integer>> levelOrderBottom2(TreeNode root){
+        List<List<Integer>> res = new LinkedList<>();
+        dfs(root, 0, res);
+        return res;
+    }
+
+    public void dfs(TreeNode node, int depth, List<List<Integer>> res) {
+        if(node == null){
+            return;
+        }
+        if(depth == res.size()){
+            res.add(0, new ArrayList<>());
+        }
+        res.get(res.size()-depth-1).add(node.val);
+        dfs(node.left, depth+1, res);
+        dfs(node.right,depth+1, res);
     }
 }
