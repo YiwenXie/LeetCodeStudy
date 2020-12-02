@@ -117,4 +117,54 @@ public class TreeNode {
         dfs(node.left, depth+1, res);
         dfs(node.right,depth+1, res);
     }
+
+    /**
+     * 199. 二叉树的右视图
+     * BFS层次遍历，每次保留最后即最右结点
+     */
+    public List<Integer> rightSideViewByBFS(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        if (root != null){
+            queue.add(root);
+        }
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            for (int i = 0; i < size; i++){
+                TreeNode node = queue.poll();
+                if (node.left != null){
+                    queue.add(node.left);
+                }
+                if (node.right != null){
+                    queue.add(node.right);
+                }
+                if (i == size -1){
+                    list.add(node.val);
+                }
+            }
+        }
+        return list;
+    }
+
+    /**
+     * 199. 二叉树的右视图
+     * DFS
+     */
+    public List<Integer> rightSideViewByDFS(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        dfs(root, 0, list);
+        return list;
+    }
+
+    private void dfs(TreeNode node, int depth, List<Integer> list){
+        if (node == null){
+            return;
+        }
+        if (depth == list.size()){
+            list.add(node.val);
+        }
+        depth++;
+        dfs(node.right, depth, list);
+        dfs(node.left, depth, list);
+    }
 }
