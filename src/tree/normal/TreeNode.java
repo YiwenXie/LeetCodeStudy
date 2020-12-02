@@ -61,7 +61,7 @@ public class TreeNode {
      * 107. 二叉树的层次遍历 II
      * BFS
      */
-    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+    public List<List<Integer>> levelOrderBottomByBFS(TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
         //or
 //        LinkedList<List<Integer>> res2 = new LinkedList<>();
@@ -100,13 +100,13 @@ public class TreeNode {
      * 107. 二叉树的层次遍历 II
      * DFS
      */
-    public List<List<Integer>> levelOrderBottom2(TreeNode root){
+    public List<List<Integer>> levelOrderBottomByDFS(TreeNode root){
         List<List<Integer>> res = new LinkedList<>();
-        dfs(root, 0, res);
+        levelOrderBottomDFS(root, 0, res);
         return res;
     }
 
-    public void dfs(TreeNode node, int depth, List<List<Integer>> res) {
+    private void levelOrderBottomDFS(TreeNode node, int depth, List<List<Integer>> res) {
         if(node == null){
             return;
         }
@@ -114,8 +114,8 @@ public class TreeNode {
             res.add(0, new ArrayList<>());
         }
         res.get(res.size()-depth-1).add(node.val);
-        dfs(node.left, depth+1, res);
-        dfs(node.right,depth+1, res);
+        levelOrderBottomDFS(node.left, depth+1, res);
+        levelOrderBottomDFS(node.right,depth+1, res);
     }
 
     /**
@@ -152,11 +152,11 @@ public class TreeNode {
      */
     public List<Integer> rightSideViewByDFS(TreeNode root) {
         List<Integer> list = new ArrayList<>();
-        dfs(root, 0, list);
+        rightSideViewDFS(root, 0, list);
         return list;
     }
 
-    private void dfs(TreeNode node, int depth, List<Integer> list){
+    private void rightSideViewDFS(TreeNode node, int depth, List<Integer> list){
         if (node == null){
             return;
         }
@@ -164,7 +164,7 @@ public class TreeNode {
             list.add(node.val);
         }
         depth++;
-        dfs(node.right, depth, list);
-        dfs(node.left, depth, list);
+        rightSideViewDFS(node.right, depth, list);
+        rightSideViewDFS(node.left, depth, list);
     }
 }
