@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @author ywxie
  * @date 2020/12/1 14:12
- * @describe shu
+ * @describe 二叉树
  */
 public class TreeNode {
     private int val;
@@ -167,4 +167,44 @@ public class TreeNode {
         rightSideViewDFS(node.right, depth, list);
         rightSideViewDFS(node.left, depth, list);
     }
+
+    /**
+     * 144. 二叉树的前序遍历
+     * DFS
+     */
+    public List<Integer> preOrderTraversalByDFS(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        preOrderTraversalDFS(root, list);
+        return list;
+    }
+
+    private void preOrderTraversalDFS(TreeNode node, List<Integer> list){
+        if (node == null){
+            return;
+        }
+        list.add(node.val);
+        preOrderTraversalDFS(node.left, list);
+        preOrderTraversalDFS(node.right, list);
+    }
+
+    /**
+     * 144. 二叉树的前序遍历
+     * BFS
+     */
+    public List<Integer> preOrderTraversalByBFS(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+
+        return list;
+    }
+
+    //102.二叉树的层序遍历
+    //107.二叉树的层次遍历II
+    //199.二叉树的右视图
+    //637.二叉树的层平均值
+    //429.N叉树的前序遍历
+    //515.在每个树行中找最大值
+    //
+    //116.填充每个节点的下一个右侧节点指针
+    //
+    //117.填充每个节点的下一个右侧节点指针II
 }
