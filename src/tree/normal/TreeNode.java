@@ -188,13 +188,22 @@ public class TreeNode {
     }
 
     /**
-     * 144. 二叉树的前序遍历
-     * BFS
+     * 145. 二叉树的后序遍历
+     * DFS
      */
-    public List<Integer> preOrderTraversalByBFS(TreeNode root) {
+    public List<Integer> postOrderTraversal(TreeNode root) {
         List<Integer> list = new ArrayList<>();
-
+        postOrderTraversalDFS(root, list);
         return list;
+    }
+
+    private void postOrderTraversalDFS(TreeNode node, List<Integer> list){
+        if (node == null){
+            return;
+        }
+        postOrderTraversalDFS(node.left, list);
+        postOrderTraversalDFS(node.right, list);
+        list.add(node.val);
     }
 
     //102.二叉树的层序遍历
