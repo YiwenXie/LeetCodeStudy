@@ -206,14 +206,68 @@ public class TreeNode {
         list.add(node.val);
     }
 
-    //102.二叉树的层序遍历
-    //107.二叉树的层次遍历II
-    //199.二叉树的右视图
-    //637.二叉树的层平均值
-    //429.N叉树的前序遍历
+    /**
+     * 637. 二叉树的层平均值
+     * BFS
+     */
+    public List<Double> averageOfLevelsByBFS(TreeNode root) {
+        List<Double> list = new ArrayList<>();
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        if (root != null){
+            queue.add(root);
+        }
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            Double sum = 0.0;
+            for (int i = 0; i < size; i++){
+                TreeNode node = queue.poll();
+                sum = sum + node.val;
+                if (node.left != null){
+                    queue.add(node.left);
+                }
+                if (node.right != null){
+                    queue.add(node.right);
+                }
+            }
+            Double average = sum / size;
+            list.add(average);
+        }
+        return list;
+    }
+
+    /**
+     * 637. 二叉树的层平均值
+     * DFS
+     */
+    public List<Double> averageOfLevelsByDFS(TreeNode root) {
+        List<Double> list = new ArrayList<>();
+        List<Double> sumList = new ArrayList<>();
+        List<Integer> sizeList = new ArrayList<>();
+        averageOfLevelsDFS(root, 0, sumList, sizeList);
+        for (int i = 0; i < sumList.size(); i++){
+            list.add(sumList.get(i)/sizeList.get(i));
+        }
+        return list;
+    }
+
+    private void averageOfLevelsDFS(TreeNode node, int depth, List<Double> sumList, List<Integer> sizeList){
+        if (node == null){
+            return;
+        }
+        //初始化
+        if (depth < sumList.size()){
+            sumList.set(depth, sumList.get(depth)+(double)node.val);
+            sizeList.set(depth, sizeList.get(depth)+1);
+
+        }else {
+            sumList.add((double) node.val);
+            sizeList.add(1);
+        }
+        averageOfLevelsDFS(node.left, depth+1, sumList, sizeList);
+        averageOfLevelsDFS(node.right, depth+1, sumList, sizeList);
+    }
+
     //515.在每个树行中找最大值
-    //
     //116.填充每个节点的下一个右侧节点指针
-    //
     //117.填充每个节点的下一个右侧节点指针II
 }
