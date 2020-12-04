@@ -12,6 +12,11 @@ public class TreeNode {
     private TreeNode left;
     private TreeNode right;
     private TreeNode(int x) { val = x; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
 
     //103. 二叉树的锯齿形层次遍历
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
@@ -267,7 +272,61 @@ public class TreeNode {
         averageOfLevelsDFS(node.right, depth+1, sumList, sizeList);
     }
 
-    //515.在每个树行中找最大值
+    /**
+     * 515. 在每个树行中找最大值
+     * BFS
+     */
+    public List<Integer> largestValuesByBFS(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        if (root != null){
+            queue.add(root);
+        }
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            List<Integer> max = new ArrayList<>();
+            for (int i = 0; i < size; i++){
+                TreeNode node = queue.poll();
+                if (max.size() <= 0){
+                    max.add(node.val);
+                }else {
+                    max.set(0, Math.max(node.val, max.get(0)));
+                }
+                if (node.left != null){
+                    queue.add(node.left);
+                }
+                if (node.right != null){
+                    queue.add(node.right);
+                }
+            }
+            list.add(max.get(0));
+        }
+        return list;
+    }
+
+    /**
+     * 515. 在每个树行中找最大值
+     * DFS
+     */
+    public List<Integer> largestValuesByDFS(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        largestValuesDFS(root, 0, list);
+        return list;
+    }
+
+    private void largestValuesDFS(TreeNode node, int depth, List<Integer> list){
+        if (node == null){
+            return;
+        }
+        if (depth < list.size()){
+            list.set(depth, Math.max(list.get(depth), node.val));
+        }else {
+            list.add(node.val);
+        }
+        largestValuesDFS(node.left, depth+1, list);
+        largestValuesDFS(node.right, depth+1, list);
+    }
+
     //116.填充每个节点的下一个右侧节点指针
     //117.填充每个节点的下一个右侧节点指针II
 }
