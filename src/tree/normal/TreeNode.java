@@ -544,4 +544,37 @@ public class TreeNode {
         return root;
     }
 
+    /**
+     * 889 根据前序和后序遍历构造二叉树
+     * 返回与给定的前序和后序遍历匹配的任何二叉树
+     * 根左右、左右根
+     * 递归
+     */
+    public TreeNode constructFromPrePost(int[] pre, int[] post) {
+        return constructFromPrePostHelper(pre, 0, pre.length-1, post, 0, post.length-1);
+    }
+
+    private TreeNode constructFromPrePostHelper(int[] pre, int pre_start, int pre_end, int[] post, int post_start, int post_end){
+        if (pre_end < pre_start || post_end < post_start){
+            return null;
+        }
+        int root_val = pre[pre_start];
+        TreeNode root = new TreeNode(root_val);
+        if (pre_start == pre_end){
+            return root;
+        }
+        int left_root_index = post_start;
+        int left_root_val = pre[pre_start+1];
+        for (; left_root_index < post_end; left_root_index++){
+            if (left_root_val == post[left_root_index]){
+                break;
+            }
+        }
+        //左子树个数
+        int left_num = left_root_index - post_start;
+        root.left = constructFromPrePostHelper(pre, pre_start+1, pre_start+1+left_num, post, post_start, left_root_index);
+        root.right = constructFromPrePostHelper(pre, pre_start+2+left_num, pre_end, post, left_root_index+1, post_end-1);
+        return root;
+    }
+
 }
