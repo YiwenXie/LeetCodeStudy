@@ -481,4 +481,67 @@ public class TreeNode {
         }
         return root;
     }
+
+    /**
+     * 106. 从中序与后序遍历序列构造二叉树
+     * 递归
+     * 左根右、左右根
+     * 规律总结：下标位置根据根节点，与前序+中序相反
+     */
+    public TreeNode buildTree3(int[] inorder, int[] postorder) {
+        return buildTreeHelper2(inorder, 0, inorder.length-1, postorder, 0, postorder.length-1);
+    }
+
+    private TreeNode buildTreeHelper2(int[] inorder, int in_start, int in_end, int[] postorder, int post_start, int post_end){
+        if (in_end < in_start || post_end < post_start){
+            return null;
+        }
+        int root_val = postorder[post_end-1];
+        TreeNode root = new TreeNode(root_val);
+        int root_index = 0;
+        //此处可用map优化
+        for (int i = 0; i < in_end; i++){
+            if (root_val == inorder[i]){
+                root_index = i;
+                break;
+            }
+        }
+        int left_num = root_index - in_start;
+        root.left = buildTreeHelper2(inorder, in_start, root_index-1, postorder, post_start, post_start+left_num-1);
+        root.right = buildTreeHelper2(inorder, root_index+1, in_end, postorder, post_start+left_num, post_end-1);
+        return root;
+    }
+
+    /**
+     * 106. 从中序与后序遍历序列构造二叉树
+     * 迭代
+     * 左根右\左右根
+     * 规律总结：与前序+中序相反的遍历顺序
+     */
+    public TreeNode buildTree4(int[] inorder, int[] postorder) {
+        if (postorder == null || postorder.length == 0){
+            return null;
+        }
+        TreeNode root = new TreeNode(postorder[postorder.length-1]);
+        Deque<TreeNode> stack = new LinkedList<TreeNode>();
+        stack.push(root);
+        int inorderIndex = inorder.length - 1;
+        for (int i = postorder.length - 2; i >= 0; i--) {
+            int postorderVal = postorder[i];
+            TreeNode node = stack.peek();
+            if (node.val != inorder[inorderIndex]) {
+                node.right = new TreeNode(postorderVal);
+                stack.push(node.right);
+            } else {
+                while (!stack.isEmpty() && stack.peek().val == inorder[inorderIndex]) {
+                    node = stack.pop();
+                    inorderIndex--;
+                }
+                node.left = new TreeNode(postorderVal);
+                stack.push(node.left);
+            }
+        }
+        return root;
+    }
+
 }
