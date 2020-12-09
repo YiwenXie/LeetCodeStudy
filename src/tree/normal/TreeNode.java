@@ -1,5 +1,8 @@
 package tree.normal;
 
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+
+import java.time.temporal.Temporal;
 import java.util.*;
 
 /**
@@ -591,11 +594,59 @@ public class TreeNode {
      *     当 root 节点左右孩子都不为空时，返回左右孩子较小深度的节点值
      */
     public int minDepth(TreeNode root) {
-        if(root == null) return 0;
+        if(root == null)return 0;
         int m1 = minDepth(root.left);
         int m2 = minDepth(root.right);
         //1.如果左孩子和右孩子有为空的情况，直接返回m1+m2+1
         //2.如果都不为空，返回较小深度+1
         return root.left == null || root.right == null ? m1 + m2 + 1 : Math.min(m1,m2) + 1;
+    }
+
+    /**
+     * 226. 翻转二叉树
+     * BFS/迭代
+     */
+    public TreeNode invertTreeByBFS(TreeNode root) {
+        if (root == null){
+            return root;
+        }
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.add(root);
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            for (int i = 0; i < size; i++){
+                TreeNode node = queue.poll();
+                TreeNode left = node.left;
+                node.left = node.right;
+                node.right = left;
+                if (node.left != null){
+                    queue.add(node.left);
+                }
+                if (node.right != null){
+                    queue.add(node.right);
+                }
+            }
+        }
+        return root;
+    }
+
+    /**
+     * 226. 翻转二叉树
+     * 递归/DFS
+     * 二叉树题目的一个难点就是，如何把题目的要求细化成每个节点需要做的事情。
+     */
+    public TreeNode invertTreeByDFS(TreeNode root){
+        if (root == null){
+            return null;
+        }
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+
+        invertTreeByDFS(root.left);
+        invertTreeByDFS(root.right);
+
+        return root;
+
     }
 }
