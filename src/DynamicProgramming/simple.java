@@ -26,7 +26,7 @@ public class simple {
 
     /**
      * 509. 斐波那契数
-     * 递归\时间复杂度是 O(n)
+     * 递归\时间复杂度是 O(n) 状态转移方程
      */
     public int fib2(int N) {
         if(N == 0){
@@ -45,5 +45,25 @@ public class simple {
         }
         map.put(N,doFib(N-1, map) + doFib(N-2, map));
         return map.get(N);
+    }
+
+    /**
+     * 509. 斐波那契数
+     * 递归\时间复杂度是 O(n) 空间复杂度降为 O(1) 「状态压缩」
+     */
+    public int fib3(int N) {
+        if (N < 1) {
+            return 0;
+        }
+        if (N == 2 || N == 1) {
+            return 1;
+        }
+        int prev = 1, curr = 1;
+        for (int i = 3; i <= N; i++) {
+            int sum = prev + curr;
+            prev = curr;
+            curr = sum;
+        }
+        return curr;
     }
 }
