@@ -1,6 +1,7 @@
 package tree.normal;
 
 import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+import org.omg.CORBA.TRANSACTION_MODE;
 
 import java.time.temporal.Temporal;
 import java.util.*;
@@ -676,5 +677,62 @@ public class TreeNode {
 
         return root;
 
+    }
+
+    /**
+     * 114. 二叉树展开为链表
+     * 反向先序遍历 - 右 左 根
+     */
+    public void flatten(TreeNode root) {
+        while (root != null) {
+            //左子树为 null，直接考虑下一个节点
+            if (root.left == null) {
+                root = root.right;
+            } else {
+                // 找左子树最右边的节点
+                TreeNode pre = root.left;
+                while (pre.right != null) {
+                    pre = pre.right;
+                }
+                //将原来的右子树接到左子树的最右边节点
+                pre.right = root.right;
+                // 将左子树插入到右子树的地方
+                root.right = root.left;
+                root.left = null;
+                // 考虑下一个节点
+                root = root.right;
+            }
+        }
+    }
+    /**
+     * 114. 二叉树展开为链表
+     * DFS/递归
+     * 你看，这就是递归的魅力，你说 flatten 函数是怎么把左右子树拉平的？说不清楚，
+     * 但是只要知道 flatten 的定义如此，相信这个定义，让 root 做它该做的事情，
+     * 然后 flatten 函数就会按照定义工作。另外注意递归框架是后序遍历，
+     * 因为我们要先拉平左右子树才能进行后续操作。
+     */
+    public void flatten2(TreeNode root) {
+        // base case
+        if (root == null) {
+            return;
+        }
+        flatten2(root.left);
+        flatten2(root.right);
+
+        /**** 后序遍历位置 ****/
+        // 1、左右子树已经被拉平成一条链表
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+        // 2、将左子树作为右子树
+        root.left = null;
+        root.right = left;
+        // 3、将原先的右子树接到当前右子树的末端
+        TreeNode pre = root;
+        while (pre.right != null){
+            pre = pre.right;
+        }
+
+        pre.right = right;
     }
 }
