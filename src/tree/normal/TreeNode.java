@@ -735,4 +735,25 @@ public class TreeNode {
 
         pre.right = right;
     }
+
+
+    /**
+     * 700. 二叉搜索树中的搜索
+     */
+    public TreeNode searchBST(TreeNode root, int val) {
+        return searchBSTHelper(root, val);
+    }
+
+    private TreeNode searchBSTHelper(TreeNode node, int val){
+        if (node == null){
+            return null;
+        }
+        if (node.val == val){
+            return node;
+        }
+        if (node.val > val){
+            return searchBSTHelper(node.left, val);
+        }
+        return searchBSTHelper(node.right, val);
+    }
 }
