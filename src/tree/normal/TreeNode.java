@@ -787,4 +787,47 @@ public class TreeNode {
         }
         return root;
     }
+
+    /**
+     * 450. 删除二叉搜索树中的节点
+     */
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if (root == null){
+            return null;
+        }
+        if (root.val == key){
+            if (root.left == null && root.right == null){
+                return null;
+            }
+            if (root.left == null){
+                return root.right;
+            }
+            if (root.right == null){
+                return root.left;
+            }
+            if (root.left != null && root.right != null){
+                // 找到右子树的最小节点
+                TreeNode minNode = getMinBST(root.right);
+                // 把 root 改成 minNode
+                root.val = minNode.val;
+                // 转而去删除 minNode
+                root.right = deleteNode(root.right, minNode.val);
+            }
+        }else if (root.val > key){
+            root.left = deleteNode(root.left, key);
+        }else {
+            root.right = deleteNode(root.right, key);
+        }
+        return root;
+    }
+
+    private TreeNode getMinBST(TreeNode node){
+        if (node == null){
+            return null;
+        }
+        while (node.left != null){
+            node = node.left;
+        }
+        return node;
+    }
 }
