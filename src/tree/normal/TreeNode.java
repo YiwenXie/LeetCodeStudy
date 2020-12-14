@@ -736,6 +736,25 @@ public class TreeNode {
         pre.right = right;
     }
 
+    /**
+     * 98. 验证二叉搜索树
+     */
+    public boolean isValidBST(TreeNode root) {
+        return isValidBSTHelper(root, null, null);
+    }
+
+    private boolean isValidBSTHelper(TreeNode node, TreeNode min, TreeNode max){
+        if (node == null){
+            return true;
+        }
+        if (min != null && node.val <= min.val){
+            return false;
+        }
+        if (max != null && node.val >= max.val){
+            return false;
+        }
+        return isValidBSTHelper(node.left, min, node) && isValidBSTHelper(node.right, node, max);
+    }
 
     /**
      * 700. 二叉搜索树中的搜索
