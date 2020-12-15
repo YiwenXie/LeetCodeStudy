@@ -632,6 +632,36 @@ public class TreeNode {
     }
 
     /**
+     * 111. 二叉树的最小深度
+     * BFS
+     **/
+    public int minDepthByBFS(TreeNode root) {
+        if (root == null){
+            return 0;
+        }
+        Queue<TreeNode> q = new ArrayDeque<>();
+        q.offer(root);
+        int depth = 1;
+        while (!q.isEmpty()){
+            int size = q.size();
+            for (int i = 0; i < size; i++){
+                TreeNode node = q.poll();
+                if (node.left == null && node.right == null){
+                    return depth;
+                }
+                if (node.left != null){
+                    q.offer(node.left);
+                }
+                if (node.right != null){
+                    q.offer(node.right);
+                }
+            }
+            depth++;
+        }
+        return depth;
+    }
+
+    /**
      * 226. 翻转二叉树
      * BFS/迭代
      */
