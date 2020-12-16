@@ -882,4 +882,33 @@ public class TreeNode {
         node.right = sortedArrayToBSTHelper(nums, mid+1, high);
         return node;
     }
+
+    /**
+     * 110. 平衡二叉树
+     * DFS
+     * 复杂度分析：
+     *     时间复杂度 O(N)：N为树的节点数；最差情况下，需要递归遍历树的所有节点。
+     *     空间复杂度 O(N)：最差情况下（树退化为链表时），系统递归需要使用 O(N)的栈空间。
+     */
+    public boolean isBalanced(TreeNode root) {
+        if (root == null){
+            return true;
+        }
+        return isBalancedHelper(root) != -1;
+    }
+
+    private int isBalancedHelper(TreeNode node){
+        if (node == null){
+            return 0;
+        }
+        int leftDepth = isBalancedHelper(node.left);
+        if (leftDepth == -1){
+            return -1;
+        }
+        int rightDepth = isBalancedHelper(node.right);
+        if (rightDepth == -1) {
+             return -1;
+        }
+        return Math.abs(leftDepth - rightDepth) < 2 ? Math.max(leftDepth, rightDepth) + 1 : -1;
+    }
 }
