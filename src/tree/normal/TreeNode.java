@@ -911,4 +911,30 @@ public class TreeNode {
         }
         return Math.abs(leftDepth - rightDepth) < 2 ? Math.max(leftDepth, rightDepth) + 1 : -1;
     }
+
+    /**
+     * 654. 最大二叉树
+     * 递归
+     */
+    public TreeNode constructMaximumBinaryTree(int[] nums) {
+        return constructMaximumBinaryTreeHelper(nums, 0, nums.length-1);
+    }
+
+    private TreeNode constructMaximumBinaryTreeHelper(int[] nums, int low, int high){
+        if (low > high){
+            return null;
+        }
+        int maxVal = Integer.MIN_VALUE;
+        int index = -1;
+        for (int i = low; i <= high; i++){
+            if (nums[i] > maxVal){
+                maxVal = nums[i];
+                index = i;
+            }
+        }
+        TreeNode root = new TreeNode(maxVal);
+        root.left = constructMaximumBinaryTreeHelper(nums, low, index-1);
+        root.right = constructMaximumBinaryTreeHelper(nums, index+1, high);
+        return root;
+    }
 }
