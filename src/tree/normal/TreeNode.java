@@ -937,4 +937,35 @@ public class TreeNode {
         root.right = constructMaximumBinaryTreeHelper(nums, index+1, high);
         return root;
     }
+
+
+    /**
+     * 652. 寻找重复的子树
+     * 1、以我为根的这棵二叉树（子树）长啥样？
+     * 2、以其他节点为根的子树都长啥样？
+     * 我要知道以自己为根的子树长啥样，是不是得先知道我的左右子树长啥样，再加上自己，就构成了整棵子树的样子？
+     * 后序遍历
+     */
+    public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
+        HashMap<String, Integer> map = new HashMap<>();
+        LinkedList<TreeNode> res = new LinkedList<>();
+        findDuplicateSubtreesHelper(root, map, res);
+        return res;
+    }
+
+    private String findDuplicateSubtreesHelper(TreeNode node, HashMap<String, Integer> map, LinkedList<TreeNode> res) {
+        if (node == null){
+            return "#";
+        }
+        String left = findDuplicateSubtreesHelper(node.left, map, res);
+        String right = findDuplicateSubtreesHelper(node.right, map, res);
+        String subTree = left + "," + right + "," + node.val;
+
+        int freq = map.getOrDefault(subTree, 0);
+        if (freq == 1){
+            res.add(node);
+        }
+        map.put(subTree, freq + 1);
+        return subTree;
+    }
 }
