@@ -1011,4 +1011,52 @@ public class TreeNode {
         }
         return node;
     }
+
+//    /**
+//     * 236. 二叉树的最近公共祖先
+//     * 前序遍历BFS?
+//     */
+//    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+//        if (root == null){
+//            return null;
+//        }
+//        Queue<TreeNode> queue = new ArrayDeque<>();
+//        queue.add(root);
+//
+//        while (!queue.isEmpty()){
+//            int size = queue.size();
+//            for (int i = 0; i < size; i++){
+//                TreeNode node = queue.poll();
+//                while (node.left != null){
+//                    queue.add(node.left);
+//                }
+//            }
+//        }
+//    }
+
+    /**
+     * 222. 完全二叉树的节点个数
+     * 满二叉树的节点总数： 2^h - 1
+     */
+    public int countNodes(TreeNode root) {
+        if (root == null){
+            return 0;
+        }
+        TreeNode l = root;
+        TreeNode r = root;
+        int hl = 0;
+        int hr = 0;
+        while (l != null){
+            l = l.left;
+            hl++;
+        }
+        while (r.right != null){
+            r = r.right;
+            hr++;
+        }
+        if (hl == hr){
+            return (int) Math.pow(2, hl) - 1;
+        }
+        return 1 + countNodes(root.left) + countNodes(root.right);
+    }
 }
