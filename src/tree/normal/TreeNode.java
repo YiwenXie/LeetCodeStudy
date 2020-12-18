@@ -1,6 +1,7 @@
 package tree.normal;
 
 import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+import jdk.internal.org.objectweb.asm.tree.FrameNode;
 import org.omg.CORBA.TRANSACTION_MODE;
 
 import java.time.temporal.Temporal;
@@ -967,5 +968,47 @@ public class TreeNode {
         }
         map.put(subTree, freq + 1);
         return subTree;
+    }
+
+    /**
+     * 230. 二叉搜索树中第K小的元素
+     */
+    public int kthSmallest(TreeNode root, int k) {
+        List<Integer> res = new ArrayList<>();
+        kthSmallestHelper(root, k, res);
+        return res.get(k-1);
+    }
+
+    private void kthSmallestHelper(TreeNode root, int k, List<Integer> res) {
+        if (root == null){
+            return;
+        }
+        kthSmallestHelper(root.left, k, res);
+        res.add(root.val);
+        if (k == res.size()){
+            return;
+        }
+        kthSmallestHelper(root.right, k, res);
+    }
+
+    /**
+     * 538. 把二叉搜索树转换为累加树
+     * 中序遍历的反向遍历
+     * 左根右-右根左
+     */
+    int sum = 0;
+    public TreeNode convertBST(TreeNode root) {
+        return convertBSTHelper(root);
+    }
+
+    private TreeNode convertBSTHelper(TreeNode node) {
+        if (node != null){
+            convertBSTHelper(node.right);
+            sum += node.val;
+            node.val = sum;
+            //做事情
+            convertBSTHelper(node.left);
+        }
+        return node;
     }
 }
