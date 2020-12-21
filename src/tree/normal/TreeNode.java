@@ -6,6 +6,7 @@ import org.omg.CORBA.TRANSACTION_MODE;
 
 import java.time.temporal.Temporal;
 import java.util.*;
+import java.util.stream.Collector;
 
 /**
  * @author ywxie
@@ -1072,5 +1073,52 @@ public class TreeNode {
             return (int) Math.pow(2, hl) - 1;
         }
         return 1 + countNodes(root.left) + countNodes(root.right);
+    }
+
+    /**
+     * 297. 二叉树的序列化与反序列化
+     * 递归+前序遍历
+     */
+    String SEP = ",";
+    String NULL = "#";
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        serializeHelper(root, sb);
+        return sb.toString();
+    }
+
+    private void serializeHelper(TreeNode node, StringBuilder sb){
+        if (node == null) {
+            sb.append(NULL).append(SEP);
+            return;
+        }
+        sb.append(node.val).append(SEP);
+        serializeHelper(node.left, sb);
+        serializeHelper(node.right, sb);
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        if (data.isEmpty()){
+            return null;
+        }
+        String[] nodes = data.split(SEP);
+        LinkedList<String> list = new LinkedList<>(Arrays.asList(nodes));
+        return deserializeHelper(list);
+    }
+
+    private TreeNode deserializeHelper(LinkedList<String> list){
+        String str = list.removeFirst();
+        if (list.isEmpty()){
+            return null;
+        }
+        if (NULL.equals(str)){
+            return null;
+        }
+        TreeNode node = new TreeNode(Integer.parseInt(str));
+        node.left = deserializeHelper(list);
+        node.right = deserializeHelper(list);
+        return node;
     }
 }
