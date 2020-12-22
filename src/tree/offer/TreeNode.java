@@ -42,4 +42,35 @@ public class TreeNode {
         root.right = buildTreeHelper(preorder, pre_start+leftNum+1, pre_end, inorder, in_root_index+1, in_end);
         return root;
     }
+
+    /**
+     * 剑指 Offer 26. 树的子结构
+     * 看前序遍历循序是否一致？
+     */
+    public boolean isSubStructure(TreeNode A, TreeNode B) {
+        //当 树 AAA 为空 或 树 BBB 为空 时，直接返回 falsefalsefalse ；
+        if (A == null || B == null){
+            return false;
+        }
+        //若树 BBB 是树 AAA 的子结构，则必满足以下三种情况之一，因此用或 || 连接；
+        //    以 节点 AAA 为根节点的子树 包含树 BBB ，对应 recur(A, B)；
+        //    树 BBB 是 树 AAA 左子树 的子结构，对应 isSubStructure(A.left, B)；
+        //    树 BBB 是 树 AAA 右子树 的子结构，对应 isSubStructure(A.right, B)；
+        return isSubStructure(A.left, B) || isSubStructure(A.right, B) || isSubStructureHelper(A, B);
+    }
+
+    private boolean isSubStructureHelper(TreeNode nodeA, TreeNode nodeB){
+        //当节点 BBB 为空：说明树 BBB 已匹配完成（越过叶子节点），因此返回 true
+        if (nodeB == null){
+            return true;
+        }
+        //当节点 AAA 为空：说明已经越过树 AAA 叶子节点，即匹配失败，返回 false
+        if (nodeA == null) {
+            return false;
+        }
+        //当节点 AAA 和 BBB 的值不同：说明匹配失败，返回 falsefalsefalse
+        //判断 AAA 和 BBB 的左子节点是否相等，即 recur(A.left, B.left)
+        //判断 AAA 和 BBB 的右子节点是否相等，即 recur(A.right, B.right)
+        return nodeA.val == nodeB.val && isSubStructureHelper(nodeA.left, nodeB.left) && isSubStructureHelper(nodeA.right, nodeB.right);
+    }
 }
