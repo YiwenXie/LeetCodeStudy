@@ -73,4 +73,19 @@ public class TreeNode {
         //判断 AAA 和 BBB 的右子节点是否相等，即 recur(A.right, B.right)
         return nodeA.val == nodeB.val && isSubStructureHelper(nodeA.left, nodeB.left) && isSubStructureHelper(nodeA.right, nodeB.right);
     }
+
+    /**
+     * 剑指 Offer 27. 二叉树的镜像
+     */
+    public TreeNode mirrorTree(TreeNode root) {
+        if (root == null){
+            return null;
+        }
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+        mirrorTree(root.left);
+        mirrorTree(root.right);
+        return root;
+    }
 }
