@@ -1,12 +1,6 @@
 package tree.normal;
 
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
-import jdk.internal.org.objectweb.asm.tree.FrameNode;
-import org.omg.CORBA.TRANSACTION_MODE;
-
-import java.time.temporal.Temporal;
 import java.util.*;
-import java.util.stream.Collector;
 
 /**
  * @author ywxie
@@ -1281,6 +1275,29 @@ public class TreeNode {
             return lowestCommonAncestor1(root.right, p, q);
         }else {
             return lowestCommonAncestor1(root.left, p, q);
+        }
+    }
+
+    /**
+     * 257. 二叉树的所有路径
+     */
+    private String arrow = "->";
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> list = new LinkedList<>();
+        binaryTreePathsHelper(root, new StringBuilder(), list);
+        return list;
+    }
+
+    private void binaryTreePathsHelper(TreeNode node, StringBuilder sb, List<String> list){
+        if (node == null){
+            return;
+        }
+        sb = sb.append(node.val);
+        if (node.left == null && node.right == null){
+            list.add(sb.toString());
+        }else {
+            binaryTreePathsHelper(node.left, new StringBuilder(sb).append(arrow), list);
+            binaryTreePathsHelper(node.right, new StringBuilder(sb).append(arrow), list);
         }
     }
 }
