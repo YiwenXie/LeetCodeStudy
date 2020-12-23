@@ -1134,4 +1134,30 @@ public class TreeNode {
         }
         return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
     }
+
+    /**
+     * 113. 路径总和 II
+     * DFS
+     */
+    List<List<Integer>> res = new LinkedList<>();
+    LinkedList<Integer> list = new LinkedList<>();
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        pathSumHelper(root, sum);
+        return res;
+    }
+
+    private void pathSumHelper(TreeNode node, int sum){
+        if (node == null){
+            return;
+        }
+        sum = sum - node.val;
+        list.add(node.val);
+        if (sum == 0 && node.left == null && node.right == null){
+            res.add(list);
+        }
+        pathSumHelper(node.left, sum);
+        pathSumHelper(node.right, sum);
+        list.removeLast();
+
+    }
 }
