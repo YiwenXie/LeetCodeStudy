@@ -1185,4 +1185,44 @@ public class TreeNode {
         // 返回经过root的单边最大分支给当前root的父节点计算使用
         return Math.max(left, right) + node.val;
     }
+
+    /**
+     * 129. 求根到叶子节点数字之和
+     */
+    public int sumNumbers(TreeNode root) {
+        if (root == null){
+            return 0;
+        }
+        sumNumbersHelper(root, 0);
+        return sum;
+//        List<Integer> sumList = new ArrayList<>();
+//        for (List<Integer> list: res){
+//            int size = list.size();
+//            int sum = 0;
+//            for (int i = 0; i < size; i++){
+//                sum = (int) (list.get(i) * (Math.pow(10, size - i - 1)) + sum);
+//            }
+//            sumList.add(sum);
+//        }
+//        int j = 0;
+//        for (int num : sumList){
+//            j = num + j;
+//        }
+//        return j;
+    }
+
+    private void sumNumbersHelper(TreeNode node, int val){
+        if (node == null){
+            return;
+        }
+        int k = val * 10 + node.val;
+//        list.add(node.val);
+        if (node.left == null && node.right == null){
+            sum = sum + k;
+//            res.add(new LinkedList<>(list));
+        }
+        sumNumbersHelper(node.left, k);
+        sumNumbersHelper(node.right, k);
+//        list.removeLast();
+    }
 }
