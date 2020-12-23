@@ -1225,4 +1225,51 @@ public class TreeNode {
         sumNumbersHelper(node.right, k);
 //        list.removeLast();
     }
+
+    /**
+     * 173. 二叉搜索树迭代器
+     * 中序遍历的反向
+     */
+    class BSTIterator {
+
+        Stack<TreeNode> stack;
+
+        public BSTIterator(TreeNode root) {
+            this.stack = new Stack<>();
+//            inorder(root);
+            while (root != null){
+                stack.push(root);
+                root = root.left;
+            }
+        }
+
+        private void inorder(TreeNode node){
+            if (node == null){
+                return;
+            }
+            inorder(node.right);
+            stack.push(node);
+            inorder(node.left);
+        }
+
+        public int next() {
+            TreeNode node = stack.pop();
+//            return node.val;
+            int result = node.val;
+            if (node.right != null){
+                node = node.right;
+                while (node != null){
+                    stack.push(node);
+                    node = node.left;
+                }
+            }
+            return result;
+        }
+
+        public boolean hasNext() {
+            return !stack.isEmpty();
+        }
+    }
+
+
 }
