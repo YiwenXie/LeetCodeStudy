@@ -1153,7 +1153,7 @@ public class TreeNode {
         sum = sum - node.val;
         list.add(node.val);
         if (sum == 0 && node.left == null && node.right == null){
-            res.add(list);
+            res.add(new LinkedList<>(list));
         }
         pathSumHelper(node.left, sum);
         pathSumHelper(node.right, sum);
