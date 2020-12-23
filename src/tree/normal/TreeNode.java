@@ -1158,6 +1158,31 @@ public class TreeNode {
         pathSumHelper(node.left, sum);
         pathSumHelper(node.right, sum);
         list.removeLast();
+    }
 
+    /**
+     * 124. 二叉树中的最大路径和
+     */
+    int max = Integer.MIN_VALUE;
+    public int maxPathSum(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        maxPathSumHelper(root);
+        return max;
+    }
+
+    private int maxPathSumHelper(TreeNode node){
+        if (node == null){
+            return 0;
+        }
+        //计算左边分支最大值，左边分支如果为负数还不如不选择
+        int left = Math.max(0, maxPathSumHelper(node.left));
+        //计算右边分支最大值，右边分支如果为负数还不如不选择
+        int right = Math.max(0, maxPathSumHelper(node.right));
+        //left->root->right 作为路径与已经计算过历史最大值做比较
+        max = Math.max(max, node.val + left + right);
+        // 返回经过root的单边最大分支给当前root的父节点计算使用
+        return Math.max(left, right) + node.val;
     }
 }
