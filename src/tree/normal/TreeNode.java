@@ -1088,8 +1088,8 @@ public class TreeNode {
             return;
         }
         sb.append(node.val).append(SEP);
-        serializeHelper(node.left, sb);
-        serializeHelper(node.right, sb);
+        serializeHelper(node.left, new StringBuilder(sb));
+        serializeHelper(node.right, new StringBuilder(sb));
     }
 
     // Decodes your encoded data to tree.
@@ -1342,4 +1342,11 @@ public class TreeNode {
         pathSumHelper2(node.left, sum);
         pathSumHelper2(node.right, sum);
     }
+
+    /**
+     * 449. 序列化和反序列化二叉搜索树
+     */
+
+
+
 }
