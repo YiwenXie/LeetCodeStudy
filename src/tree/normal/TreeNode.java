@@ -1348,5 +1348,28 @@ public class TreeNode {
      */
 
 
+    /**
+     * 530. 二叉搜索树的最小绝对差
+     * 符合条件的节点:中序遍历中相邻的两个节点
+     * 特性：二叉搜索树
+     */
+    int min = Integer.MAX_VALUE;
+    TreeNode preNode = null;
+    public int getMinimumDifference(TreeNode root) {
+        getMinimumDifferenceHelper(root);
+        return min;
+    }
+
+    private void getMinimumDifferenceHelper(TreeNode node){
+        if (node == null) {
+            return;
+        }
+        getMinimumDifferenceHelper(node.left);
+        if (preNode != null){
+            min = Math.min(node.val - preNode.val, min);
+        }
+        preNode = node;
+        getMinimumDifferenceHelper(node.right);
+    }
 
 }
