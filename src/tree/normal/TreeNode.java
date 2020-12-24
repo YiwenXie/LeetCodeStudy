@@ -1315,4 +1315,31 @@ public class TreeNode {
         sumOfLeftLeaves(root.right);
         return sum;
     }
+
+    /**
+     * 437. 路径总和 III
+     * 双重递归思想
+     */
+    int k = 0;
+    public int pathSum2(TreeNode root, int sum) {
+        if (root == null){
+            return 0;
+        }
+        pathSumHelper2(root, sum);
+        pathSum2(root.left, sum);
+        pathSum2(root.right, sum);
+        return k;
+    }
+
+    private void pathSumHelper2(TreeNode node, int sum){
+        if(node == null){
+            return;
+        }
+        sum = sum - node.val;
+        if (sum == 0){
+            k = k + 1;
+        }
+        pathSumHelper2(node.left, sum);
+        pathSumHelper2(node.right, sum);
+    }
 }
