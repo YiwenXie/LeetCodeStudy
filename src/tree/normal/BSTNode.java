@@ -1,6 +1,7 @@
 package tree.normal;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
@@ -266,4 +267,46 @@ public class BSTNode {
     /**
      * 449. 序列化和反序列化二叉搜索树
      */
+
+    /**
+     * 501. 二叉搜索树中的众数
+     * 中序遍历的过程是升序，因此相等的数一定相邻
+     */
+    int curTimes = 0,maxTimes = 0;
+    LinkedList<Integer> list = new LinkedList<>();
+    public int[] findMode(TreeNode root) {
+        if (root == null){
+            return null;
+        }
+        int[] array = new int[list.size()];
+        for (int i = 0; i < list.size(); i++){
+            array[i] = list.get(i);
+        }
+        return array;
+    }
+
+    private void findModeHelper(TreeNode node){
+        if (node == null){
+            return;
+        }
+        findModeHelper(node.left);
+        if (preNode == null){
+            preNode = node;
+        }
+        if (preNode.val == node.val){
+            curTimes++;
+        }else {
+            preNode = node;
+            curTimes = 1;
+        }
+        if (curTimes == maxTimes){
+            list.add(node.val);
+        }else if (curTimes > maxTimes){
+            list.clear();
+            list.add(node.val);
+            maxTimes = curTimes;
+        }
+        findModeHelper(node.right);
+
+    }
 }
