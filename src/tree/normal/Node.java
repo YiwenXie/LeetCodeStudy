@@ -73,4 +73,47 @@ public class Node {
         }
 
     }
+
+    /**
+     * 559. N 叉树的最大深度
+     * DFS
+     */
+    public int maxDepthByDFS(Node root) {
+        if (root == null){
+            return 0;
+        }
+        if (root.children == null){
+            return 1;
+        }
+        int depth = 0;
+        for (Node node: root.children){
+            depth = Math.max(maxDepthByDFS(node), depth);
+        }
+        return depth+1;
+    }
+
+    public int maxDepthByBFS(Node root){
+        if (root == null){
+            return 0;
+        }
+        if (root.children == null){
+            return 1;
+        }
+        Queue<Node> queue = new ArrayDeque<>();
+        queue.offer(root);
+        int depth = 0;
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            for (int i = 0; i < size; i++){
+                Node node = queue.poll();
+                if (node.children != null){
+                    for (Node child: node.children){
+                        queue.add(child);
+                    }
+                }
+            }
+            depth++;
+        }
+        return depth;
+    }
 }
