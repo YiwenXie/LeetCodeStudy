@@ -1127,5 +1127,23 @@ public class TreeNode {
         pathSumHelper2(node.right, sum);
     }
 
+    /**
+     * 543. 二叉树的直径
+     */
+    int ans = 1;
+    public int diameterOfBinaryTree(TreeNode root) {
+        diameterOfBinaryTreeHelper(root);
+        return ans - 1;
+    }
+
+    private int diameterOfBinaryTreeHelper(TreeNode node){
+        if (node == null){
+            return 0;
+        }
+        int left = diameterOfBinaryTreeHelper(node.left);
+        int right = diameterOfBinaryTreeHelper(node.right);
+        ans = Math.max(left+right+1, ans);
+        return Math.max(left, right) + 1;
+    }
 
 }
