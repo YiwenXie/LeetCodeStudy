@@ -236,6 +236,11 @@ public class TreeNode {
     }
 
     /**
+     * 145. 二叉树的后序遍历
+     * 迭代
+     */
+
+    /**
      * 637. 二叉树的层平均值
      * BFS
      */
@@ -1209,5 +1214,33 @@ public class TreeNode {
             return false;
         }
         return isSubtreeHelper(s.left, t.left) && isSubtreeHelper(s.right, t.right);
+    }
+
+    /**
+     * 606. 根据二叉树创建字符串
+     */
+    String leftBracket = "(";
+    String rightBracket = ")";
+    StringBuilder str = new StringBuilder();
+    public String tree2str(TreeNode t) {
+        tree2strHelper(t);
+        return str.toString();
+    }
+
+    private void tree2strHelper(TreeNode node){
+        if (node == null){
+            return;
+        }
+        str.append(node.val);
+        if (node.left != null || node.right != null){
+            str.append(leftBracket);
+            tree2str(node.left);
+            str.append(rightBracket);
+            if (node.right != null){
+                str.append(leftBracket);
+                tree2str(node.right);
+                str.append(rightBracket);
+            }
+        }
     }
 }
