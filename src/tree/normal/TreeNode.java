@@ -1146,4 +1146,21 @@ public class TreeNode {
         return Math.max(left, right) + 1;
     }
 
+    /**
+     * 563. 二叉树的坡度
+     * DFS
+     */
+    public int findTilt(TreeNode root) {
+        if (root == null){
+            return 0;
+        }
+        return Math.abs(findTiltHelper(root.left) - findTiltHelper(root.right)) + findTilt(root.left) + findTilt(root.right);
+    }
+
+    private int findTiltHelper(TreeNode node){
+        if (node == null){
+            return 0;
+        }
+        return findTiltHelper(node.left) + findTiltHelper(node.right) + node.val;
+    }
 }
