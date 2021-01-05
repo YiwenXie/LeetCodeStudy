@@ -1355,4 +1355,96 @@ public class TreeNode {
         }
         return t1;
     }
+
+    /**
+     * 623. 在二叉树中增加一行
+     * BFS
+     * 遍历到指定深度，然后添加一层值
+     */
+    public TreeNode addOneRow(TreeNode root, int v, int d) {
+        if (root == null){
+            return root;
+        }
+        if (d == 1){
+            TreeNode root2 = new TreeNode(v);
+            root2.left = root;
+            return root2;
+        }
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.add(root);
+        int depth = 1;
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            for (int i = 0; i < size; i++){
+                TreeNode node = queue.remove();
+                if (node.left != null){
+                    if (depth == d-1){
+                        TreeNode temp = node.left;
+                        node.left = new TreeNode(v);
+                        node.left.left = temp;
+                    }
+                    queue.add(node.left);
+                }else {
+                    if (depth == d-1){
+                        node.left = new TreeNode(v);
+                    }
+                }
+                if (node.right != null){
+                    if (depth == d-1){
+                        TreeNode temp = node.right;
+                        node.right = new TreeNode(v);
+                        node.right.right = temp;
+                    }
+                    queue.add(node.right);
+                }else {
+                    if (depth == d-1){
+                        node.right = new TreeNode(v);
+                    }
+                }
+            }
+            depth++;
+        }
+        return root;
+    }
+
+    /**
+     * 623. 在二叉树中增加一行
+     * DFS
+     */
+    public TreeNode addOneRowByDFS(TreeNode root, int v, int d) {
+        if (root == null){
+            return root;
+        }
+        if (d == 1){
+            TreeNode root2 = new TreeNode(v);
+            root2.left = root;
+            return root2;
+        }
+        addOneRowByDFSHelper(root, v, d, 1);
+        return root;
+    }
+
+    private void addOneRowByDFSHelper(TreeNode root, int v, int d, int depth){
+        if (root == null){
+            return;
+        }
+        if (depth == d - 1){
+            if (root.left != null){
+                TreeNode temp = root.left;
+                root.left = new TreeNode(v);
+                root.left.left = temp;
+            }else {
+                root.left = new TreeNode(v);
+            }
+            if (root.right != null){
+                TreeNode temp = root.right;
+                root.right = new TreeNode(v);
+                root.right.right = temp;
+            }else {
+                root.right = new TreeNode(v);
+            }
+        }
+        addOneRowByDFSHelper(root.left, v, d, depth+1);
+        addOneRowByDFSHelper(root.right, v, d, depth+1);
+    }
 }
