@@ -1301,4 +1301,58 @@ public class TreeNode {
         }
         return maxValue;
     }
+
+    /**
+     * 617. 合并二叉树
+     * DFS
+     * 重叠的节点相加，不重叠的覆盖
+     */
+    TreeNode t;
+    public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
+        if (t1 == null){
+            return t2;
+        }
+        if (t2 == null){
+            return t1;
+        }
+        t1.val = t1.val + t2.val;
+        t1.left = mergeTrees(t1.left, t2.left);
+        t1.right = mergeTrees(t1.right, t2.right);
+        return t1;
+    }
+
+    public TreeNode mergeTreesByBFS(TreeNode t1, TreeNode t2){
+        if (t1 == null){
+            return t2;
+        }
+        if (t2 == null){
+            return t1;
+        }
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.add(t1);
+        queue.add(t2);
+        while (!queue.isEmpty()){
+            TreeNode r1 = queue.remove();
+            TreeNode r2 = queue.remove();
+            r1.val += r2.val;
+            //如果r1和r2的左子树都不为空，就放到队列中
+            //如果r1的左子树为空，就把r2的左子树挂到r1的左子树上
+            if(r1.left!=null && r2.left!=null){
+                queue.add(r1.left);
+                queue.add(r2.left);
+            }
+            else if(r1.left==null) {
+                r1.left = r2.left;
+            }
+            //对于右子树也是一样的
+            if(r1.right!=null && r2.right!=null) {
+                queue.add(r1.right);
+                queue.add(r2.right);
+            }
+            else if(r1.right==null) {
+                r1.right = r2.right;
+            }
+        }
+        return t1;
+    }
 }
