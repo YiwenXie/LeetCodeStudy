@@ -128,4 +128,19 @@ public class Node {
         }
         return res;
     }
+
+    /**
+     * 590. N叉树的后序遍历
+     * DFS
+     */
+    public List<Integer> postorder(Node root) {
+        if (root == null){
+            return res;
+        }
+        for (Node child: root.children){
+            postorder(child);
+        }
+        res.add(root.val);
+        return res;
+    }
 }
