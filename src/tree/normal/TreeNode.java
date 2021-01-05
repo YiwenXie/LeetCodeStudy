@@ -1243,4 +1243,62 @@ public class TreeNode {
             }
         }
     }
+
+    /**
+     * 513. 找树左下角的值
+     * DFS 1.确定递归参数、返回值 2.确定终止条件 3.确定单层递归的逻辑
+     * 深度最大的最左叶子节点。
+     * 最左->前序遍历
+     * 一个深度、一个节点值
+     */
+    int maxDepth = Integer.MIN_VALUE;
+    int maxValue;
+    public int findBottomLeftValue(TreeNode root) {
+        findBottomLeftValueHelper(root, 0);
+        return maxValue;
+    }
+
+    private void findBottomLeftValueHelper(TreeNode node, int depth){
+        if (node == null){
+            return;
+        }
+        if (node.left == null && node.right == null){
+            if (depth > maxDepth){
+                maxDepth = depth;
+                maxValue = node.val;
+            }
+            return;
+        }
+        if (node.left != null){
+            findBottomLeftValueHelper(node.left, depth + 1);
+        }
+        if (node.right != null){
+            findBottomLeftValueHelper(node.right, depth + 1);
+        }
+    }
+
+    /**
+     * 513. 找树左下角的值
+     * BFS 即找到最后一行的第一个节点
+     */
+    public int findBottomLeftValueByBFS(TreeNode root){
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.add(root);
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            for (int i = 0; i < size; i++){
+                TreeNode node = queue.poll();
+                if (i == 0){
+                    maxValue = node.val;
+                }
+                if (node.left != null){
+                    queue.add(node.left);
+                }
+                if (node.right != null){
+                    queue.add(node.right);
+                }
+            }
+        }
+        return maxValue;
+    }
 }
