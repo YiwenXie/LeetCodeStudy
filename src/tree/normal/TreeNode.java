@@ -1447,4 +1447,60 @@ public class TreeNode {
         addOneRowByDFSHelper(root.left, v, d, depth+1);
         addOneRowByDFSHelper(root.right, v, d, depth+1);
     }
+
+    /**
+     * 662. 二叉树最大宽度
+     * BFS
+     */
+    int maxWidth = 0;
+    public int widthOfBinaryTree(TreeNode root) {
+        if (root == null){
+            return 0;
+        }
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.add(root);
+        LinkedList<Integer> list = new LinkedList<>();
+        list.add(1);
+        maxWidth = 1;
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            int left = list.peek();
+            for (int i = 0; i < size; i++){
+                TreeNode node = queue.remove();
+                int index = list.poll();
+                maxWidth = Math.max(maxWidth, index - left + 1);
+                if (node.left != null){
+                    list.add(index * 2);
+                    queue.add(node.left);
+                }
+                if (node.right != null) {
+                    list.add(index * 2 + 1);
+                    queue.add(node.right);
+                }
+            }
+        }
+        return maxWidth;
+    }
+
+    /**
+     * 662. 二叉树最大宽度
+     * DFS
+     */
+    HashMap<Integer, Integer> indexMap = new HashMap<>();
+    public int widthOfBinaryTreeByDFS(TreeNode root) {
+        widthOfBinaryTreeByDFSHelper(root, 1, 1);
+        return maxWidth;
+    }
+
+    private void widthOfBinaryTreeByDFSHelper(TreeNode node, int index, int depth){
+        if (node == null){
+            return;
+        }
+        if (!indexMap.containsKey(depth)){
+            indexMap.put(depth, index);
+        }
+        maxWidth = Math.max(maxWidth, index - indexMap.get(depth) + 1);
+        widthOfBinaryTreeByDFSHelper(node.left, index * 2, depth + 1);
+        widthOfBinaryTreeByDFSHelper(node.right, index * 2 + 1, depth + 1);
+    }
 }
