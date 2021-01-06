@@ -1503,4 +1503,29 @@ public class TreeNode {
         widthOfBinaryTreeByDFSHelper(node.left, index * 2, depth + 1);
         widthOfBinaryTreeByDFSHelper(node.right, index * 2 + 1, depth + 1);
     }
+
+    /**
+     * 671. 二叉树中第二小的节点
+     * 最小的值一定是根节点。
+     * 问题可以转化为求左右子树的最小值，如果左右子树最小值都大于根节点的值取较小的值。其他情况取左右子树较大的值。
+     */
+    public int findSecondMinimumValue(TreeNode root) {
+        return findSecondMinimumValueHelper(root, root.val);
+    }
+
+    private int findSecondMinimumValueHelper(TreeNode node, int val){
+        if (node == null){
+            return -1;
+        }
+        //递归找到比根结点大的值时可以立即返回，不用再遍历当前节点下面的子节点，因为子节点的值不可能比它小。
+        if (val < node.val){
+            return node.val;
+        }
+        int left = findSecondMinimumValueHelper(node.left, val);
+        int right = findSecondMinimumValueHelper(node.right, val);
+        if (left > val && right > val){
+            return Math.min(left, right);
+        }
+        return Math.max(left, right);
+    }
 }
