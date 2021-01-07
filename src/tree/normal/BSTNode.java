@@ -403,4 +403,25 @@ public class BSTNode {
         }
         return false;
     }
+
+    /**
+     * 783. 二叉搜索树节点最小距离
+     * Link:530. 二叉搜索树的最小绝对差
+     *      符合条件的节点:中序遍历中相邻的两个节点
+     */
+    public int minDiffInBST(TreeNode root) {
+        minDiffInBSTHelper(root);
+        return min;
+    }
+    private void minDiffInBSTHelper(TreeNode node){
+        if (node == null){
+            return;
+        }
+        minDiffInBSTHelper(node.left);
+        if (preNode != null){
+            min = Math.min(node.val - preNode.val, min);
+        }
+        preNode = node;
+        minDiffInBSTHelper(node.right);
+    }
 }
