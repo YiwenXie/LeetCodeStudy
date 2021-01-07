@@ -1,9 +1,6 @@
 package tree.normal;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @author ywxie
@@ -359,5 +356,51 @@ public class BSTNode {
             cur = cur.right;
         }
         return root;
+    }
+
+    /**
+     * 653. 两数之和 IV - 输入 BST
+     * DFS+Hash Set
+     */
+    Set<Integer> set = new HashSet<>();
+    public boolean findTarget(TreeNode root, int k) {
+        if (root == null){
+            return false;
+        }
+        if (set.contains(k - root.val)){
+            return true;
+        }
+        set.add(root.val);
+        return findTarget(root.left, k) || findTarget(root.right, k);
+    }
+
+    /**
+     * 653. 两数之和 IV - 输入 BST
+     * BFS+Hash Set
+     */
+    public boolean findTargetByBFS(TreeNode root, int k) {
+        if (root == null){
+            return false;
+        }
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.add(root);
+        boolean res = false;
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            for (int i = 0; i < size; i++){
+                TreeNode node = queue.poll();
+                if (set.contains(k - node.val)){
+                    return true;
+                }
+                set.add(node.val);
+                if (node.left != null){
+                    queue.add(node.left);
+                }
+                if (node.right != null){
+                    return queue.add(node.right);
+                }
+            }
+        }
+        return false;
     }
 }
