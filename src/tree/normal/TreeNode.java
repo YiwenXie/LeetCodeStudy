@@ -1544,4 +1544,30 @@ public class TreeNode {
         }
         return root;
     }
+
+    /**
+     * 872. 叶子相似的树
+     * DFS
+     */
+    public boolean leafSimilar(TreeNode root1, TreeNode root2) {
+        if (root1 == null || root2 == null){
+            return false;
+        }
+        List<Integer> list1 = new ArrayList<>();
+        List<Integer> list2 = new ArrayList<>();
+        leafSimilarHelper(root1, list1);
+        leafSimilarHelper(root2, list2);
+        return list1.equals(list2);
+    }
+
+    private void leafSimilarHelper(TreeNode node, List<Integer> list){
+        if (node == null){
+            return;
+        }
+        leafSimilarHelper(node.left, list);
+        leafSimilarHelper(node.right, list);
+        if (node.left == null && node.right == null){
+            list.add(node.val);
+        }
+    }
 }
