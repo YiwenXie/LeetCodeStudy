@@ -1570,4 +1570,50 @@ public class TreeNode {
             list.add(node.val);
         }
     }
+
+    /**
+     * 897. 递增顺序查找树
+     * 非重建Tree
+     */
+    public TreeNode increasingBST(TreeNode root) {
+        if (root == null){
+            return null;
+        }
+        LinkedList<Integer> list = new LinkedList<>();
+        arrayBST(root, list);
+        TreeNode node = new TreeNode(list.removeFirst());
+        TreeNode pre = node;
+        while (!list.isEmpty()){
+            pre.right = new TreeNode(list.removeFirst());
+            pre = pre.right;
+        }
+        return node;
+    }
+
+    private void arrayBST(TreeNode node, LinkedList<Integer> list){
+        if (node == null){
+            return;
+        }
+        arrayBST(node.left, list);
+        list.add(node.val);
+        arrayBST(node.right, list);
+    }
+
+    /**
+     * 897. 递增顺序查找树
+     * 原地重建Tree
+     * 当我们遍历到一个节点时，把它的左孩子设为空，并将其本身作为上一个遍历到的节点的右孩子。
+     */
+    TreeNode head = new TreeNode(0);
+    TreeNode cur = head;
+    public TreeNode increasingBST2(TreeNode root) {
+        if (root == null){
+            return null;
+        }
+        increasingBST2(root.left);
+        cur.right = new TreeNode(root.val);
+        cur = cur.right;
+        increasingBST2(root.right);
+        return head.right;
+    }
 }
