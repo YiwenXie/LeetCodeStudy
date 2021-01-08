@@ -1650,4 +1650,55 @@ public class TreeNode {
         isUnivalTreeHelper(node.left);
         isUnivalTreeHelper(node.right);
     }
+
+    /**
+     * 993. 二叉树的堂兄弟节点
+     */
+    public boolean isCousins(TreeNode root, int x, int y) {
+        if (root == null || x == y || root.val == x || root.val == y){
+            return false;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        int depthX= 0;
+        int depthY = 0;
+        int depth = 0;
+        int preX = 0;
+        int preY = 0;
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            for (int i = 0; i < size; i++){
+                TreeNode node = queue.poll();
+                if (node.val == x){
+                    depthX = depth;
+                }
+                if (node.val == y){
+                    depthY = depth;
+                }
+                if (depthX != 0 && depthY != 0 && depthX == depthY && preX != 0 && preY != 0 && preX != preY){
+                    return true;
+                }
+                if (node.left != null){
+                    if (node.left.val == x){
+                        preX = node.val;
+                    }
+                    if (node.left.val == y){
+                        preY = node.val;
+                    }
+                    queue.add(node.left);
+                }
+                if (node.right != null){
+                    if (node.right.val == x){
+                        preX = node.val;
+                    }
+                    if (node.right.val == y){
+                        preY = node.val;
+                    }
+                    queue.add(node.right);
+                }
+            }
+            depth++;
+        }
+        return false;
+    }
 }
