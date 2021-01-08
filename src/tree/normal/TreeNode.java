@@ -1616,4 +1616,38 @@ public class TreeNode {
         increasingBST2(root.right);
         return head.right;
     }
+
+    /**
+     * 863. 二叉树中所有距离为 K 的结点
+     */
+//    public List<Integer> distanceK(TreeNode root, TreeNode target, int K) {
+//
+//    }
+
+    /**
+     * 965. 单值二叉树
+     */
+//    int val = 0;
+    boolean flag = true;
+    public boolean isUnivalTree(TreeNode root) {
+        if (root == null){
+            return false;
+        }
+        val = root.val;
+        isUnivalTreeHelper(root.left);
+        isUnivalTreeHelper(root.right);
+        return flag;
+    }
+
+    private void isUnivalTreeHelper(TreeNode node){
+        if (node == null){
+            return;
+        }
+        if (val != node.val){
+            flag = false;
+            return;
+        }
+        isUnivalTreeHelper(node.left);
+        isUnivalTreeHelper(node.right);
+    }
 }
