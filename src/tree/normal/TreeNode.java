@@ -1733,4 +1733,30 @@ public class TreeNode {
         dp[1] = node.val + left[0] + right[0];
         return dp;
     }
+
+    /**
+     * 687. 最长同值路径
+     */
+//    int ans = 0;
+    public int longestUnivaluePath(TreeNode root) {
+        longestUnivaluePathHelper(root);
+        return ans;
+    }
+
+    private int longestUnivaluePathHelper(TreeNode node){
+        if (node == null) {
+            return 0;
+        }
+        int left = longestUnivaluePathHelper(node.left);
+        int right = longestUnivaluePathHelper(node.right);
+        int arrowLeft = 0, arrowRight = 0;
+        if (node.left != null && node.left.val == node.val) {
+            arrowLeft += left + 1;
+        }
+        if (node.right != null && node.right.val == node.val) {
+            arrowRight += right + 1;
+        }
+        ans = Math.max(ans, arrowLeft + arrowRight);
+        return Math.max(arrowLeft, arrowRight);
+    }
 }
