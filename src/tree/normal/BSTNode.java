@@ -424,4 +424,39 @@ public class BSTNode {
         preNode = node;
         minDiffInBSTHelper(node.right);
     }
+
+    /**
+     * 938. 二叉搜索树的范围和
+     */
+    public int rangeSumBST(TreeNode root, int low, int high) {
+        if (root == null){
+            return 0;
+        }
+        if (root.val >= low && root.val <= high){
+            sum = sum + root.val;
+        }
+        if (root.val < low){
+            rangeSumBSTHelper(root.right, low, high);
+        }
+        if (root.val > high){
+            rangeSumBSTHelper(root.left, low, high);
+        }
+        rangeSumBST(root, low, high);
+        return sum;
+    }
+
+    private void rangeSumBSTHelper(TreeNode node, int low, int high){
+        if (node == null){
+            return;
+        }
+        if (node.val >= low && node.val <= high){
+            sum = sum + node.val;
+        }
+        if (node.val < low){
+            rangeSumBSTHelper(node.right, low, high);
+        }
+        if (node.val > high){
+            rangeSumBSTHelper(node.left, low, high);
+        }
+    }
 }
