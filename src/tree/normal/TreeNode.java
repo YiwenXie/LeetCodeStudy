@@ -1817,4 +1817,32 @@ public class TreeNode {
         distanceKDFS(node.left, node);
         distanceKDFS(node.right, node);
     }
+
+    /**
+     * 1123. 最深叶节点的最近公共祖先
+     * 回溯 -> 后序遍历
+     * Link236
+     * 我：先找最深节点，再找公共祖先
+     * 大神解题思路：
+     * 如果当前节点是最深叶子节点的最近公共祖先，那么它的左右子树的高度一定是相等的，
+     * 否则高度低的那个子树的叶子节点深度一定比另一个子树的叶子节点的深度小，因此不满足条件。
+     * 所以只需要dfs遍历找到左右子树高度相等的根节点即出答案。
+     */
+    public TreeNode lcaDeepestLeaves(TreeNode root) {
+        int leftSubTreeDepth = lcaDeepestLeavesHelper(root.left);
+        int rightSubTreeDepth = lcaDeepestLeavesHelper(root.right);
+
+        if(leftSubTreeDepth == rightSubTreeDepth) {
+            return root;
+        }
+
+        return leftSubTreeDepth > rightSubTreeDepth ? lcaDeepestLeaves(root.left) : lcaDeepestLeaves(root.right);
+    }
+
+    private int lcaDeepestLeavesHelper(TreeNode node) {
+        if(node == null){
+            return 0;
+        }
+        return Math.max(lcaDeepestLeavesHelper(node.left), lcaDeepestLeavesHelper(node.right))+1;
+    }
 }
