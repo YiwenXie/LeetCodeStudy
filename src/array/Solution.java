@@ -67,4 +67,36 @@ public class Solution {
         }
         return length;
     }
+
+    /**
+     * 209. 长度最小的子数组
+     * 滑动窗口
+     * 在本题中实现滑动窗口，主要确定如下三点：
+     *
+     *     窗口内是什么？
+     *     如何移动窗口的起始位置？
+     *     如何移动窗口的结束位置？
+     *
+     * 窗口就是 满足其和 ≥ s 的长度最小的 连续 子数组。
+     *
+     * 窗口的起始位置如何移动：如果当前窗口的值大于s了，窗口就要向前移动了（也就是该缩小了）。
+     *
+     * 窗口的结束位置如何移动：窗口的结束位置就是遍历数组的指针，窗口的起始位置设置为数组的起始位置就可以了。
+     */
+    public int minSubArrayLen(int s, int[] nums) {
+        int length = nums.length;
+        int i = 0;
+        int minLength = Integer.MAX_VALUE;
+        int sum = 0;
+        for (int j = 0; j < length; j++){
+            sum += nums[j];
+            while (sum >= s){
+                int subLength = j - i + 1;
+                minLength = Math.min(minLength, subLength);
+                sum -= nums[i++];
+            }
+        }
+        return minLength < Integer.MAX_VALUE ? minLength: 0;
+
+    }
 }
