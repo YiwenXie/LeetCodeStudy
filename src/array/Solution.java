@@ -97,6 +97,37 @@ public class Solution {
             }
         }
         return minLength < Integer.MAX_VALUE ? minLength: 0;
-
     }
+
+    /**
+     * 59. 螺旋矩阵 II
+     */
+    public int[][] generateMatrix(int n) {
+        int[][] arr = new int[n][n];
+        int count = 1;
+        int up = 0;
+        int down = n - 1;
+        int left = 0;
+        int right = n - 1;
+        while (count <= n * n){
+            for (int i = left; i <= right; i++){
+                arr[up][i] = count++;
+            }
+            up++;
+            for (int i = up; i <= down; i++){
+                arr[i][right] = count++;
+            }
+            right--;
+            for (int i = right; i >= left; i--){
+                arr[down][i] = count++;
+            }
+            down--;
+            for (int i = down; i >= up; i--){
+                arr[i][left] = count++;
+            }
+            left++;
+        }
+        return arr;
+    }
+
 }
