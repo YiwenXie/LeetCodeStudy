@@ -50,4 +50,21 @@ public class Solution {
         // 目标值在数组所有元素之后的情况 [left, right]， return right + 1
         return r + 1;
     }
+
+    /**
+     * 27. 移除元素
+     * 双指针法：快慢指针：「通过一个快指针和慢指针在一个for循环下完成两个for循环的工作。」
+     */
+    public int removeElement(int[] nums, int val){
+        int length = nums.length;
+        int slowIndex = 0;
+        for (int fastIndex = 0; fastIndex < length; fastIndex++){
+            if (nums[slowIndex] != val) {
+                nums[slowIndex] = nums[fastIndex + 1];
+            }else {
+                length--;
+            }
+        }
+        return length;
+    }
 }
