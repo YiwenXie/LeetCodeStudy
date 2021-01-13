@@ -129,9 +129,4 @@ public class Solution {
         }
         return arr;
     }
-
-    /**
-     * 203. 移除链表元素
-     */
-
 }
