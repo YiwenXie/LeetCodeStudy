@@ -1,5 +1,9 @@
 package listnode;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author ywxie
  * @date 2021/1/13 15:48
@@ -163,5 +167,20 @@ public class ListNode {
         return reverseList2Helper(cur, pre);
     }
 
-
+    /**
+     * 142. 环形链表 II
+     */
+    public ListNode detectCycle(ListNode head) {
+        ListNode pos = head;
+        Set<ListNode> visited = new HashSet<ListNode>();
+        while (pos != null) {
+            if (visited.contains(pos)) {
+                return pos;
+            } else {
+                visited.add(pos);
+            }
+            pos = pos.next;
+        }
+        return null;
+    }
 }
