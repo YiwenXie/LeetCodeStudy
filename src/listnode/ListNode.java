@@ -125,4 +125,43 @@ public class ListNode {
         }
     }
 
+    /**
+     * 206. 反转链表
+     * 迭代
+     */
+    public ListNode reverseList(ListNode head) {
+        ListNode pre = null;
+        ListNode cur = head;
+        ListNode temp;
+        while (cur != null){
+            temp = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = temp;
+        }
+        return pre;
+    }
+
+    /**
+     * 206. 反转链表
+     * 递归
+     */
+    public ListNode reverseList2(ListNode head) {
+        ListNode cur = head;
+        ListNode pre = null;
+        return reverseList2Helper(cur, pre);
+    }
+
+    private ListNode reverseList2Helper(ListNode cur, ListNode pre){
+        if (cur == null){
+            return pre;
+        }
+        ListNode temp = cur.next;
+        cur.next = pre;
+        pre = cur;
+        cur = temp;
+        return reverseList2Helper(cur, pre);
+    }
+
+
 }
