@@ -105,4 +105,38 @@ public class Solution {
         }
         return sum;
     }
+
+    /**
+     * 1. 两数之和
+     * 两层for循环，时间复杂度n^2
+     */
+    public int[] getSum(int[] nums, int target){
+        int length = nums.length;
+        int index[] = new int[2];
+        for (int i = 0;i < length;i++){
+            for (int j = i + 1; j < length; j++) {
+                int sum = nums[i] + nums[j];
+                if (sum == target) {
+                    index[0] = i;
+                    index[1] = j;
+                    break;
+                }
+            }
+        }
+        return index;
+    }
+
+    public int[] getSum2(int[] nums, int target){
+        int length = nums.length;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int[] nums1 = new int[2];
+        for (int i = 0; i < length; i++){
+            if (map.containsKey(target - nums[i]) && map.get(target - nums[i]) != i){
+                nums1[0] = i;
+                nums1[1] = map.get(target - nums[i]);
+            }
+            map.put(nums[i], i);
+        }
+        return nums1;
+    }
 }
