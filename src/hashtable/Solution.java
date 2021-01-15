@@ -1,7 +1,7 @@
 package hashtable;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author ywxie
@@ -62,5 +62,16 @@ public class Solution {
             }
         }
         return true;
+    }
+
+    /**
+     * 349. 两个数组的交集
+     */
+    public int[] intersection(int[] nums1, int[] nums2) {
+        Set<Integer> set = Arrays.stream(nums1).boxed().collect(Collectors.toSet());
+        return Arrays.stream(nums2).filter(set::contains).distinct().toArray();
+        //或者两个for循环后
+//        Integer[] nums3 = set.toArray(new Integer[set.size()]);
+//        return Arrays.stream(nums3).mapToInt(Integer::intValue).toArray();
     }
 }
