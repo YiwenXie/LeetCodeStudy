@@ -183,4 +183,46 @@ public class Solution {
         }
         return count;
     }
+
+    /**
+     * 383. 赎金信
+     * 同242
+     */
+    public boolean canConstruct(String ransomNote, String magazine) {
+        HashMap<Character, Integer> map = new HashMap<>();
+        for (char r : ransomNote.toCharArray()){
+            map.put(r, map.getOrDefault(r, 0) + 1);
+        }
+        for (char m : magazine.toCharArray()){
+            if (map.containsKey(m)){
+                if (map.get(m) <= 1){
+                    map.remove(m);
+                }else {
+                    map.put(m, map.get(m) - 1);
+                }
+            }
+        }
+        if (map.isEmpty()){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 383. 赎金信
+     * 同242
+     */
+    public boolean canConstruct2(String ransomNote, String magazine) {
+        StringBuilder stringBuilder = new StringBuilder(magazine);
+        int index;
+        for (char c : ransomNote.toCharArray()) {
+            index = stringBuilder.indexOf(String.valueOf(c));
+            if (index >= 0) {
+                stringBuilder.deleteCharAt(index);
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
 }
