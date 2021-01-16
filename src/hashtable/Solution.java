@@ -1,5 +1,6 @@
 package hashtable;
 
+import javax.swing.plaf.basic.BasicScrollPaneUI;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -138,5 +139,49 @@ public class Solution {
             map.put(nums[i], i);
         }
         return nums1;
+    }
+
+    /**
+     * 454. 四数相加 II
+     * 计算有多少个元组 (i, j, k, l) ，使得 A[i] + B[j] + C[k] + D[l] = 0
+     * 暴力法，超出时间限制
+     */
+    public int fourSumCount(int[] A, int[] B, int[] C, int[] D) {
+        int count = 0;
+        for (int i = 0; i < A.length; i++){
+            for (int j = 0; j < B.length; j++){
+                for (int k = 0; k < C.length; k++){
+                    for (int l = 0; l < D.length; l++) {
+                        if (A[i] + B[j] + C[k] + D[l] == 0) {
+                            count++;
+                        }
+                    }
+                }
+            }
+        }
+        return count;
+    }
+
+    /**
+     * 454. 四数相加 II
+     * 遍历 A 和 B 所有元素和的组合情况，并记录在 ab_map 中，ab_map 的 key 为两数和，value 为该两数和出现的次数
+     * 遍历 C 和 D 所有元素和的组合情况，取和的负值判断其是否在 ab_map 中，若存在则取出 ab_map 对应的 value 值，count = count + value
+     */
+    public int fourSumCount2(int[] A, int[] B, int[] C, int[] D) {
+        int count = 0;
+        HashMap<Integer, Integer> abMap = new HashMap<>();
+        for (int i = 0; i < A.length; i++){
+            for (int j = 0; j < B.length; j++){
+                abMap.put(A[i] + B[j], abMap.getOrDefault(A[i] + B[j], 0) + 1);
+            }
+        }
+        for (int k = 0; k < C.length; k++){
+            for (int l = 0; l < D.length; l++) {
+                if (abMap.containsKey(0 - C[k] - D[l])){
+                    count = count + abMap.get(0 - C[k] - D[l]);
+                }
+            }
+        }
+        return count;
     }
 }
