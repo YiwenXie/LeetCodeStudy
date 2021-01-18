@@ -288,4 +288,58 @@ public class Solution {
         }
         return ls;
     }
+
+    /**
+     * 18. 四数之和
+     */
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        Arrays.sort(nums);
+        List<List<Integer>> ls = new ArrayList<>();
+        if (nums.length == 4){
+            if (nums[0] + nums[1] + nums[2] + nums[3] == 0){
+                ls.add(Arrays.asList(nums[0], nums[1], nums[2], nums[3]));
+                return ls;
+            }
+        }else if (nums.length < 4){
+            return ls;
+        }
+        for (int i = 0; i < nums.length - 3; i++){
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            for (int j = i + 1; j < nums.length - 2 ; j++){
+                if (j > i + 1 && nums[j] == nums[j - 1]) {
+                    continue;
+                }
+
+                int l = j+1; int r = nums.length - 1; int sum = target - nums[i] - nums[j];
+
+                while (l < r){
+                    if (nums[l] + nums[r] == sum){
+                        ls.add(Arrays.asList(nums[i], nums[j], nums[l], nums[r]));
+                        while (l < r && nums[l] == nums[l+1]){
+                            l++;
+                        }
+                        while (l < r && nums[r] == nums[r - 1]) {
+                            r--;
+                        }
+                        l++;
+                        r--;
+                    }else if (nums[l] + nums[r] < sum) {
+                        while (l < r && nums[l] == nums[l + 1]) {
+                            l++;   // 跳过重复值
+                        }
+                        l++;
+                    } else {
+                        while (l < r && nums[r] == nums[r - 1]) {
+                            r--;
+                        }
+                        r--;
+                    }
+                }
+            }
+        }
+        return ls;
+    }
+
 }
