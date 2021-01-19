@@ -50,4 +50,25 @@ public class StringSolution {
             }
         }
     }
+
+    /**
+     * 剑指 Offer 05. 替换空格
+     * 把字符串 s 中的每个空格替换成"%20"。
+     */
+    public String replaceSpace(String s) {
+        return s.replaceAll(" ", "%20");
+    }
+
+    public String replaceSpace2(String s) {
+        char[] r = s.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < r.length; i++){
+            if (r[i] == ' '){
+                sb.append("%20");
+            }else {
+                sb.append(r[i]);
+            }
+        }
+        return sb.toString();
+    }
 }
