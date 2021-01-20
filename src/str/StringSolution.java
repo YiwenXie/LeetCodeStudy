@@ -158,4 +158,16 @@ public class StringSolution {
         }
         return new String(s_arr).substring(0, i);
     }
+
+    /**
+     * 剑指 Offer 58 - II. 左旋转字符串
+     * 局部反转+整体反转
+     */
+    public String reverseLeftWords(String s, int n) {
+        char[] chars = s.toCharArray();
+        reverse(chars, 0, n);
+        reverse(chars, n, chars.length);
+        reverse(chars, 0, chars.length);
+        return String.valueOf(chars);
+    }
 }
