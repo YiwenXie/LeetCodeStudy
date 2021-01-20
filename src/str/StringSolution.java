@@ -1,5 +1,7 @@
 package str;
 
+import java.util.Arrays;
+
 /**
  * @author ywxie
  * @date 2021/1/19 13:59
@@ -70,5 +72,90 @@ public class StringSolution {
             }
         }
         return sb.toString();
+    }
+
+    /**
+     * 151. 翻转字符串里的单词
+     * 暴力逻辑判断法
+     */
+    public String reverseWords(String s) {
+        if (s.isEmpty()){
+            return " ";
+        }
+        String[] str = s.split(" ");
+        if (str.length == 1){
+            return Arrays.toString(str);
+        }
+        StringBuilder sb = new StringBuilder();
+        boolean spaceFlag = false;
+        for (int i = str.length - 1; i >= 0; i--){
+            if (str[i].isEmpty()){
+                spaceFlag = true;
+                continue;
+            }else if (!str[i].isEmpty() && i > 0) {
+                if (spaceFlag){
+                    sb.append(" ");
+                }
+                spaceFlag = false;
+                sb.append(str[i]);
+                if (!str[i-1].isEmpty()){
+                    sb.append(" ");
+                }
+            }else if (!str[i].isEmpty() && i == 0){
+                if (spaceFlag){
+                    sb.append(" ");
+                }
+                sb.append(str[i]);
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 151. 翻转字符串里的单词
+     * 双指针法
+     */
+    public String reverseWords2(String s){
+        char[] chars = s.toCharArray();
+        int p = chars.length;
+        reverse(chars, 0, p);
+        wordReverse(chars);
+        return cleanSpace(chars, chars.length);
+    }
+
+    private void wordReverse(char[] chars){
+        int i = 0;
+        int j = 0;
+        while (j < chars.length){
+            while (i < chars.length && chars[i] == ' '){
+                i++;
+            }
+            j = i;
+            while (j < chars.length && chars[j] != ' '){
+                j++;
+            }
+            reverse(chars, i, j);
+            i = j;
+        }
+    }
+
+    private String cleanSpace(char[] s_arr, int n) {
+        int i = 0;
+        int j = 0;
+        while (j < n) {
+            while (j < n && s_arr[j] == ' ') {
+                j++;
+            }
+            while (j < n && s_arr[j] != ' ') {
+                s_arr[i++] = s_arr[j++];
+            }
+            while (j < n && s_arr[j] == ' ') {
+                j++;
+            }
+            if (j < n) {
+                s_arr[i++] = ' ';
+            }
+        }
+        return new String(s_arr).substring(0, i);
     }
 }
