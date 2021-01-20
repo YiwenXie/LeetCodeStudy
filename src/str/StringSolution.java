@@ -11,6 +11,7 @@ public class StringSolution {
 
     /**
      * 344. 反转字符串
+     * 双指针法原地反转
      */
     public void reverseString(char[] s) {
         int p = s.length - 1;
@@ -25,6 +26,7 @@ public class StringSolution {
 
     /**
      * 541. 反转字符串 II
+     * 双指针法
      * 给定一个字符串 s 和一个整数 k，你需要对从字符串开头算起的每隔 2k 个字符的前 k 个字符进行反转。
      *
      *     如果剩余字符少于 k 个，则将剩余字符全部反转。
@@ -56,6 +58,7 @@ public class StringSolution {
     /**
      * 剑指 Offer 05. 替换空格
      * 把字符串 s 中的每个空格替换成"%20"。
+     * for循环中的判断
      */
     public String replaceSpace(String s) {
         return s.replaceAll(" ", "%20");
@@ -113,7 +116,7 @@ public class StringSolution {
 
     /**
      * 151. 翻转字符串里的单词
-     * 双指针法
+     * 双指针法+整体反转+局部反转
      */
     public String reverseWords2(String s){
         char[] chars = s.toCharArray();
