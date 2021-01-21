@@ -173,4 +173,53 @@ public class StringSolution {
         reverse(chars, 0, chars.length);
         return String.valueOf(chars);
     }
+
+    /**
+     * 28. 实现 strStr()
+     * KMP
+     */
+    public int strStr(String haystack, String needle) {
+        if (needle.isEmpty()){
+            return 0;
+        }
+        if (haystack.isEmpty()){
+            return -1;
+        }
+        char[] hay = haystack.toCharArray();
+        char[] need = needle.toCharArray();
+        int[] next = getNextArray(need.length, need);
+        int j = -1; // // 因为next数组里记录的起始位置为-1
+        for (int i = 0; i < hay.length; i++) { // 注意i就从0开始
+            while(j >= 0 && hay[i] != need[j + 1]) { // 不匹配
+                j = next[j]; // j 寻找之前匹配的位置
+            }
+            if (hay[i] == need[j + 1]) { // 匹配，j和i同时向后移动
+                j++;
+            }
+            if (j == (need.length - 1) ) { // 文本串s里出现了模式串t
+                return (i - need.length + 1);
+            }
+        }
+        return -1;
+    }
+
+    private int[] getNextArray(int length, char[] chars){
+        int j = -1;
+        int[] next = new int[length];
+        next[0] = j;
+        for (int i = 1; i < length; i++){
+            //如果前后缀不相同
+            while (j >=0 && chars[i] != chars[j+1]){
+                //向前回溯
+                j = next[j];
+            }
+            //如果前后缀相同
+            if (chars[i] == chars[j+1]){
+                j++;
+            }
+            //将j（前缀的长度）赋给next[i]
+            next[i] = j;
+        }
+        return next;
+    }
 }
