@@ -192,6 +192,8 @@ public class StringSolution {
         for (int i = 0; i < hay.length; i++) { // 注意i就从0开始
             while(j >= 0 && hay[i] != need[j + 1]) { // 不匹配
                 j = next[j]; // j 寻找之前匹配的位置
+                //while(j > 0 && hay[i] != need[j + 1])
+                //j = next[j - 1]; // 这里要找j前一位的对应的回退位置
             }
             if (hay[i] == need[j + 1]) { // 匹配，j和i同时向后移动
                 j++;
@@ -203,6 +205,7 @@ public class StringSolution {
         return -1;
     }
 
+    //前缀表统一减一版本
     private int[] getNextArray(int length, char[] chars){
         int j = -1;
         int[] next = new int[length];
@@ -212,6 +215,27 @@ public class StringSolution {
             while (j >=0 && chars[i] != chars[j+1]){
                 //向前回溯
                 j = next[j];
+            }
+            //如果前后缀相同
+            if (chars[i] == chars[j+1]){
+                j++;
+            }
+            //将j（前缀的长度）赋给next[i]
+            next[i] = j;
+        }
+        return next;
+    }
+
+    //前缀表不减一版本
+    private int[] getNextArray2(int length, char[] chars){
+        int j = 0;
+        int[] next = new int[length];
+        next[0] = j;
+        for (int i = 1; i < length; i++){
+            //如果前后缀不相同
+            while (j >0 && chars[i] != chars[j+1]){
+                // 从j-1对应的回退值开始回退
+                j = next[j - 1];
             }
             //如果前后缀相同
             if (chars[i] == chars[j+1]){
