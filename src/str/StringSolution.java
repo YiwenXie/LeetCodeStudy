@@ -222,4 +222,17 @@ public class StringSolution {
         }
         return next;
     }
+
+    /**
+     * 459. 重复的子字符串
+     * KMP
+     */
+    public boolean repeatedSubstringPattern(String s) {
+        if (s.length() == 0) {
+            return false;
+        }
+        int[] next = getNextArray(s.length(), s.toCharArray());
+        int len = s.length();
+        return next[len - 1] != -1 && len % (len - (next[len - 1] + 1)) == 0;
+    }
 }
