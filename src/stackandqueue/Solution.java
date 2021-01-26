@@ -145,4 +145,33 @@ public class Solution {
         return String.valueOf(chars);
     }
 
+    /**
+     * 150. 逆波兰表达式求值
+     * +, -, *, /
+     */
+    public int evalRPN(String[] tokens) {
+        Stack<Integer> stack = new Stack<>();
+        for (String s: tokens){
+            if ("+".equals(s) || "-".equals(s) || "*".equals(s) || "/".equals(s)){
+                int b = stack.pop();
+                int a = stack.pop();
+                stack.push(doCalculate(a, b, s));
+            }else {
+                stack.push(Integer.valueOf(s));
+            }
+        }
+        return stack.pop();
+    }
+
+    private int doCalculate(int a, int b, String s){
+        if ("+".equals(s)){
+            return a + b;
+        }else if ("-".equals(s)){
+            return a - b;
+        }else if ("*".equals(s)){
+            return a * b;
+        }
+        return a / b;
+    }
+
 }
