@@ -1,9 +1,6 @@
 package stackandqueue;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @author ywxie
@@ -119,6 +116,33 @@ public class Solution {
             }
         }
         return stack.isEmpty();
+    }
+
+    /**
+     * 1047. 删除字符串中的所有相邻重复项
+     */
+    public String removeDuplicates(String S) {
+        if (S.isEmpty()){
+            return S;
+        }
+        Stack<Character> stack = new Stack<>();
+        for (char c: S.toCharArray()){
+            if (stack.isEmpty()){
+                stack.push(c);
+            }else {
+                if (stack.peek() == c){
+                    stack.pop();
+                }else {
+                    stack.push(c);
+                }
+            }
+        }
+        char[] chars = new char[stack.size()];
+        int i = stack.size() - 1;
+        while (!stack.isEmpty()){
+            chars[i--] = stack.pop();
+        }
+        return String.valueOf(chars);
     }
 
 }
