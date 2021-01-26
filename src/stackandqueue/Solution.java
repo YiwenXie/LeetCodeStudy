@@ -95,4 +95,30 @@ public class Solution {
         }
     }
 
+    /**
+     * 20. 有效的括号
+     * 给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串 s ，判断字符串是否有效。
+     */
+    public boolean isValid(String s) {
+        if(s.isEmpty()) {
+            return true;
+        }
+        if (s.length() % 2 != 0 ){
+            return false;
+        }
+        Stack<Character> stack = new Stack<>();
+        for (char c: s.toCharArray()){
+            if (c == '('){
+                stack.push(')');
+            }else if (c == '{'){
+                stack.push('}');
+            }else if (c == '['){
+                stack.push(']');
+            } else if (stack.isEmpty() || stack.pop() != c) {
+                return false;
+            }
+        }
+        return stack.isEmpty();
+    }
+
 }
