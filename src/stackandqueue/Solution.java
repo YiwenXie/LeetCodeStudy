@@ -230,4 +230,35 @@ public class Solution {
         return result;
     }
 
+    /**
+     * 347. 前 K 个高频元素
+     * Lamda + Stream
+     */
+    public int[] topKFrequent(int[] nums, int k) {
+        HashMap<Integer, Integer> frequencyMap = new HashMap<>();
+        for (int i = 0; i < nums.length; i++){
+            frequencyMap.put(nums[i], frequencyMap.getOrDefault(nums[i], 0) + 1);
+        }
+        return frequencyMap.entrySet().stream().sorted((m1, m2) -> m2.getValue() - m1.getValue()).limit(k).mapToInt(Map.Entry::getKey).toArray();
+    }
+
+    /**
+     * 347. 前 K 个高频元素
+     * 优先级队列
+     */
+    public int[] topKFrequent2(int[] nums, int k) {
+        HashMap<Integer, Integer> frequencyMap = new HashMap<>();
+        int[] result = new int[k];
+        for (int i = 0; i < nums.length; i++){
+            frequencyMap.put(nums[i], frequencyMap.getOrDefault(nums[i], 0) + 1);
+        }
+        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(Comparator.comparingInt(frequencyMap::get).reversed());
+        priorityQueue.addAll(frequencyMap.keySet());
+        int index = 0;
+        while (index < k){
+            result[index++] = priorityQueue.poll();
+        }
+        return result;
+    }
+
 }
