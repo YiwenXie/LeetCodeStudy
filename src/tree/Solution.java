@@ -1,6 +1,5 @@
 package tree;
 
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 
 import java.util.*;
 
@@ -98,6 +97,37 @@ public class Solution {
             }
             if (node.right != null){
                 stack.push(node.right);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 二叉树的前中后序遍历
+     * 统一迭代法
+     */
+    public List<Integer> inorderTraversal2(TreeNode root) {
+        List<Integer> result = new LinkedList<>();
+        if (root == null){
+            return result;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()){
+            TreeNode node = stack.pop();
+            if (node != null){
+                //中序：右中左 前序：右左中 后序：中右左 NULL节点都在中后面
+                if (node.right != null){    //右
+                    stack.push(node.right);
+                }
+                stack.push(node);           //中
+                stack.push(null);
+                if (node.left != null){     //左
+                    stack.push(node.left);
+                }
+            }else {
+                node = stack.pop();
+                result.add(node.val);
             }
         }
         return result;
