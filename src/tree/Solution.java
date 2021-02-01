@@ -132,4 +132,51 @@ public class Solution {
         }
         return result;
     }
+
+
+    /**
+     * 101. 对称二叉树
+     * 递归
+     */
+    public boolean isSymmetric(TreeNode root) {
+        return isCheck(root, root);
+    }
+
+    private boolean isCheck(TreeNode p, TreeNode q){
+        if(p == null && q == null){
+            return true;
+        }
+        if(p == null || q == null){
+            return false;
+        }
+        return p.val == q.val && isCheck(p.left, q.right) && isCheck(p.right, q.left);
+    }
+
+    /**
+     * 101. 对称二叉树
+     * 迭代
+     */
+    public boolean isSymmetric2(TreeNode root) {
+        if (root == null){
+            return true;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root.left);
+        queue.add(root.right);
+        while (!queue.isEmpty()) {
+            TreeNode node1 = queue.poll();
+            TreeNode node2 = queue.poll();
+            if (node1 == null && node2 == null){
+                continue;
+            }
+            if ((node1 == null || node2 == null) || node1.val != node2.val){
+                return false;
+            }
+            queue.add(node1.left);
+            queue.add(node2.right);
+            queue.add(node1.right);
+            queue.add(node2.left);
+        }
+        return true;
+    }
 }
