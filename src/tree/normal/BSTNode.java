@@ -57,6 +57,23 @@ public class BSTNode {
     }
 
     /**
+     * 700. 二叉搜索树中的搜索
+     * 迭代
+     */
+    public TreeNode searchBST2(TreeNode root, int val) {
+        while (root != null){
+            if (root.val > val){
+                root = searchBST2(root.left, val);
+            }else if (root.val < val){
+                root = searchBST2(root.right, val);
+            }else {
+                return root;
+            }
+        }
+        return null;
+    }
+
+    /**
      * 701. 二叉搜索树中的插入操作
      */
     public TreeNode insertIntoBST(TreeNode root, int val) {
