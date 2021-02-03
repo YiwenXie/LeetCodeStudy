@@ -635,6 +635,32 @@ public class TreeNode {
     }
 
     /**
+     * 654. 最大二叉树
+     * 递归
+     */
+    public TreeNode constructMaximumBinaryTree(int[] nums) {
+        return constructMaximumBinaryTreeHelper(nums, 0, nums.length-1);
+    }
+
+    private TreeNode constructMaximumBinaryTreeHelper(int[] nums, int low, int high){
+        if (low > high){
+            return null;
+        }
+        int maxVal = Integer.MIN_VALUE;
+        int index = -1;
+        for (int i = low; i <= high; i++){
+            if (nums[i] > maxVal){
+                maxVal = nums[i];
+                index = i;
+            }
+        }
+        TreeNode root = new TreeNode(maxVal);
+        root.left = constructMaximumBinaryTreeHelper(nums, low, index-1);
+        root.right = constructMaximumBinaryTreeHelper(nums, index+1, high);
+        return root;
+    }
+
+    /**
      * 111. 二叉树的最小深度
      * DFS
      * 最小深度是从根节点到最近叶子节点的最短路径上的节点数量。
@@ -821,33 +847,6 @@ public class TreeNode {
     }
 
     /**
-     * 654. 最大二叉树
-     * 递归
-     */
-    public TreeNode constructMaximumBinaryTree(int[] nums) {
-        return constructMaximumBinaryTreeHelper(nums, 0, nums.length-1);
-    }
-
-    private TreeNode constructMaximumBinaryTreeHelper(int[] nums, int low, int high){
-        if (low > high){
-            return null;
-        }
-        int maxVal = Integer.MIN_VALUE;
-        int index = -1;
-        for (int i = low; i <= high; i++){
-            if (nums[i] > maxVal){
-                maxVal = nums[i];
-                index = i;
-            }
-        }
-        TreeNode root = new TreeNode(maxVal);
-        root.left = constructMaximumBinaryTreeHelper(nums, low, index-1);
-        root.right = constructMaximumBinaryTreeHelper(nums, index+1, high);
-        return root;
-    }
-
-
-    /**
      * 652. 寻找重复的子树
      * 1、以我为根的这棵二叉树（子树）长啥样？
      * 2、以其他节点为根的子树都长啥样？
@@ -1025,6 +1024,33 @@ public class TreeNode {
     }
 
     /**
+     * 437. 路径总和 III
+     * 双重递归思想
+     */
+    int k = 0;
+    public int pathSum2(TreeNode root, int sum) {
+        if (root == null){
+            return 0;
+        }
+        pathSumHelper2(root, sum);
+        pathSum2(root.left, sum);
+        pathSum2(root.right, sum);
+        return k;
+    }
+
+    private void pathSumHelper2(TreeNode node, int sum){
+        if(node == null){
+            return;
+        }
+        sum = sum - node.val;
+        if (sum == 0){
+            k = k + 1;
+        }
+        pathSumHelper2(node.left, sum);
+        pathSumHelper2(node.right, sum);
+    }
+
+    /**
      * 124. 二叉树中的最大路径和
      */
     int max = Integer.MIN_VALUE;
@@ -1092,21 +1118,6 @@ public class TreeNode {
     }
 
     /**
-     * 404. 左叶子之和
-     */
-    public int sumOfLeftLeaves(TreeNode root) {
-        if (root == null){
-            return 0;
-        }
-        if (root.left != null && root.left.left == null && root.left.right == null){
-            sum = root.left.val;
-        }
-        sumOfLeftLeaves(root.left);
-        sumOfLeftLeaves(root.right);
-        return sum;
-    }
-
-    /**
      * 257. 二叉树的所有路径
      */
     private String arrow = "->";
@@ -1130,30 +1141,76 @@ public class TreeNode {
     }
 
     /**
-     * 437. 路径总和 III
-     * 双重递归思想
+     * 404. 左叶子之和
      */
-    int k = 0;
-    public int pathSum2(TreeNode root, int sum) {
+    public int sumOfLeftLeaves(TreeNode root) {
         if (root == null){
             return 0;
         }
-        pathSumHelper2(root, sum);
-        pathSum2(root.left, sum);
-        pathSum2(root.right, sum);
-        return k;
+        if (root.left != null && root.left.left == null && root.left.right == null){
+            sum = root.left.val;
+        }
+        sumOfLeftLeaves(root.left);
+        sumOfLeftLeaves(root.right);
+        return sum;
     }
 
-    private void pathSumHelper2(TreeNode node, int sum){
-        if(node == null){
+    /**
+     * 513. 找树左下角的值
+     * DFS 1.确定递归参数、返回值 2.确定终止条件 3.确定单层递归的逻辑
+     * 深度最大的最左叶子节点。
+     * 最左->前序遍历
+     * 一个深度、一个节点值
+     */
+    int maxDepth = Integer.MIN_VALUE;
+    int maxValue;
+    public int findBottomLeftValue(TreeNode root) {
+        findBottomLeftValueHelper(root, 0);
+        return maxValue;
+    }
+
+    private void findBottomLeftValueHelper(TreeNode node, int depth){
+        if (node == null){
             return;
         }
-        sum = sum - node.val;
-        if (sum == 0){
-            k = k + 1;
+        if (node.left == null && node.right == null){
+            if (depth > maxDepth){
+                maxDepth = depth;
+                maxValue = node.val;
+            }
+            return;
         }
-        pathSumHelper2(node.left, sum);
-        pathSumHelper2(node.right, sum);
+        if (node.left != null){
+            findBottomLeftValueHelper(node.left, depth + 1);
+        }
+        if (node.right != null){
+            findBottomLeftValueHelper(node.right, depth + 1);
+        }
+    }
+
+    /**
+     * 513. 找树左下角的值
+     * BFS 即找到最后一行的第一个节点
+     */
+    public int findBottomLeftValueByBFS(TreeNode root){
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.add(root);
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            for (int i = 0; i < size; i++){
+                TreeNode node = queue.poll();
+                if (i == 0){
+                    maxValue = node.val;
+                }
+                if (node.left != null){
+                    queue.add(node.left);
+                }
+                if (node.right != null){
+                    queue.add(node.right);
+                }
+            }
+        }
+        return maxValue;
     }
 
     /**
@@ -1242,64 +1299,6 @@ public class TreeNode {
                 str.append(rightBracket);
             }
         }
-    }
-
-    /**
-     * 513. 找树左下角的值
-     * DFS 1.确定递归参数、返回值 2.确定终止条件 3.确定单层递归的逻辑
-     * 深度最大的最左叶子节点。
-     * 最左->前序遍历
-     * 一个深度、一个节点值
-     */
-    int maxDepth = Integer.MIN_VALUE;
-    int maxValue;
-    public int findBottomLeftValue(TreeNode root) {
-        findBottomLeftValueHelper(root, 0);
-        return maxValue;
-    }
-
-    private void findBottomLeftValueHelper(TreeNode node, int depth){
-        if (node == null){
-            return;
-        }
-        if (node.left == null && node.right == null){
-            if (depth > maxDepth){
-                maxDepth = depth;
-                maxValue = node.val;
-            }
-            return;
-        }
-        if (node.left != null){
-            findBottomLeftValueHelper(node.left, depth + 1);
-        }
-        if (node.right != null){
-            findBottomLeftValueHelper(node.right, depth + 1);
-        }
-    }
-
-    /**
-     * 513. 找树左下角的值
-     * BFS 即找到最后一行的第一个节点
-     */
-    public int findBottomLeftValueByBFS(TreeNode root){
-        Queue<TreeNode> queue = new ArrayDeque<>();
-        queue.add(root);
-        while (!queue.isEmpty()){
-            int size = queue.size();
-            for (int i = 0; i < size; i++){
-                TreeNode node = queue.poll();
-                if (i == 0){
-                    maxValue = node.val;
-                }
-                if (node.left != null){
-                    queue.add(node.left);
-                }
-                if (node.right != null){
-                    queue.add(node.right);
-                }
-            }
-        }
-        return maxValue;
     }
 
     /**
