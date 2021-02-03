@@ -553,7 +553,7 @@ public class TreeNode {
         if (in_end < in_start || post_end < post_start){
             return null;
         }
-        int root_val = postorder[post_end-1];
+        int root_val = postorder[post_end];
         TreeNode root = new TreeNode(root_val);
         int root_index = 0;
         //此处可用map优化
