@@ -306,6 +306,32 @@ public class BSTNode {
     }
 
     /**
+     * 530. 二叉搜索树的最小绝对差
+     * 迭代/中序遍历
+     */
+    public int getMinimumDifference2(TreeNode root) {
+        if (root == null){
+            return 0;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = root;
+        while (cur != null || !stack.isEmpty()){
+            if (cur != null){
+                stack.push(cur);
+                cur = cur.left;
+            }else {
+                cur = stack.pop();
+                if (preNode != null){
+                    min = Math.min(min, cur.val - preNode.val);
+                }
+                preNode = cur;
+                cur = cur.right;
+            }
+        }
+        return min;
+    }
+
+    /**
      * 449. 序列化和反序列化二叉搜索树
      */
 
