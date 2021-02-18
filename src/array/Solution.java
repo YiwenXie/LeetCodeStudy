@@ -60,12 +60,10 @@ public class Solution {
         int slowIndex = 0;
         for (int fastIndex = 0; fastIndex < length; fastIndex++){
             if (nums[slowIndex] != val) {
-                nums[slowIndex] = nums[fastIndex + 1];
-            }else {
-                length--;
+                nums[slowIndex++] = nums[fastIndex];
             }
         }
-        return length;
+        return slowIndex;
     }
 
     /**
