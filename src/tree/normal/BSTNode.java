@@ -1,6 +1,7 @@
 package tree.normal;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author ywxie
@@ -102,6 +103,7 @@ public class BSTNode {
 
     /**
      * 701. 二叉搜索树中的插入操作
+     * 递归
      */
     public TreeNode insertIntoBST(TreeNode root, int val) {
         if (root == null){
@@ -112,6 +114,33 @@ public class BSTNode {
         }
         if (root.val < val){
             root.right = insertIntoBST(root.right, val);
+        }
+        return root;
+    }
+
+    /**
+     * 701. 二叉搜索树中的插入操作
+     * 迭代
+     */
+    public TreeNode insertIntoBST2(TreeNode root, int val) {
+        if (root == null){
+            return new TreeNode(val);
+        }
+        TreeNode cur = root;
+        TreeNode parent = root;
+        while (cur != null){
+            parent = cur;
+            if (cur.val > val){
+                cur = cur.left;
+            }else {
+                cur = cur.right;
+            }
+        }
+        TreeNode node = new TreeNode(val);
+        if (val < parent.val){
+            parent.left = node;
+        }else {
+            parent.right = node;
         }
         return root;
     }
@@ -345,6 +374,7 @@ public class BSTNode {
         if (root == null){
             return null;
         }
+        findModeHelper(root);
         int[] array = new int[list.size()];
         for (int i = 0; i < list.size(); i++){
             array[i] = list.get(i);
@@ -376,6 +406,44 @@ public class BSTNode {
         findModeHelper(node.right);
 
     }
+
+    /**
+     * 501. 二叉搜索树中的众数
+     * 非搜索树的解法
+     */
+//    HashMap<Integer, Integer> frequencyMap = new HashMap<>();
+//    public int[] findMode2(TreeNode root) {
+//        //先遍历拿到频率map
+//        findModeHelper2(root);
+//        //对频率进行排序
+//        List<Integer> list = new ArrayList<>();
+//        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(Comparator.comparingInt(frequencyMap::get).reversed());
+//        priorityQueue.addAll(frequencyMap.keySet());
+//        int max = priorityQueue.poll();
+//        list.add(max);
+//        for(int i = 1; i < priorityQueue.size(); i++){
+//            if (frequencyMap.get(max).equals(frequencyMap.get(priorityQueue.peek()))){
+//                list.add(priorityQueue.poll());
+//            }else {
+//                break;
+//            }
+//        }
+//        int[] result = new int[list.size()];
+//        int index = 0;
+//        while (index < result.length){
+//            result[index++] = list.get(index);
+//        }
+//        return result;
+//    }
+//
+//    private void findModeHelper2(TreeNode node){
+//        if (node == null){
+//            return;
+//        }
+//        findModeHelper2(node.left);
+//        frequencyMap.put(node.val, frequencyMap.getOrDefault(node.val, 0) + 1);
+//        findModeHelper2(node.right);
+//    }
 
     /**
      * 669. 修剪二叉搜索树
