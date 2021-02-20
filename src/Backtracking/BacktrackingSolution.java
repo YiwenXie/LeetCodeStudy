@@ -1,5 +1,6 @@
 package Backtracking;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -78,6 +79,35 @@ public class BacktrackingSolution {
             permuteHelper(nums, track, res);
             // 取消选择
             track.removeLast();
+        }
+    }
+
+    /**
+     * 77. 组合
+     * 给定两个整数 n 和 k，返回 1 ... n 中所有可能的 k 个数的组合。
+     */
+    List<List<Integer>> result = new ArrayList<>();// 存放符合条件结果的集合
+    LinkedList<Integer> path = new LinkedList<>();// 用来存放符合条件结果
+    public List<List<Integer>> combine(int n, int k) {
+        combineHelper(n, k, 1);
+        return result;
+    }
+
+    /**
+     * 每次从集合中选取元素，可选择的范围随着选择的进行而收缩，调整可选择的范围，就是要靠startIndex
+     * @param startIndex 用来记录本层递归的中，集合从哪里开始遍历（集合就是[1,...,n] ）。
+     */
+    private void combineHelper(int n, int k, int startIndex){
+        //终止条件
+        if (path.size() == k){
+            result.add(new ArrayList<>(path));
+            return;
+        }
+        //类似于N叉树的递归遍历
+        for (int i = startIndex; i <= n; i++){
+            path.add(i);// 处理节点
+            combineHelper(n, k, i + 1);// 递归
+            path.removeLast();// 回溯，撤销处理的节点
         }
     }
 }
