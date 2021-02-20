@@ -295,6 +295,28 @@ public class BSTNode {
     }
 
     /**
+     * 538. 把二叉搜索树转换为累加树
+     * 迭代
+     */
+    public TreeNode convertBST2(TreeNode root) {
+        TreeNode cur  = root;
+        Stack<TreeNode> stack = new Stack<>();
+        int sum = 0;
+        while (cur != null || !stack.isEmpty()){
+            if (cur != null){
+                stack.push(cur);
+                cur = cur.right;
+            }else {
+                cur = stack.pop();
+                sum += cur.val;
+                cur.val = sum;
+                cur = cur.left;
+            }
+        }
+        return root;
+    }
+
+    /**
      * 173. 二叉搜索树迭代器
      * 中序遍历的反向
      */
