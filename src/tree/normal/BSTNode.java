@@ -190,6 +190,7 @@ public class BSTNode {
 
     /**
      * 108. 将有序数组转换为二叉搜索树
+     * 本质就是寻找分割点，分割点作为当前节点，然后递归左区间和右区间
      * 中序遍历构造二叉树
      */
     public TreeNode sortedArrayToBST(int[] nums) {
@@ -208,6 +209,47 @@ public class BSTNode {
         node.left = sortedArrayToBSTHelper(nums, low, mid-1);
         node.right = sortedArrayToBSTHelper(nums, mid+1, high);
         return node;
+    }
+
+    /**
+     * 108. 将有序数组转换为二叉搜索树
+     * 迭代
+     * 三个队列，一个队列放遍历的节点，一个队列放左区间下表，一个队列放右区间下表。
+     */
+    public TreeNode sortedArrayToBST2(int[] nums) {
+        if (nums.length == 0){
+            return null;
+        }
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        Queue<Integer> leftQueue = new ArrayDeque<>();
+        Queue<Integer> rightQueue = new ArrayDeque<>();
+        TreeNode root = new TreeNode(0);
+        queue.add(root);
+        leftQueue.add(0);
+        rightQueue.add(nums.length - 1);
+        while (!queue.isEmpty()){
+            TreeNode cur = queue.poll();
+
+            int left = leftQueue.poll();
+            int right = rightQueue.poll();
+            int mid = left + ((right - left) / 2);
+
+            cur.val = nums[mid];
+
+            if (left <= mid - 1){
+                cur.left = new TreeNode(0);
+                queue.add(cur.left);
+                leftQueue.add(left);
+                rightQueue.add(mid - 1);
+            }
+            if (right >= mid + 1){
+                cur.right = new TreeNode(0);
+                queue.add(cur.right);
+                leftQueue.add(mid + 1);
+                rightQueue.add(right);
+            }
+        }
+        return root;
     }
 
     /**
