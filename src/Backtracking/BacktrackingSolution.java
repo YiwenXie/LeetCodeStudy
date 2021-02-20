@@ -104,7 +104,12 @@ public class BacktrackingSolution {
             return;
         }
         //类似于N叉树的递归遍历
-        for (int i = startIndex; i <= n; i++){
+//        for (int i = startIndex; i <= n; i++){
+            // 剪枝优化
+            // 可以剪枝的地方就在递归中每一层的for循环所选择的起始位置。
+            // 如果for循环选择的起始位置之后的元素个数 已经不足 我们需要的元素个数了，那么就没有必要搜索了
+            // +1是因为是左闭区间
+        for (int i = startIndex; i <= n - (k - path.size()) + 1; i++){// 优化的地方
             path.add(i);// 处理节点
             combineHelper(n, k, i + 1);// 递归
             path.removeLast();// 回溯，撤销处理的节点
