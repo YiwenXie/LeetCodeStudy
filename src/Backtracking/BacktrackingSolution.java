@@ -115,4 +115,33 @@ public class BacktrackingSolution {
             path.removeLast();// 回溯，撤销处理的节点
         }
     }
+
+    /**
+     * 216. 组合总和 III
+     * 找出所有相加之和为 n 的 k 个数的组合。组合中只允许含有 1 - 9 的正整数，并且每种组合中不存在重复的数字。
+     */
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        combinationSum3Helper(k, n, 1, 0);
+        return result;
+    }
+
+    private void combinationSum3Helper(int k, int n, int startIndex, int sum){
+        if (sum > n){// 剪枝优化
+            return;
+        }
+        if (path.size() == k){
+            if (sum == n){
+                result.add(new ArrayList<>(path));
+            }
+            // 如果path.size() == k 但sum != targetSum 直接返回
+            return;
+        }
+        for (int i = startIndex; i <= 9; i++){
+            path.add(i);
+            sum += i;
+            combinationSum3Helper(k, n, i + 1, sum);
+            sum -= i;
+            path.removeLast();
+        }
+    }
 }
