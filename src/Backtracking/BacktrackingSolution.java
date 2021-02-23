@@ -1,8 +1,6 @@
 package Backtracking;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author ywxie
@@ -143,5 +141,56 @@ public class BacktrackingSolution {
             sum -= i;
             path.removeLast();
         }
+    }
+
+    /**
+     * 17. 电话号码的字母组合
+     */
+    List<String> result17 = new ArrayList<>();
+    char[] temp;
+    HashMap<Integer, char[]> numberMap = new HashMap<>();
+    public List<String> letterCombinations(String digits) {
+        if (digits.isEmpty()){
+            return result17;
+        }
+        char[] chars = digits.toCharArray();
+        temp = new char[digits.length()];
+        getLetterMap();
+        letterCombinationsHelper(chars, chars.length, 0);
+        return result17;
+    }
+
+    private void letterCombinationsHelper(char[] chars, int k, int index){
+        if (index == k){
+            result17.add(new String(temp));
+        }
+        int j = chars[index] - '0';
+        char[] letters = numberMap.get(j);
+        for (int i = 0; i < letters.length; i++){
+            temp[index] = letters[i];
+            letterCombinationsHelper(chars, k, index + 1);
+        }
+    }
+
+    private void getLetterMap(){
+        numberMap.put(2, new char[]{'a', 'b', 'c'});
+        numberMap.put(3, new char[]{'d', 'e', 'f'});
+        numberMap.put(4, new char[]{'g', 'h', 'i'});
+        numberMap.put(5, new char[]{'j', 'k', 'l'});
+        numberMap.put(6, new char[]{'m', 'n', 'o'});
+        numberMap.put(7, new char[]{'p', 'q', 'r', 's'});
+        numberMap.put(8, new char[]{'t', 'u', 'v'});
+        numberMap.put(9, new char[]{'w', 'x', 'y', 'z'});
+//        switch (number){
+//            case '2': return new char[]{'a', 'b', 'c'};
+//            case '3': return new char[]{'d', 'e', 'f'};
+//            case '4': return new char[]{'g', 'h', 'i'};
+//            case '5': return new char[]{'j', 'k', 'l'};
+//            case '6': return new char[]{'m', 'n', 'o'};
+//            case '7': return new char[]{'p', 'q', 'r', 's'};
+//            case '8': return new char[]{'t', 'u', 'v'};
+//            case '9': return new char[]{'w', 'x', 'y', 'z'};
+//            default: return new char[]{};
+//        }
     }
 }
