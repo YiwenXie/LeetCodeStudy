@@ -134,7 +134,8 @@ public class BacktrackingSolution {
             // 如果path.size() == k 但sum != targetSum 直接返回
             return;
         }
-        for (int i = startIndex; i <= 9; i++){
+        for (int i = startIndex; i <= 9 - (k - path.size()) + 1; i++){// 剪枝优化，如77
+//        for (int i = startIndex; i <= 9; i++){
             path.add(i);
             sum += i;
             combinationSum3Helper(k, n, i + 1, sum);
