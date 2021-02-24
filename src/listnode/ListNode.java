@@ -121,6 +121,7 @@ public class ListNode {
                 return;
             }
             ListNode cur = head;
+            //注意这里的终止条件是i < index，说明终止时cur指向指定index的前一个节点
             for (int i = 0; i < index; i++){
                 cur = cur.next;
             }
