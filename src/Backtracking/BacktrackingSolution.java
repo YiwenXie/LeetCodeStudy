@@ -195,4 +195,39 @@ public class BacktrackingSolution {
 //            default: return new char[]{};
 //        }
     }
+
+    /**
+     * 39. 组合总和
+     * 给定一个无重复元素的数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
+     * candidates 中的数字可以无限制重复被选取。解集不能包含重复的组合。
+     */
+//    List<List<Integer>> result = new ArrayList<>();// 存放符合条件结果的集合
+//    LinkedList<Integer> path = new LinkedList<>();// 用来存放符合条件结果
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        if (candidates.length == 0){
+            return result;
+        }
+        // 因为candidates非有序数组，所以先排序
+        Arrays.sort(candidates);//升序排序
+        combinationSumHelper(candidates, target, 0, 0);
+        return result;
+    }
+
+    private void combinationSumHelper(int[] candidates, int target, int sum, int startIndex){
+        if (sum > target){
+            return;
+        }
+        if (sum == target){
+            result.add(new ArrayList<>(path));
+        }
+        // 如果是一个集合来求组合的话，就需要startIndex(结果去重就要加startIndex)
+        // 如果是多个集合取组合，各个集合之间相互不影响，那么就不用startIndex
+        for (int i = startIndex; i < candidates.length && sum + candidates[i] <= target; i++){// for循环剪枝优化
+            path.add(candidates[i]);
+            sum += candidates[i];
+            combinationSumHelper(candidates, target, sum, i);// 不用i+1了，表示可以重复读取当前的数
+            sum -= candidates[i];
+            path.removeLast();
+        }
+    }
 }
