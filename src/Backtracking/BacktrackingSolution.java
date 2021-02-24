@@ -161,6 +161,7 @@ public class BacktrackingSolution {
     }
 
     private void letterCombinationsHelper(char[] chars, int k, int index){
+        //index 为深度，letters.length为宽度
         if (index == k){
             result17.add(new String(temp));
         }
