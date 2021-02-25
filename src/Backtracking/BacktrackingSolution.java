@@ -230,4 +230,45 @@ public class BacktrackingSolution {
             path.removeLast();
         }
     }
+
+    /**
+     * 40. 组合总和 II
+     * 给定一个数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
+     * candidates 中的每个数字在每个组合中只能使用一次。
+     * 集合（数组candidates）有重复元素，但还不能有重复的组合
+     * 要去重的是同一树层上的“使用过”，同一树枝上的都是一个组合里的元素，不用去重
+     */
+//   List<List<Integer>> result = new ArrayList<>();// 存放符合条件结果的集合
+//   LinkedList<Integer> path = new LinkedList<>();// 用来存放符合条件结果
+    boolean[] used;
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        if (candidates.length == 0){
+            return result;
+        }
+        used = new boolean[candidates.length];
+        Arrays.sort(candidates);
+        combinationSum2Helper(candidates, target, 0, 0);
+        return result;
+    }
+
+    private void combinationSum2Helper(int[] candidates, int target, int sum, int startIndex){
+        if (sum == target){
+            result.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = startIndex; i < candidates.length && sum + candidates[i] <= target; i++){
+            // used[i - 1] == true，说明同一树支candidates[i - 1]使用过
+            // used[i - 1] == false，说明同一树层candidates[i - 1]使用过
+            if (i > 0 && candidates[i] == candidates[i - 1] && used[i - 1] == false){
+                continue;
+            }
+            path.add(candidates[i]);
+            sum += candidates[i];
+            used[i] = true;
+            combinationSum2Helper(candidates, target, sum, i + 1);// 和39.组合总和的区别1：这里是i+1，每个数字在每个组合中只能使用一次
+            path.removeLast();
+            sum -= candidates[i];
+            used[i] = false;
+        }
+    }
 }
