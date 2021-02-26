@@ -271,4 +271,47 @@ public class BacktrackingSolution {
             used[i] = false;
         }
     }
+
+    /**
+     * 131. 分割回文串
+     */
+    List<List<String>> result131 = new ArrayList<>();// 存放符合条件结果的集合
+    LinkedList<String> path131 = new LinkedList<>();// 用来存放符合条件结果
+    public List<List<String>> partition(String s) {
+        if (s.isEmpty()){
+            return result131;
+        }
+        partitionHelper(s, 0);
+        return result131;
+    }
+
+    private void partitionHelper(String s, int startIndex){
+        if (startIndex >= s.length()){
+            result131.add(new ArrayList<>(path131));
+            return;
+        }
+        for (int i = startIndex; i < s.length(); i++){
+            if (isPalindrome(s, startIndex, i)){
+                // 获取[startIndex,i]在s中的子串
+                String str = s.substring(startIndex, i + 1);
+                path131.add(str);
+            }else {
+                //得到的子串不是回文串，往后尝试，寻找下一个可行位置，才能调用下一层递归
+                continue;
+            }
+            partitionHelper(s, i + 1);
+            path131.removeLast();
+        }
+    }
+
+    // 判断字符串是否为回文串
+    private boolean isPalindrome(String s, int start, int end){
+        char[] chars = s.toCharArray();
+        for (int i = start, j = end; i < j; i++, j--){
+            if (chars[i] != chars[j]){
+                return false;
+            }
+        }
+        return true;
+    }
 }
