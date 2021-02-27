@@ -314,4 +314,50 @@ public class BacktrackingSolution {
         }
         return true;
     }
+
+    /**
+     * 93. 复原 IP 地址
+     */
+    List<String> result93 = new LinkedList<>();// 存放符合条件结果的集合
+    LinkedList<String> path93 = new LinkedList<>();// 用来存放符合条件结果
+    String dot = ".";
+    char[] chars;
+    public List<String> restoreIpAddresses(String s) {
+        //一开始小于4个数或者大于12个数，肯定是构不成合法ip地址的
+        if (s.length() < 4 || s.length() > 12){
+            return result93;
+        }
+        chars = s.toCharArray();
+        restoreIpAddressesHelper(s, 0);
+        return result93;
+    }
+
+    private void restoreIpAddressesHelper(String s, int startIndex){
+        if (startIndex == s.length() && path93.size() == 4){
+            String str = String.join(dot, path93);// 加.
+            result93.add(str);
+            return;
+        }
+        for (int i = startIndex; i < s.length(); i++){
+            //判断是否合法
+            if (!isMoreBig(s, startIndex, i)){
+                String str = s.substring(startIndex, i + 1);
+                path93.add(str);
+            }else {
+                // 因为剩下都不合法了，就跳过这层
+                break;
+            }
+            restoreIpAddressesHelper(s, i + 1);
+            path93.removeLast();
+        }
+    }
+
+    private boolean isMoreBig(String s, int start, int end){
+        //不能以0开头
+        if (chars[0] == '0' && start != end){
+            return false;
+        }
+        //不能大于255
+        return Integer.parseInt(s.substring(start, end)) > 255;
+    }
 }
