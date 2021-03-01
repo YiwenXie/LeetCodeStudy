@@ -219,6 +219,7 @@ public class BacktrackingSolution {
         }
         if (sum == target){
             result.add(new ArrayList<>(path));
+            return;
         }
         // 如果是一个集合来求组合的话，就需要startIndex(结果去重就要加startIndex)
         // 如果是多个集合取组合，各个集合之间相互不影响，那么就不用startIndex
