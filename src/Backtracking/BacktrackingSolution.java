@@ -389,4 +389,44 @@ public class BacktrackingSolution {
             path.removeLast();
         }
     }
+
+    /**
+     * 90. 子集 II
+     * 给定一个可能包含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。
+     * 说明：解集不能包含重复的子集。
+     */
+//    List<List<Integer>> result = new ArrayList<>();// 存放符合条件结果的集合
+//    LinkedList<Integer> path = new LinkedList<>();// 用来存放符合条件结果
+//    boolean[] used;
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        if (nums.length == 0){
+            result.add(path);
+            return result;
+        }
+        Arrays.sort(nums);
+        used = new boolean[nums.length];
+        subsetsWithDupHelper(nums, 0);
+        return result;
+    }
+
+    private void subsetsWithDupHelper(int[] nums, int startIndex){
+        result.add(new ArrayList<>(path));
+        if (startIndex >= nums.length){
+            return;
+        }
+        for (int i = startIndex; i < nums.length; i++){
+            // used[i - 1] == true，说明同一树支candidates[i - 1]使用过
+            // 在回溯之前都是true，就是一直在同一树枝上
+            if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]){
+                continue;
+            }
+            path.add(nums[i]);
+            used[i] = true;
+            subsetsWithDupHelper(nums, i + 1);
+            path.removeLast();
+            // used[i - 1] == false，说明同一树层candidates[i - 1]使用过
+            // 因为运行到了这行，要开始下一次遍历，就是同一树层选取另一个数了。
+            used[i] = false;
+        }
+    }
 }
