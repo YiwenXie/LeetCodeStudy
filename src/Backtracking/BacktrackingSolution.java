@@ -374,7 +374,6 @@ public class BacktrackingSolution {
             return result;
         }
         Arrays.sort(nums);
-        result.add(new ArrayList<>());
         subsetsHelper(nums, 0);
         return result;
     }
