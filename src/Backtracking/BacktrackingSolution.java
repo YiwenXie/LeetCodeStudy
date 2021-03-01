@@ -341,7 +341,7 @@ public class BacktrackingSolution {
         }
         for (int i = startIndex; i < s.length(); i++){
             //判断是否合法
-            if (!isMoreBig(s, startIndex, i)){
+            if (isIPAddress(s, startIndex, i)){
                 String str = s.substring(startIndex, i + 1);
                 path93.add(str);
             }else {
@@ -353,13 +353,13 @@ public class BacktrackingSolution {
         }
     }
 
-    private boolean isMoreBig(String s, int start, int end){
+    private boolean isIPAddress(String s, int start, int end){
         //不能以0开头
         if (chars[0] == '0' && start != end){
             return false;
         }
         //不能大于255
-        return Integer.parseInt(s.substring(start, end)) > 255;
+        return Integer.parseInt(s.substring(start, end)) <= 255;
     }
 
     /**
