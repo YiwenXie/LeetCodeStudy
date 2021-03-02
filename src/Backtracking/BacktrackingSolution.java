@@ -429,4 +429,42 @@ public class BacktrackingSolution {
             used[i] = false;
         }
     }
+
+    /**
+     * 491. 递增子序列
+     * 给定一个整型数组, 你的任务是找到所有该数组的递增子序列，递增子序列的长度至少是2。
+     */
+    //    List<List<Integer>> result = new ArrayList<>();// 存放符合条件结果的集合
+//    LinkedList<Integer> path = new LinkedList<>();// 用来存放符合条件结果
+//    boolean[] used;
+    public List<List<Integer>> findSubsequences(int[] nums) {
+        if (nums.length == 0){
+            return result;
+        }
+        used = new boolean[nums.length];
+        findSubsequencesHelper(nums, 0, null);
+        return result;
+    }
+
+    private void findSubsequencesHelper(int[] nums, int startIndex, Integer preNum){
+        if (path.size() >= 2){
+            result.add(new ArrayList<>(path));
+            // 注意这里不要加return，要取树上的节点
+        }
+        if (startIndex >= nums.length){
+            return;
+        }
+        Set<Integer> set = new HashSet<>();// 使用set对本层(同一树层)元素进行去重，一个set一个新的for循环（树层）
+        for (int i = startIndex; i < nums.length; i++){
+            if ((i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) || (preNum != null && nums[i] < preNum) || set.contains(nums[i])){
+                continue;
+            }
+            path.add(nums[i]);
+            used[i] = true;// 对同一树枝去重
+            set.add(nums[i]);// 记录这个元素在本层(同一树层)用过了，本层后面不能再用了
+            findSubsequencesHelper(nums, i + 1, nums[i]);
+            path.removeLast();
+            used[i] = false;
+        }
+    }
 }
