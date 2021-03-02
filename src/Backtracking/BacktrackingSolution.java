@@ -454,14 +454,23 @@ public class BacktrackingSolution {
         if (startIndex >= nums.length){
             return;
         }
-        Set<Integer> set = new HashSet<>();// 使用set对本层(同一树层)元素进行去重，一个set一个新的for循环（树层）
+//        Set<Integer> set = new HashSet<>();// 使用set对本层(同一树层)元素进行去重，一个set一个新的for循环（树层）
+        //「其实用数组来做哈希，效率就高了很多」。
+        int[] set = new int[201];// 这里使用数组来进行去重操作，题目说数值范围[-100, 100]
         for (int i = startIndex; i < nums.length; i++){
-            if ((i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) || (preNum != null && nums[i] < preNum) || set.contains(nums[i])){
+//            if ((i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) || (preNum != null && nums[i] < preNum) || set.contains(nums[i])){
+//                continue;
+//            }
+            if ((i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) || (preNum != null && nums[i] < preNum)){
+                continue;
+            }
+            if (set[nums[i] + 100] == 1){
                 continue;
             }
             path.add(nums[i]);
             used[i] = true;// 对同一树枝去重
-            set.add(nums[i]);// 记录这个元素在本层(同一树层)用过了，本层后面不能再用了
+//            set.add(nums[i]);// 记录这个元素在本层(同一树层)用过了，本层后面不能再用了
+            set[nums[i] + 100] = 1; // 记录这个元素在本层用过了，本层后面不能再用了
             findSubsequencesHelper(nums, i + 1, nums[i]);
             path.removeLast();
             used[i] = false;
