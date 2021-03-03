@@ -476,4 +476,46 @@ public class BacktrackingSolution {
             used[i] = false;
         }
     }
+
+    /**
+     * 46.全排列
+     * 给定一个 没有重复 数字的序列，返回其所有可能的全排列。
+     */
+    //    List<List<Integer>> result = new ArrayList<>();// 存放符合条件结果的集合
+//    LinkedList<Integer> path = new LinkedList<>();// 用来存放符合条件结果
+    //    boolean[] used;
+    public List<List<Integer>> permute1(int[] nums) {
+        if (nums.length == 0){
+            return result;
+        }
+        used = new boolean[nums.length];
+        permuteHelper(nums);
+        return result;
+    }
+
+    private void permuteHelper(int[] nums){
+        if (path.size() == nums.length){
+            result.add(new ArrayList<>(path));
+            return;
+        }
+        // 这里和组合问题、切割问题和子集问题最大的不同就是for循环里不用startIndex了。
+        // 因为排列问题，每次都要从头开始搜索，例如元素1在[1,2]中已经使用过了，但是在[2,1]中还要再使用一次1。
+        //排列问题的不同：
+        //    每层都是从0开始搜索而不是startIndex
+        //    需要used数组记录path里都放了哪些元素了
+        for (int i = 0; i < nums.length; i++){
+//            if (path.contains(nums[i])){
+//                continue;
+//            }
+            if (used[i]){
+                continue;
+            }
+            used[i] = true;
+            path.add(nums[i]);
+            permuteHelper(nums);
+            path.removeLast();
+            used[i] = false;
+        }
+    }
+
 }
