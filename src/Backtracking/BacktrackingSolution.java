@@ -258,6 +258,7 @@ public class BacktrackingSolution {
             return;
         }
         for (int i = startIndex; i < candidates.length && sum + candidates[i] <= target; i++){
+            // 组合问题去重
             // used[i - 1] == true，说明同一树支candidates[i - 1]使用过
             // used[i - 1] == false，说明同一树层candidates[i - 1]使用过
             if (i > 0 && candidates[i] == candidates[i - 1] && used[i - 1] == false){
@@ -415,7 +416,8 @@ public class BacktrackingSolution {
             return;
         }
         for (int i = startIndex; i < nums.length; i++){
-            // used[i - 1] == true，说明同一树支candidates[i - 1]使用过
+            // 子集问题去重
+            // used[i - 1] == true，说明同一树支candidates[i - 1]使用过（在递归中）
             // 在回溯之前都是true，就是一直在同一树枝上
             if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]){
                 continue;
@@ -454,7 +456,7 @@ public class BacktrackingSolution {
         if (startIndex >= nums.length){
             return;
         }
-//        Set<Integer> set = new HashSet<>();// 使用set对本层(同一树层)元素进行去重，一个set一个新的for循环（树层）
+//        Set<Integer> set = new HashSet<>();// 使用set对【本层】元素进行去重，一个set一个新的for循环（树层）
         //「其实用数组来做哈希，效率就高了很多」。
         int[] set = new int[201];// 这里使用数组来进行去重操作，题目说数值范围[-100, 100]
         for (int i = startIndex; i < nums.length; i++){
@@ -515,6 +517,49 @@ public class BacktrackingSolution {
             permuteHelper(nums);
             path.removeLast();
             used[i] = false;
+        }
+    }
+
+    /**
+     * 47. 全排列 II
+     * 给定一个可包含重复数字的序列 nums ，按任意顺序 返回所有不重复的全排列。
+     * 「一般来说：组合问题和排列问题是在树形结构的叶子节点上收集结果，而子集问题就是取树上所有节点的结果」。
+     */
+//    List<List<Integer>> result = new ArrayList<>();// 存放符合条件结果的集合
+//    LinkedList<Integer> path = new LinkedList<>();// 用来存放符合条件结果
+//    boolean[] used;
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        if (nums.length == 0){
+            return result;
+        }
+        //「还要强调的是去重一定要对元素进行排序，这样我们才方便通过相邻的节点来判断是否重复使用了」。
+        Arrays.sort(nums);
+        used = new boolean[nums.length];
+        permuteUniqueHelper(nums);
+        return result;
+    }
+
+    private void permuteUniqueHelper(int[] nums){
+        if (path.size() == nums.length){
+            result.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++){
+            // nums[i] == nums[i - 1] 前面已排过序，相同的元素一定相邻
+            // !used[i] 说明同一树层，nums[i]已经选取过所有可能性了，
+            // 两者结合，避免出现顺序重复
+            if (i > 0 && nums[i] == nums[i - 1] && !used[i]){
+                continue;
+            }
+            // used[i] 说明在同一树枝上，不能重复选择，所以需要去重，避免出现元素选取重复
+            if (used[i]){
+                continue;
+            }
+            path.add(nums[i]);
+            used[i] = true;
+            permuteUniqueHelper(nums);
+            used[i] = false;
+            path.removeLast();
         }
     }
 
