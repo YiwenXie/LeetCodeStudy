@@ -257,16 +257,23 @@ public class BacktrackingSolution {
             result.add(new ArrayList<>(path));
             return;
         }
+        // 也可以用HashSet对同一父节点下的同一层去重
+//        HashSet<Integer> set = new HashSet<>();
         for (int i = startIndex; i < candidates.length && sum + candidates[i] <= target; i++){
             // 组合问题去重
             // used[i - 1] == true，说明同一树支candidates[i - 1]使用过
             // used[i - 1] == false，说明同一树层candidates[i - 1]使用过
-            if (i > 0 && candidates[i] == candidates[i - 1] && used[i - 1] == false){
+            if (i > 0 && candidates[i] == candidates[i - 1] && !used[i - 1]){
                 continue;
             }
+            // 也可以用HashSet对同一父节点下的同一层去重
+//            if (set.contains(candidates[i])){
+//                continue;
+//            }
             path.add(candidates[i]);
             sum += candidates[i];
             used[i] = true;
+//            set.add(candidates[i]);
             combinationSum2Helper(candidates, target, sum, i + 1);// 和39.组合总和的区别1：这里是i+1，每个数字在每个组合中只能使用一次
             path.removeLast();
             sum -= candidates[i];
@@ -570,13 +577,19 @@ public class BacktrackingSolution {
             result.add(new ArrayList<>(path));
             return;
         }
+        // 也可以用HashSet对同一父节点下的同一层去重
+//        HashSet<Integer> set = new HashSet<>();
         for (int i = 0; i < nums.length; i++){
             // nums[i] == nums[i - 1] 前面已排过序，相同的元素一定相邻
-            // !used[i] 说明同一树层，nums[i]已经选取过所有可能性了，
-            // 两者结合，避免出现顺序重复
+            // !used[i - 1] 说明同一父节点下的同一树层，换树枝了
+            // 两者结合，说明同一树层，与nums[i]相等的已经选取过所有可能性了
             if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]){
                 continue;
             }
+            // 也可以用HashSet对同一父节点下的同一层去重
+//            if (set.contains(nums[i])){
+//                continue;
+//            }
             // used[i] 说明在同一树枝上，不能重复选择，所以需要去重，避免出现元素选取重复
             if (used[i]){
                 continue;
@@ -588,6 +601,7 @@ public class BacktrackingSolution {
 //            }
             path.add(nums[i]);
             used[i] = true;
+//            set.add(nums[i]);
             permuteUniqueHelper(nums);
             used[i] = false;
             path.removeLast();
