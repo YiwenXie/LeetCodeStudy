@@ -365,6 +365,8 @@ public class BacktrackingSolution {
 
     /**
      * 78. 子集
+     * 给你一个整数数组 nums ，数组中的元素 [互不相同] 。返回该数组所有可能的子集（幂集）。
+     * 解集 不能 包含重复的子集。你可以按 任意顺序 返回解集。
      * 「那么组合问题和分割问题都是收集树的叶子节点，而子集问题是找树的所有节点！」
      */
 //    List<List<Integer>> result = new ArrayList<>();// 存放符合条件结果的集合
@@ -393,8 +395,10 @@ public class BacktrackingSolution {
 
     /**
      * 90. 子集 II
-     * 给定一个可能包含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。
+     * 给定一个可能[包含重复元素]的整数数组 nums，返回该数组所有可能的子集（幂集）。
      * 说明：解集不能包含重复的子集。
+     *             // 同一树枝可以重复选取（可以选取重复的另一个数）
+     *             // 同一树层不能重复选取（因为这样会得到重复的子集）
      */
 //    List<List<Integer>> result = new ArrayList<>();// 存放符合条件结果的集合
 //    LinkedList<Integer> path = new LinkedList<>();// 用来存放符合条件结果
@@ -404,7 +408,8 @@ public class BacktrackingSolution {
             result.add(path);
             return result;
         }
-        Arrays.sort(nums);
+        Arrays.sort(nums);// 排序 「整颗树的同一层是否重复出现元素是我们控制不了的（这颗树本来就是抽象出来的），
+//     * 所以子集问题才会通过排序之后，判断相邻两个分支的同一层是否同时出现元素来达到去重的目的」。
         used = new boolean[nums.length];
         subsetsWithDupHelper(nums, 0);
         return result;
@@ -435,6 +440,11 @@ public class BacktrackingSolution {
     /**
      * 491. 递增子序列
      * 给定一个整型数组, 你的任务是找到所有该数组的递增子序列，递增子序列的长度至少是2。
+     * 给定数组的长度不会超过15。
+      数组中的整数范围是 [-100,100]。
+      给定数组中可能包含重复数字，相等的数字应该被视为递增的一种情况。
+     * 也是子集问题
+     * 同一树枝需要去重
      */
     //    List<List<Integer>> result = new ArrayList<>();// 存放符合条件结果的集合
 //    LinkedList<Integer> path = new LinkedList<>();// 用来存放符合条件结果
@@ -443,6 +453,7 @@ public class BacktrackingSolution {
         if (nums.length == 0){
             return result;
         }
+        // 注意，这里没有排序
         used = new boolean[nums.length];
         findSubsequencesHelper(nums, 0, null);
         return result;
@@ -457,6 +468,7 @@ public class BacktrackingSolution {
             return;
         }
 //        Set<Integer> set = new HashSet<>();// 使用set对【本层】元素进行去重，一个set一个新的for循环（树层）
+        // 本层去重，是指同一个父节点下的本层，而不是整颗树的本层。（之前说的是整棵树）
         //「其实用数组来做哈希，效率就高了很多」。
         int[] set = new int[201];// 这里使用数组来进行去重操作，题目说数值范围[-100, 100]
         for (int i = startIndex; i < nums.length; i++){
@@ -471,8 +483,8 @@ public class BacktrackingSolution {
             }
             path.add(nums[i]);
             used[i] = true;// 对同一树枝去重
-//            set.add(nums[i]);// 记录这个元素在本层(同一树层)用过了，本层后面不能再用了
-            set[nums[i] + 100] = 1; // 记录这个元素在本层用过了，本层后面不能再用了
+//            set.add(nums[i]);// 记录这个元素在本层(同一个父节点下的本层)用过了，本层后面不能再用了
+            set[nums[i] + 100] = 1; // 记录这个元素在本层(同一个父节点下的本层)用过了，本层后面不能再用了
             findSubsequencesHelper(nums, i + 1, nums[i]);
             path.removeLast();
             used[i] = false;
@@ -480,8 +492,22 @@ public class BacktrackingSolution {
     }
 
     /**
+     * 「整颗树的同一层是否重复出现元素是我们控制不了的（这颗树本来就是抽象出来的），
+     * 所以子集问题才会通过排序之后，判断相邻两个分支的同一层是否同时出现元素来达到去重的目的」。
+     *
+     * 「我在归纳总结一下：」
+     *     回溯算法：递增子序列的去重是同一个父节点下的本层的去重。
+     *     回溯算法：求子集问题（二）的去重是要整颗树的本层去重，但是整棵树的同一层去重不好操作，所以才排序，与前一个树枝对比就可以了。
+     *
+     * 理解以上内容，就知道了：
+     *     回溯算法：递增子序列去重用set的定义为什么放在单层搜索的逻辑里，而不是放在全局变量里。
+     *     为什么回溯算法：求子集问题（二）的去重要排序。
+     */
+
+    /**
      * 46.全排列
      * 给定一个 没有重复 数字的序列，返回其所有可能的全排列。
+     * 排列是有序的，也就是说[1,2] 和[2,1] 是两个集合，这和之前分析的子集以及组合所不同的地方。
      */
     //    List<List<Integer>> result = new ArrayList<>();// 存放符合条件结果的集合
 //    LinkedList<Integer> path = new LinkedList<>();// 用来存放符合条件结果
@@ -509,7 +535,7 @@ public class BacktrackingSolution {
 //            if (path.contains(nums[i])){
 //                continue;
 //            }
-            if (used[i]){
+            if (used[i]){ //同一树枝，已经选取过的元素就不用再选了
                 continue;
             }
             used[i] = true;
@@ -548,13 +574,18 @@ public class BacktrackingSolution {
             // nums[i] == nums[i - 1] 前面已排过序，相同的元素一定相邻
             // !used[i] 说明同一树层，nums[i]已经选取过所有可能性了，
             // 两者结合，避免出现顺序重复
-            if (i > 0 && nums[i] == nums[i - 1] && !used[i]){
+            if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]){
                 continue;
             }
             // used[i] 说明在同一树枝上，不能重复选择，所以需要去重，避免出现元素选取重复
             if (used[i]){
                 continue;
             }
+            // 如果要对树层中前一位去重，就用used[i - 1] == false，如果要对树枝前一位去重用used[i - 1] == true。
+            //「对于排列问题，树层上去重和树枝上去重，都是可以的，但是树层上去重效率更高！」
+//            if (i > 0 && nums[i] == nums[i - 1] && used[i - 1] == true) {
+//                continue;
+//            }
             path.add(nums[i]);
             used[i] = true;
             permuteUniqueHelper(nums);
