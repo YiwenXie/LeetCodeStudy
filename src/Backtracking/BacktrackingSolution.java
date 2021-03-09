@@ -608,4 +608,79 @@ public class BacktrackingSolution {
         }
     }
 
+    /**
+     * 332. 重新安排行程
+     */
+    private Map<String, PriorityQueue<String>> map = new HashMap<>();// 优先级队列
+
+    private List<String> resList = new LinkedList<>();
+
+    public List<String> findItinerary(List<List<String>> tickets) {
+        // 建立映射关系
+        for (List<String> ticket : tickets) {
+            String src = ticket.get(0); // 出发机场
+            String dst = ticket.get(1); // 到达机场
+            if (!map.containsKey(src)) {
+                PriorityQueue<String> pq = new PriorityQueue<>();
+                map.put(src, pq);
+            }
+            map.get(src).add(dst);
+        }
+        dfs("JFK");
+        return resList;
+    }
+
+    private void dfs(String src) {
+        PriorityQueue<String> pq = map.get(src); // 拿到出发机场对应的到达机场优先级队列
+        while (pq != null && !pq.isEmpty()) {
+            dfs(pq.poll());// 暗藏回溯
+        }
+        // 从终点机场开始add，所以是addFirst
+        ((LinkedList<String>) resList).addFirst(src);
+    }
+//    String constant = "JFK";
+//    // <出发机场, map<到达机场, 航班次数>>
+//    HashMap<String, HashMap<String, Integer>> targets = new HashMap<>();
+//    LinkedList<String> result332 = new LinkedList<>();
+//    HashMap<String, Integer> map = new HashMap<>();
+//    public List<String> findItinerary(List<List<String>> tickets) {
+//        for (List<String> list: tickets){
+//            if (targets.containsKey(list.get(0))){
+//                HashMap<String, Integer> map = targets.get(list.get(0));
+//                map.put(list.get(1), map.get(list.get(1)) + 1);
+//                targets.put(list.get(0), map);
+//            }else {
+//                HashMap<String, Integer> map = new HashMap<>();;
+//                map.put(list.get(1), 0);
+//                targets.put(list.get(0), map);
+//            }
+//        }
+//        result332.add(constant);
+//        findItineraryHelper(tickets.size());
+//        return result332;
+//    }
+//
+//    // 我们之前讲解回溯算法的时候，一般函数返回值都是void，这次为什么是bool呢？
+//    // 因为我们只需要找到一个行程，就是在树形结构中唯一的一条通向叶子节点的路线，
+//    private boolean findItineraryHelper(int ticketNum){
+//        if (result332.size() == ticketNum + 1){
+//            return true;
+//        }
+//        map = targets.get(result332.get(result332.size() - 1));
+//        for (String key: map.keySet()){
+//            if (map.get(key) > 0){
+//                result332.add(key);
+//                map.put(key, map.get(key) - 1);
+//                targets.put(result332.get(result332.size() - 1), new HashMap<>(map));
+//                if (findItineraryHelper(ticketNum)){
+//                    return true;
+//                }
+//                result332.removeLast();
+//                map.put(key, map.get(key) + 1);
+//                targets.put(result332.get(result332.size() - 1), new HashMap<>(map));
+//            }
+//        }
+//        return false;
+//    }
+
 }
