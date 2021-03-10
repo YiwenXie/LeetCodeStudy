@@ -1,6 +1,7 @@
 package Backtracking;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author ywxie
@@ -682,5 +683,83 @@ public class BacktrackingSolution {
 //        }
 //        return false;
 //    }
+    /**
+     * 51. N 皇后
+     */
+    List<List<String>> result51 = new ArrayList<>();
+    char[][] chessBoard; // 存棋子路线的数组
+    public List<List<String>> solveNQueens(int n) {
+        if (n <= 0){
+            return result51;
+        }
+        chessBoard = new char[n][n];
+        solveNQueensHelper(n, 0);
+        return result51;
+    }
 
+    /**
+     * N皇后 Helper
+     * @param n 棋牌大小
+     * @param row 遍历到第几行
+     */
+    private void solveNQueensHelper(int n, int row){
+        // 当递归到棋盘最底层（也就是叶子节点）的时候，就可以收集结果并返回了。
+        if (row == n){
+            result51.add(buildList(n));
+            return;
+        }
+        // 递归深度就是row控制棋盘的行，每一层里for循环的col控制棋盘的列，一行一列，确定了放置皇后的位置。
+        // 每次都是要从新的一行的起始位置开始搜，所以都是从0开始。
+        for (int col = 0; col < n; col++){
+            if (isValidNQueen(n, row, col)){// 验证合法就可以放
+                chessBoard[row][col] = 'Q';// 放置皇后
+                solveNQueensHelper(n, row + 1);
+                chessBoard[row][col] = '.';// 回溯，撤销皇后
+            }
+        }
+    }
+
+    private boolean isValidNQueen(int n, int row, int col){
+        // 为什么没有在同行进行检查呢？
+        // 因为在单层搜索的过程中，每一层递归，只会选for循环（也就是同一行）里的一个元素，所以不用去重了。
+
+        // 检查同列
+        for (int i = 0; i < row; i++){
+            if (chessBoard[i][col] == 'Q'){
+                return false;
+            }
+        }
+        // 检查 45度角是否有皇后
+        for (int i = row - 1, j = col - 1; i >= 0 && j  >= 0; i--, j--){
+            if (chessBoard[i][j] == 'Q'){
+                return false;
+            }
+        }
+        // 检查 135度角是否有皇后
+        for(int i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++) {
+            if (chessBoard[i][j] == 'Q'){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // 构建List
+    private List<String> buildList(int n){
+        List<String> list = new ArrayList<>();
+        for (int row = 0; row < n; row++){
+            int col = 0;
+            StringBuilder sb = new StringBuilder();
+            while (col < n){
+                if (chessBoard[row][col] == 'Q'){
+                    sb.append(chessBoard[row][col]);
+                }else {
+                    sb.append('.');
+                }
+                col++;
+            }
+            list.add(new String(sb));
+        }
+        return list;
+    }
 }
