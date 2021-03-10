@@ -708,6 +708,7 @@ public class BacktrackingSolution {
             result51.add(buildList(n));
             return;
         }
+        // 棋盘的宽度就是for循环的长度，递归的深度就是棋盘的高度
         // 递归深度就是row控制棋盘的行，每一层里for循环的col控制棋盘的列，一行一列，确定了放置皇后的位置。
         // 每次都是要从新的一行的起始位置开始搜，所以都是从0开始。
         for (int col = 0; col < n; col++){
