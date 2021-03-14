@@ -107,7 +107,7 @@ public class BacktrackingSolution {
             // 剪枝优化
             // 可以剪枝的地方就在递归中每一层的for循环所选择的起始位置。
             // 如果for循环选择的起始位置之后的元素个数 已经不足 我们需要的元素个数了，那么就没有必要搜索了
-            // +1是因为是左闭区间
+            // +1是因为包括起始位置， 需要左闭区间
         for (int i = startIndex; i <= n - (k - path.size()) + 1; i++){// 优化的地方
             path.add(i);// 处理节点
             combineHelper(n, k, i + 1);// 递归
@@ -147,6 +147,9 @@ public class BacktrackingSolution {
 
     /**
      * 17. 电话号码的字母组合
+     * 多个集合求组合，不用startIndex
+     * 「因为本题每一个数字代表的是不同集合，也就是求不同集合之间的组合，
+     * 而回溯算法：求组合问题！和回溯算法：求组合总和！都是是求同一个集合中的组合！」
      */
     List<String> result17 = new ArrayList<>();
     char[] temp;
@@ -166,6 +169,7 @@ public class BacktrackingSolution {
         //index 为深度，letters.length为宽度
         if (index == k){
             result17.add(new String(temp));
+            return;
         }
         int j = chars[index] - '0';
         char[] letters = numberMap.get(j);
@@ -222,8 +226,8 @@ public class BacktrackingSolution {
             result.add(new ArrayList<>(path));
             return;
         }
-        // 如果是一个集合来求组合的话，就需要startIndex(结果去重就要加startIndex)
-        // 如果是多个集合取组合，各个集合之间相互不影响，那么就不用startIndex
+        // 如果是一个集合来求组合的话，就需要startIndex(结果去重就要加startIndex) eg.组合问题
+        // 如果是多个集合取组合，各个集合之间相互不影响，那么就不用startIndex eg.电话号码
         for (int i = startIndex; i < candidates.length && sum + candidates[i] <= target; i++){// for循环剪枝优化
             path.add(candidates[i]);
             sum += candidates[i];
@@ -262,8 +266,8 @@ public class BacktrackingSolution {
 //        HashSet<Integer> set = new HashSet<>();
         for (int i = startIndex; i < candidates.length && sum + candidates[i] <= target; i++){
             // 组合问题去重
-            // used[i - 1] == true，说明同一树支candidates[i - 1]使用过
-            // used[i - 1] == false，说明同一树层candidates[i - 1]使用过
+            // used[i - 1] == true，说明同一树支candidates[i - 1]使用过 一直在递归，在一根树枝上
+            // used[i - 1] == false，说明同一树层candidates[i - 1]使用过 递归后
             if (i > 0 && candidates[i] == candidates[i - 1] && !used[i - 1]){
                 continue;
             }
@@ -284,6 +288,12 @@ public class BacktrackingSolution {
 
     /**
      * 131. 分割回文串
+     * 几个难点：
+     *     切割问题其实类似组合问题
+     *     如何模拟那些切割线
+     *     切割问题中递归如何终止 → 切割到叶子节点
+     *     在递归循环中如何截取子串
+     *     如何判断回文
      */
     List<List<String>> result131 = new ArrayList<>();// 存放符合条件结果的集合
     LinkedList<String> path131 = new LinkedList<>();// 用来存放符合条件结果
@@ -390,7 +400,8 @@ public class BacktrackingSolution {
     }
 
     private void subsetsHelper(int[] nums, int startIndex){
-        result.add(new ArrayList<>(path));//「遍历这个树的时候，把所有节点都记录下来，就是要求的子集集合」。
+        //「遍历这个树的时候，把所有节点都记录下来，就是要求的子集集合」。
+        result.add(new ArrayList<>(path)); // 收集子集，要放在终止添加的上面，否则会漏掉结果
         if (startIndex >= nums.length){ //终止条件可不加
             return;
         }
