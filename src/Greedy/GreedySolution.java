@@ -1,6 +1,8 @@
 package Greedy;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author ywxie
@@ -57,4 +59,73 @@ public class GreedySolution {
 //        }
         return result;
     }
+
+    /**
+     * 376. 摆动序列
+     * 给定一个整数序列，返回作为摆动序列的最长子序列的长度。
+     * 通过从原始序列中删除一些（也可以不删除）元素来获得子序列，剩下的元素保持其原始顺序。
+     * 如果连续数字之间的差严格地在正数和负数之间交替，则数字序列称为摆动序列。
+     * 第一个差（如果存在的话）可能是正数或负数。少于两个元素的序列也是摆动序列。
+     */
+    public int wiggleMaxLength(int[] nums) {
+        if (nums.length == 0 || nums.length == 1){
+            return nums.length;
+        }
+        int result = 0;
+//        if (nums.length == 2){
+//            return result;
+//        }
+        int index = 1; //快
+        boolean positiveFlag = false;
+//        List<Integer> list = new ArrayList<>();
+        result++;
+//        list.add(nums[0]);
+        for (int i = 0; i < nums.length; i++){
+            while (index < nums.length && nums[index] == nums[i]){
+                index++;
+            }
+            if (index >= nums.length){
+                break;
+            }
+            if (i == 0){
+                positiveFlag = nums[index] - nums[i] > 0;
+                result++;
+//                list.add(nums[index]);
+                index++;
+            }
+            if (i > 0 && nums[index] - nums[i] > 0 && !positiveFlag){
+                positiveFlag = true;
+//                list.add(nums[index]);
+                result++;
+                index++;
+            }else if (i > 0 && nums[index] - nums[i] < 0 && positiveFlag){
+                positiveFlag = false;
+//                list.add(nums[index]);
+                result++;
+                index++;
+            }
+        }
+//        return list.size();
+        return result;
+    }
+
+    // 另一种解法
+    public int wiggleMaxLength2(int[] nums) {
+        if (nums.length <= 1) {
+            return nums.length;
+        }
+        int curDiff = 0; // 当前一对差值
+        int preDiff = 0; // 前一对差值
+        int result = 1;  // 记录峰值个数，序列默认序列最右边有一个峰值
+        for (int i = 1; i < nums.length; i++) {
+            curDiff = nums[i] - nums[i - 1];
+            // 出现峰值
+            if ((curDiff > 0 && preDiff <= 0) || (preDiff >= 0 && curDiff < 0)) {
+                result++;
+                preDiff = curDiff;
+            }
+        }
+        return result;
+    }
+
 }
