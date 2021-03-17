@@ -1,8 +1,6 @@
 package Greedy;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author ywxie
@@ -126,6 +124,53 @@ public class GreedySolution {
             }
         }
         return result;
+    }
+
+    /**
+     * 53. 最大子序和
+     * 给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+     * nums = [-2,1,-3,4,-1,2,1,-5,4]
+     * 输出：6
+     * 解释：连续子数组 [4,-1,2,1] 的和最大，为 6 。
+     */
+    public int maxSubArray(int[] nums) {
+        if (nums.length == 1){
+            return nums[0];
+        }
+        int sum = Integer.MIN_VALUE;
+        // 1.暴力解法
+        // 思路:第一层for 就是设置起始位置，第二层for循环遍历数组寻找最大值
+        // 时间复杂度：O(n^2) 空间复杂度：O(1)
+        for (int i = 0; i < nums.length; i++){
+            int temp = 0;
+            for (int j = i; j < nums.length; j++){
+                temp += nums[j];
+                sum = Math.max(temp, sum);
+            }
+        }
+
+        // 2.贪心算法
+        // 思路：如果 -2 1 在一起，计算起点的时候，一定是从1开始计算，因为负数只会拉低总和，这就是贪心贪的地方！
+        // 局部最优：当前“连续和”为负数的时候立刻放弃，从下一个元素重新计算“连续和”，因为负数加上下一个元素 “连续和”只会越来越小。
+        // 全局最优：选取最大“连续和”
+        // 时间复杂度：O(n) 空间复杂度：O(1)
+        int count = 0;
+        for (int i = 0; i < nums.length; i++){
+            count += nums[i];
+            sum = Math.max(sum, count); // 取区间累计的最大值（相当于不断确定最大子序终止位置）
+            if (count <= 0){
+                count = 0; // 相当于重置最大子序起始位置，因为遇到负数一定是拉低总和
+            }
+        }
+        return sum;
+
+        // 3.其它解法
+//        int pre = 0, maxAns = nums[0];
+//        for (int x : nums) {
+//            pre = Math.max(pre + x, x);
+//            maxAns = Math.max(maxAns, pre);
+//        }
+//        return maxAns;
     }
 
 }
