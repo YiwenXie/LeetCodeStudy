@@ -171,6 +171,17 @@ public class GreedySolution {
 //            maxAns = Math.max(maxAns, pre);
 //        }
 //        return maxAns;
+
+        // 4.动态规划
+        // 时间复杂度：O(n) 空间复杂度：O(n)
+//        int[] dp = new int[nums.length];// dp[i]表示包括i之前的最大连续子序列和
+//        dp[0] = nums[0];
+//        int result = dp[0];
+//        for (int i = 1; i < nums.length; i++) {
+//            dp[i] = Math.max(dp[i - 1] + nums[i], nums[i]); // 状态转移公式
+//            result = Math.max(result, dp[i]);// result 保存dp[i]的最大值
+//        }
+//        return result;
     }
 
 }
