@@ -235,4 +235,54 @@ public class GreedySolution {
         return false;
     }
 
+    /**
+     * 45. 跳跃游戏 II
+     *
+     * 给定一个非负整数数组，你最初位于数组的第一个位置。
+     * 数组中的每个元素代表你在该位置可以跳跃的最大长度。
+     * 你的目标是使用最少的跳跃次数到达数组的最后一个位置。
+     *
+     * 「所以真正解题的时候，要从覆盖范围出发，不管怎么跳，覆盖范围内一定是可以跳到的，以最小的步数增加覆盖范围，
+     * 覆盖范围一旦覆盖了终点，得到的就是最小步数！」
+     * 「这里需要统计两个覆盖范围，当前这一步的最大覆盖和下一步最大覆盖」。
+     * 如果移动下标达到了当前这一步的最大覆盖最远距离了，还没有到终点的话，那么就必须再走一步来增加覆盖范围，直到覆盖范围覆盖了终点。
+     */
+    public static int jump(int[] nums) {
+        if (nums.length <= 1){
+            return 0;
+        }
+        int result = 0;
+        int next = 0;// 下一步覆盖最远距离下标
+        int cur = 0;// 当前覆盖最远距离下标
+        // 方法一
+//        for(int i = 0; i < nums.length; i++){
+//            next = Math.max(nums[i] + i, next); // 更新下一步覆盖最远距离下标
+//            if (i == cur){ // 遇到当前覆盖最远距离下标
+//                if (cur != nums.length - 1){// 如果当前覆盖最远距离下标不是终点
+//                    result++;// 需要走下一步
+//                    cur = next;// 更新当前覆盖最远距离下标（相当于加油了）
+//                    if (next >= nums.length - 1){// 下一步的覆盖范围已经可以达到终点，结束循环
+//                        break;
+//                    }
+//                }else {
+//                    break;// 当前覆盖最远距离下标是集合终点，不用做ans++操作了，直接结束
+//                }
+//            }
+//        }
+        // 方法二
+        for (int i = 0; i < nums.length - 1; i++) { // 注意这里是小于nums.length - 1，这是关键所在
+            next = Math.max(nums[i] + i, next); // 更新下一步覆盖的最远距离下标
+            if (i == cur) {                 // 遇到当前覆盖的最远距离下标
+                cur = next;         // 更新当前覆盖的最远距离下标
+                result++;
+            }
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 1, 1, 1};
+        System.out.println(jump(arr));
+    }
+
 }
