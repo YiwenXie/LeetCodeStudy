@@ -280,6 +280,51 @@ public class GreedySolution {
         return result;
     }
 
+    /**
+     * 1005. K 次取反后最大化的数组和
+     * 给定一个整数数组 A，我们只能用以下方法修改该数组：我们选择某个索引 i 并将 A[i] 替换为 -A[i]，
+     * 然后总共重复这个过程 K 次。（我们可以多次选择同一个索引 i。）
+     * 以这种方式修改数组后，返回数组可能的最大和。
+     */
+    public int largestSumAfterKNegations(int[] A, int K) {
+        Arrays.sort(A);// 从小到大排序
+        int result = 0;
+        int index = Integer.MIN_VALUE; // 记录最后一个负数的下标
+        for (int i = 0; i < A.length; i++){
+            if (A[i] < 0){
+                if (K > 0){
+                    A[i] = -A[i];
+                    K--;
+                }
+                result += A[i];
+                index = i;
+                continue;
+            }
+            while (A[i] == 0 && K > 0){
+                K--;
+            }
+            if (A[i] > 0 && K >= 0){
+                while (K > 0){
+                    if (index >= 0 && index <= i){
+                        if (-A[index] > -A[i]){
+                            result = result - A[index];
+                            A[index] = -A[index];
+                            result += A[index];
+                        }else {
+                            A[i] = -A[i];
+                        }
+                    }else {
+                        A[i] = -A[i];
+                    }
+                    K--;
+                }
+                result += A[i];
+            }
+        }
+        return result;
+
+    }
+
     public static void main(String[] args) {
         int[] arr = {1, 2, 1, 1, 1};
         System.out.println(jump(arr));
