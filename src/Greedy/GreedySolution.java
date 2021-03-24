@@ -300,26 +300,43 @@ public class GreedySolution {
                 index = i;
                 continue;
             }
-            while (A[i] == 0 && K > 0){
-                K--;
+            if (A[i] == 0 && K > 0){
+                K = 0;
+                continue;
             }
-            if (A[i] > 0 && K >= 0){
-                while (K > 0){
-                    if (index >= 0 && index <= i){
-                        if (-A[index] > -A[i]){
+            if (A[i] > 0 && K >= 0) {
+                if (K % 2 != 0) {
+                    if (index >= 0 && index <= i) {
+                        if (-A[index] > -A[i]) {
                             result = result - A[index];
                             A[index] = -A[index];
                             result += A[index];
-                        }else {
+                        } else {
                             A[i] = -A[i];
                         }
-                    }else {
+                    } else {
                         A[i] = -A[i];
                     }
-                    K--;
                 }
+                K = 0;
                 result += A[i];
             }
+
+//                while (K > 0){
+//                    if (index >= 0 && index <= i){
+//                        if (-A[index] > -A[i]){
+//                            result = result - A[index];
+//                            A[index] = -A[index];
+//                            result += A[index];
+//                        }else {
+//                            A[i] = -A[i];
+//                        }
+//                    }else {
+//                        A[i] = -A[i];
+//                    }
+//                    K--;
+//                }
+//                result += A[i];
         }
         return result;
 
