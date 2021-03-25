@@ -339,12 +339,98 @@ public class GreedySolution {
 //                result += A[i];
         }
         return result;
+    }
 
+    /**
+     * 134. 加油站
+     */
+    public static int canCompleteCircuit(int[] gas, int[] cost) {
+        //方法二，贪心
+        // 「那么局部最优：当前累加rest[j]的和curSum一旦小于0，起始位置至少要是j+1，
+        // 因为从j开始一定不行。全局最优：找到可以跑一圈的起始位置」。
+        int curSum = 0;
+        int totalSum = 0;
+        int start = -1;
+        for (int i = 0; i < gas.length; i++){
+            curSum += gas[i] - cost[i];
+            totalSum += gas[i] - cost[i];
+            if (curSum < 0){
+                start = i + 1;
+                curSum = 0;
+            }
+        }
+        if (totalSum < 0){
+            return -1;
+        }
+        return start;
+        // 方法一，非贪心
+//        int curSum = 0;
+//        int min = Integer.MAX_VALUE;// 从起点出发，油箱里的油量最小值
+//        for (int i = 0; i < gas.length; i++){
+//            int rest = gas[i] - cost[i];
+//            curSum += rest;
+//            min = Math.min(curSum, min);
+//        }
+//        // 1.如果gas的总和小于cost总和，那么无论从哪里出发，一定是跑不了一圈的
+//        if (curSum < 0){
+//            return -1;
+//        }
+//        // 2.rest[i] = gas[i]-cost[i]为一天剩下的油，i从0开始计算累加到最后一站，
+//        // 如果累加没有出现负数，说明从0出发，油就没有断过，那么0就是起点。
+//        if (min >= 0){
+//            return 0;
+//        }
+//        // 3.如果累加的最小值是负数，汽车就要从非0节点出发，
+//        // 从后向前，看哪个节点能这个负数填平，能把这个负数填平的节点就是出发节点。
+//        for (int i = gas.length - 1; i >= 0; i--){
+//            int rest = gas[i] - cost[i];
+//            min += rest;
+//            if (min >= 0){
+//                return i;
+//            }
+//        }
+//        return -1;
+        //我自己：超出时间限制了
+//        int result = -1;
+//        for (int i = 0; i < gas.length; i++){
+//            if (gas[i] - cost[i] < 0){
+//                result = -1;
+//                continue;
+//            }
+//            int rest = gas[i];
+//            result = i;
+//            int start;
+//            int end = i;
+//            for (int j = i + 1; j != i; j++){
+//                if (j >= gas.length){
+//                    j = 0;
+//                    start = gas.length - 1;
+//                }else {
+//                    start = j - 1;
+//                }
+//                if (rest - cost[start] < 0){
+//                    result = -1;
+//                    break;
+//                }
+//                rest = rest - cost[start] + gas[j];
+//                end = j;
+//            }
+//            if (result != -1){
+//                rest = rest - cost[end];
+//                if (rest >= 0){
+//                    return result;
+//                }else{
+//                    result = -1;
+//                }
+//            }
+//        }
+//        return result;
     }
 
     public static void main(String[] args) {
-        int[] arr = {1, 2, 1, 1, 1};
-        System.out.println(jump(arr));
+        int[] gas = {1,2,3,4,5};
+        int[] cost = {3,4,5,1,2};
+        System.out.println(canCompleteCircuit(gas, cost));
     }
 
 }
