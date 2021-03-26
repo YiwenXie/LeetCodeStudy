@@ -1,6 +1,8 @@
 package Greedy;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author ywxie
@@ -425,6 +427,40 @@ public class GreedySolution {
 //            }
 //        }
 //        return result;
+    }
+
+    /**
+     * 135. 分发糖果
+     * 这道题目一定是要确定一边之后，再确定另一边，例如比较每一个孩子的左边，然后再比较右边，「如果两边一起考虑一定会顾此失彼」。
+     * 先确定右边评分大于左边的情况（也就是从前向后遍历）
+     * 此时局部最优：只要右边评分比左边大，右边的孩子就多一个糖果，全局最优：相邻的孩子中，评分高的右孩子获得比左边孩子更多的糖果
+     * 局部最优可以推出全局最优。
+     */
+    public int candy(int[] ratings) {
+        int result = 0;
+        if (ratings.length <= 0){
+            return result;
+        }
+        int[] candy = new int[ratings.length];
+        candy[0] = 1;
+        for (int i = 1; i < ratings.length; i++){
+            candy[i] = ratings[i] > ratings[i - 1] ? candy[i - 1] + 1:1;
+        }
+        // 为什么不能从前向后遍历呢？
+        // 因为如果从前向后遍历，根据 ratings[i + 1] 来确定 ratings[i] 对应的糖果，那么每次都不能利用上前一次的比较结果了。
+        //「所以确定左孩子大于右孩子的情况一定要从后向前遍历！」
+        result += candy[ratings.length - 1];
+        for (int i = ratings.length - 2; i >= 0; i--){
+            if (ratings[i] > ratings[i + 1]){
+                //如果 ratings[i] > ratings[i + 1]，此时candyVec[i]（第i个小孩的糖果数量）就有两个选择了，一个是candyVec[i + 1] + 1（从右边这个加1得到的糖果数量），一个是candyVec[i]（之前比较右孩子大于左孩子得到的糖果数量）。
+                //那么又要贪心了，局部最优：取candyVec[i + 1] + 1 和 candyVec[i] 最大的糖果数量，保证第i个小孩的糖果数量即大于左边的也大于右边的。全局最优：相邻的孩子中，评分高的孩子获得更多的糖果。
+                //局部最优可以推出全局最优。
+                //所以就取candyVec[i + 1] + 1 和 candyVec[i] 最大的糖果数量，「candyVec[i]只有取最大的才能既保持对左边candyVec[i - 1]的糖果多，也比右边candyVec[i + 1]的糖果多」。
+                candy[i] = Math.max(candy[i + 1] + 1, candy[i]);
+            }
+            result += candy[i];
+        }
+        return result;
     }
 
     public static void main(String[] args) {
