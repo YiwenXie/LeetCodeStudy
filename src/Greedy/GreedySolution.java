@@ -463,6 +463,60 @@ public class GreedySolution {
         return result;
     }
 
+    /**
+     * 860. 柠檬水找零
+     *
+     * 只需要维护三种金额的数量，5，10和20。
+     * 有如下三种情况：
+     *     情况一：账单是5，直接收下。
+     *     情况二：账单是10，消耗一个5，增加一个10
+     *     情况三：账单是20，优先消耗一个10和一个5，如果不够，再消耗三个5
+     * 此时大家就发现 情况一，情况二，都是固定策略，都不用我们来做分析了，而唯一不确定的其实在情况三。
+     * 而情况三逻辑也不复杂甚至感觉纯模拟就可以了，其实情况三这里是有贪心的。
+     * 账单是20的情况，为什么要优先消耗一个10和一个5呢？
+     * 「因为美元10只能给账单20找零，而美元5可以给账单10和账单20找零，美元5更万能！」
+     * 所以局部最优：遇到账单20，优先消耗美元10，完成本次找零。全局最优：完成全部账单的找零。
+     */
+    Map<Integer, Integer> restMap = new HashMap<>();// 记录每种零钱数量
+    public boolean lemonadeChange(int[] bills) {
+        if (bills[0] > 5){
+            return false;
+        }
+        restMap.put(bills[0], 1);
+        for (int i = 1; i < bills.length; i++){
+            int shouldReturn = bills[i] - 5;
+            restMap.put(bills[i], restMap.getOrDefault(bills[i], 0) + 1);
+            if (!canCorrectReturn(shouldReturn)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean canCorrectReturn(int shouldReturn){
+        if (shouldReturn == 0){
+            return true;
+        }
+        if (shouldReturn == 5){
+            if (restMap.containsKey(5) && restMap.get(5) >= 1){
+                restMap.put(5, restMap.get(5) - 1);
+                return true;
+            }
+        }
+        if (shouldReturn == 15){
+            if ((restMap.containsKey(10) && restMap.get(10) >= 1) && (restMap.containsKey(5) && restMap.get(5) >= 1)){
+                restMap.put(10, restMap.get(10) - 1);
+                restMap.put(5, restMap.get(5) - 1);
+                return true;
+            }
+            if (restMap.containsKey(5) && restMap.get(5) >= 3){
+                restMap.put(5, restMap.get(5) - 3);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         int[] gas = {1,2,3,4,5};
         int[] cost = {3,4,5,1,2};
