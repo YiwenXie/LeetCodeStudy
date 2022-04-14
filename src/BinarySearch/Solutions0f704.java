@@ -34,6 +34,18 @@ public class Solutions0f704 {
     }
 
     /**
+     * 二分查找，寻找左右边界问题可以编程一个函数问题
+     * 确定 x 、 f（x），target
+     * 例子704
+     * x : 索引
+     * f(x) : nums
+     * target:最左边界
+     */
+    public int f(int[] nums, int x){
+        return nums[x];
+    }
+
+    /**
      * 二分查找，查找左边界 左闭右开
      * @param nums
      * @param target
@@ -54,7 +66,7 @@ public class Solutions0f704 {
             }
         }
         // target 比所有数都大
-        if (left >= nums.length){
+        if (left == nums.length){
             return -1;
         }
         return nums[left] == target? left: -1;
@@ -80,7 +92,7 @@ public class Solutions0f704 {
                 right = mid - 1;
             }
         }
-        // 最后要检查 left 越界的情况
+        // 最后要检查 left 越界的情况，因为while 的终止条件应该是 left == right + 1
         if (left >= nums.length || nums[left] != target){
             return -1;
         }
@@ -112,6 +124,7 @@ public class Solutions0f704 {
         if (left == 0){
             return -1;
         }
+        // 因为我们对 left 的更新必须是 left = mid + 1，就是说 while 循环结束时，nums[left] 一定不等于 target 了，而 nums[left-1] 可能是 target。
         return nums[left - 1] == target? (left - 1): -1;
     }
 
