@@ -1,5 +1,7 @@
 package SkillCategory.array.BinarySearch;
 
+import java.util.HashMap;
+
 /**
  * @author ywxie
  * @date 2022/4/19 14:49
@@ -292,5 +294,61 @@ public class Solutions {
             return -1;
         }
         return right;
+    }
+
+    /**
+     * 1539. 第 k 个缺失的正整数
+     */
+    public int findKthPositive(int[] arr, int k) {
+        return 0;
+    }
+
+    /**
+     * 410. 分割数组的最大值
+     * 设计一个算法使得这 m 个子数组各自和的最大值最小。（即最小载力）
+     * 其实就是1011的变种题
+     * 自变量 x：数组的最大值（即载力）
+     * 目标值 target：m （即运货天数）
+     * f(x)：分割的数组数量 （即一次运几次货）
+     * X的最大值：数组内所有元素之和
+     * X的最小值：数组内最大元素
+     * 求 X 的左边界
+     * @param nums
+     * @param m
+     * @return
+     */
+    public int splitArray(int[] nums, int m){
+        int left = 0;
+        int right = 1;
+        for (int num:
+             nums) {
+            left = Math.max(left, num);
+            right += num;
+        }
+        while (left < right){
+            int mid = left + (right - left) / 2;
+            if (splitArrayF(nums, mid) > m){
+                left = mid + 1;
+            }else {
+                right = mid;
+            }
+        }
+        return left;
+    }
+
+    private int splitArrayF(int[] nums, int x){
+        int result = 0;
+        for (int i = 0; i < nums.length;) {
+            int power = x;
+            while (i < nums.length){
+                if (power - nums[i] >= 0){
+                    power -= nums[i++];
+                }else {
+                    break;
+                }
+            }
+            result++;
+        }
+        return result;
     }
 }

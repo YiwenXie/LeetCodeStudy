@@ -41,10 +41,10 @@ public class StudySolutions {
     /**
      * 27.移动元素
      */
-    public static int removeElement(int[] nums, int val){
+    public static int removeElement(int[] nums, int val) {
         int slow = 0;
         for (int fast = 0; fast < nums.length; fast++) {
-            if (nums[fast] != val){
+            if (nums[fast] != val) {
                 // 注意这里和有序数组去重的解法有一个细节差异，
                 // 我们这里是先给 nums[slow] 赋值然后再给 slow++，
                 // 这样可以保证 nums[0..slow-1] 是不包含值为 val 的元素的，
@@ -62,7 +62,7 @@ public class StudySolutions {
     public void moveZeroes(int[] nums) {
         int slow = 0;
         for (int fast = 0; fast < nums.length; fast++) {
-            if (nums[fast] != 0){
+            if (nums[fast] != 0) {
                 int temp = nums[slow];
                 nums[slow++] = nums[fast];
                 nums[fast] = temp;
@@ -76,17 +76,76 @@ public class StudySolutions {
     public int[] twoSum(int[] numbers, int target) {
         int left = 0;
         int right = numbers.length - 1;
-        while (left < right){
+        while (left < right) {
             int sum = numbers[left] + numbers[right];
-            if (sum == target){
+            if (sum == target) {
                 return new int[]{left + 1, right + 1};
-            }else if (sum > target){
+            } else if (sum > target) {
                 right--;
-            }else {
+            } else {
                 left++;
             }
         }
         return new int[]{-1, -1};
     }
+
+    /**
+     * 344.反转字符串
+     */
+    public void reverseString(char[] s) {
+        int left = 0;
+        int right = s.length - 1;
+        while (left < right){
+            char temp = s[left];
+            s[left] = s[right];
+            s[right] = temp;
+            left++;
+            right--;
+        }
+    }
+
+    /**
+     * 回文串判断 OK
+     */
+    public boolean isPalindrome(String s) {
+        int left = 0;
+        int right = s.length() - 1;
+        char[] chars = s.toCharArray();
+        while (left < right){
+            if (chars[left] != chars[right]){
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+
+    /**
+     * 5.最长回文串
+     */
+    public String longestPalindrome(String s){
+        String res = "";
+        for (int i = 0; i < s.length(); i++) {
+            // 以 s[i] 为中心的最长回文子串
+            String s1 = palindrome(s, i, i);
+            // 以 s[i] 和 s[i+1] 为中心的最长回文子串
+            String s2 = palindrome(s, i, i + 1);
+            // res = longest(res, s1, s2)
+            res = res.length() > s1.length() ? res : s1;
+            res = res.length() > s2.length() ? res : s2;
+        }
+        return res;
+    }
+
+    private String palindrome(String s, int l, int r) {
+        while (l >= 0 && r < s.length() && s.charAt(l) == s.charAt(r)){
+            l--;
+            r++;
+        }
+        return s.substring(l + 1, r);
+    }
+
+
 
 }
