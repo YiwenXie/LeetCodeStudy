@@ -10,7 +10,7 @@ import DataStructureCategory.listnode.ListNode;
  * 左右指针：两个指针相向而行或者相背而行
  * 快慢指针：两个指针同向而行，一快一慢。
  */
-public class StudySolutions {
+public class Solution {
 
 
     /**

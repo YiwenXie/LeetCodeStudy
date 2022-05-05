@@ -7,7 +7,7 @@ import java.util.*;
  * @date 2022/4/22 15:48
  * @describe 滑动窗口-学习类
  */
-public class StudySolutions {
+public class Solution {
     /**
      * 76. 最小覆盖子串
      */
@@ -135,21 +135,20 @@ public class StudySolutions {
      * 3. 无重复字符的最长子串
      */
     public int lengthOfLongestSubstring(String s) {
-//        Set<Character> set = new HashSet<>();
         HashMap<Character, Integer> window = new HashMap<>();
-//        for (int i = 0; i < s.length(); i++) {
-//            set.add(s.charAt(i));
-//        }
         int left = 0, right = 0;
-        int valid = 0;
         int len = 0;
         while (right < s.length()){
             char c = s.charAt(right++);
+            // 当right窗口扩大时，更新什么数据
             window.put(c, window.getOrDefault(c, 0) + 1);
+            // 缩小左侧窗口的条件是什么
             while (window.get(c) > 1){
+                // 缩小左侧窗口时，需要更新什么数据
                 char d = s.charAt(left++);
                 window.put(d, window.get(d) - 1);
             }
+            // 我们要的结果，是在扩大右侧窗口之后更新，还是缩小左侧窗口后更新
             len = Math.max(len, right - left);
         }
         return len;

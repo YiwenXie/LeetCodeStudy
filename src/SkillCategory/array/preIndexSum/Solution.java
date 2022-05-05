@@ -7,7 +7,7 @@ import java.util.HashMap;
  * @date 2022/4/16 16:20
  * @describe
  */
-public class StudySolutions {
+public class Solution {
     /**
      * 303. 区域和检索 - 数组不可变
      */
