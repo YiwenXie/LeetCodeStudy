@@ -129,22 +129,33 @@ public class Solution {
      * 双指针
      */
     public ListNode removeNthFromEnd(ListNode head, int n) {
+//        ListNode dummy = new ListNode(-1);
+//        dummy.next = head;
+//        ListNode p1 = head;
+//        for (int i = 0; i < n; i++) {
+//            p1 = p1.next;
+//        }
+//        // 考虑首结点
+//        if (p1 == null){
+//            return head.next;
+//        }
+//        ListNode p2 = head;
+//        while (p1.next != null){
+//            p1 = p1.next;
+//            p2 = p2.next;
+//        }
+//        p2.next = p2.next.next;
+//        return dummy.next;
+
         ListNode dummy = new ListNode(-1);
         dummy.next = head;
-        ListNode p1 = head;
-        for (int i = 0; i < n; i++) {
-            p1 = p1.next;
-        }
-        // 考虑首结点
-        if (p1 == null){
-            return head.next;
-        }
-        ListNode p2 = head;
-        while (p1.next != null){
-            p1 = p1.next;
-            p2 = p2.next;
-        }
-        p2.next = p2.next.next;
+        // 需要考虑被移除的元素是首结点的情况。
+        //虚拟头结点的技巧，也是为了防止出现空指针的情况，
+        // 比如说链表总共有 5 个节点，题目就让你删除倒数第 5 个节点，
+        // 也就是第一个节点，那按照算法逻辑，应该首先找到倒数第 6 个节点。
+        // 但第一个节点前面已经没有节点了，这就会出错。
+        ListNode p1 = findFromEnd(dummy, n + 1);
+        p1.next = p1.next.next;
         return dummy.next;
     }
 
@@ -208,6 +219,19 @@ public class Solution {
             slow = slow.next;
         }
         return slow;
+
+        // 另一种解法 用set
+//        ListNode cur = head;
+//        Set<ListNode> set = new HashSet<>();
+//        while(cur != null){
+//            if(set.contains(cur)){
+//                return cur;
+//            }else{
+//                set.add(cur);
+//                cur = cur.next;
+//            }
+//        }
+//        return null;
     }
 
     /**
