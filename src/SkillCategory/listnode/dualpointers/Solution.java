@@ -106,8 +106,6 @@ public class Solution {
      * 双指针
      */
     ListNode findFromEnd(ListNode head, int k){
-        ListNode dummy = new ListNode(-1);
-        dummy.next = head;
         ListNode p1 = head;
         ListNode p2 = head;
         // p1 先走 k 步，剩余节点是 n - k 个（n是节点总数）
@@ -255,6 +253,16 @@ public class Solution {
         b1.next = null;
         // 返回刚刚找环起点的结果
         return result;
+    }
+
+    public ListNode getIntersectionNode2(ListNode headA, ListNode headB) {
+        ListNode a = headA;
+        ListNode b = headB;
+        while (a != b){
+            a = a == null? headB:a.next;
+            b = b == null? headA:b.next;
+        }
+        return a;
     }
 
 

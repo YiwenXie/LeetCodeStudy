@@ -18,7 +18,7 @@ public class Solution {
      * 2、生成一个取值在 preSum 之内的随机数，用二分搜索算法寻找大于等于这个随机数的最小元素索引。
      * 3、最后对这个索引减一（因为前缀和数组有一位索引偏移），就可以作为权重数组的索引，即最终答案:
      */
-    class Solution {
+
 
         private int[] preSum;
         private Random random = new Random();
@@ -54,7 +54,6 @@ public class Solution {
             }
             return left;
         }
-    }
 
     /**
      * 870. 优势洗牌
