@@ -1,4 +1,4 @@
-package SkillCategory.tree.operation;
+package SkillCategory.tree.bst.operation;
 
 import SkillCategory.tree.TreeNode;
 
@@ -60,7 +60,7 @@ public class Solution {
 
     /**
      * 700. 二叉搜索树中的搜索
-     * 递归
+     * 分解
      */
     TreeNode searchBST2(TreeNode root, int val){
         if (root == null){

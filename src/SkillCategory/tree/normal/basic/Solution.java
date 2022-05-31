@@ -1,4 +1,4 @@
-package SkillCategory.tree.basic;
+package SkillCategory.tree.normal.basic;
 
 import SkillCategory.tree.Node;
 import SkillCategory.tree.TreeNode;
@@ -166,16 +166,16 @@ public class Solution {
      */
     // 记录最大直径的长度
     public int diameterOfBinaryTree2(TreeNode root) {
-        maxDepth3(root);
+        diameterOfBinaryTree2Helper(root);
         return maxDiameter;
     }
 
-    int maxDepth3(TreeNode root) {
+    int diameterOfBinaryTree2Helper(TreeNode root) {
         if (root == null) {
             return 0;
         }
-        int leftMax = maxDepth3(root.left);
-        int rightMax = maxDepth3(root.right);
+        int leftMax = diameterOfBinaryTree2Helper(root.left);
+        int rightMax = diameterOfBinaryTree2Helper(root.right);
         // 后序位置，顺便计算最大直径
         int myDiameter = leftMax + rightMax;
         maxDiameter = Math.max(maxDiameter, myDiameter);

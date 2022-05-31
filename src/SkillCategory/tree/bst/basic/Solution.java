@@ -1,4 +1,4 @@
-package SkillCategory.tree.sort;
+package SkillCategory.tree.bst.basic;
 
 import SkillCategory.tree.TreeNode;
 

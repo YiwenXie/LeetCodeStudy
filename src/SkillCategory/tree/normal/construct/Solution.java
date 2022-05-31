@@ -1,4 +1,4 @@
-package SkillCategory.tree.construct;
+package SkillCategory.tree.normal.construct;
 
 import SkillCategory.tree.TreeNode;
 
@@ -145,6 +145,7 @@ public class Solution {
 
     /**
      * 297. 二叉树的序列化与反序列化
+     * 前序遍历解法
      */
     public class Codec {
 
@@ -178,10 +179,12 @@ public class Solution {
 
 
         TreeNode deserializeHelper(LinkedList<String> list){
-            String str = list.removeFirst();
             if (list.isEmpty()){
                 return null;
             }
+            /****** 前序遍历位置 ******/
+            // 列表最左侧就是根节点，从前往后取出元素
+            String str = list.removeFirst();
             if (NULL.equals(str)){
                 return null;
             }
@@ -189,6 +192,127 @@ public class Solution {
             TreeNode root = new TreeNode(Integer.parseInt(str));
             root.left = deserializeHelper(list);
             root.right = deserializeHelper(list);
+            return root;
+        }
+    }
+
+    /**
+     * 297. 二叉树的序列化与反序列化
+     * 后序遍历解法
+     */
+    public class Codec2 {
+        String NULL = "#";
+        String SEP = ",";
+        // Encodes a tree to a single string.
+        public String serialize(TreeNode root) {
+            StringBuilder sb = new StringBuilder();
+            traverse(root, sb);
+            return sb.toString();
+        }
+
+        void traverse(TreeNode root, StringBuilder sb) {
+            if (root == null){
+                sb.append(NULL).append(SEP);
+                return;
+            }
+            traverse(root.left, sb);
+            traverse(root.right, sb);
+            sb.append(root.val).append(SEP);
+        }
+
+        // Decodes your encoded data to tree.
+        public TreeNode deserialize(String data) {
+            if (data.isEmpty()){
+                return null;
+            }
+            LinkedList<String> list = new LinkedList<>(Arrays.asList(data.split(SEP)));
+            return deserializeHelper(list);
+        }
+
+
+        TreeNode deserializeHelper(LinkedList<String> list){
+            if (list.isEmpty()){
+                return null;
+            }
+            /****** 前序遍历位置 ******/
+            // 列表最右侧就是根节点，从后往前取出元素
+            String str = list.removeLast();
+            if (NULL.equals(str)){
+                return null;
+            }
+            TreeNode root = new TreeNode(Integer.parseInt(str));
+            // 后序遍历，先构造右子树，后构造左子树
+            root.right = deserializeHelper(list);
+            root.left = deserializeHelper(list);
+            return root;
+        }
+    }
+
+    /**
+     * 297. 二叉树的序列化与反序列化
+     * 层序遍历解法
+     */
+    public class Codec3 {
+        String NULL = "#";
+        String SEP = ",";
+        // Encodes a tree to a single string.
+        public String serialize(TreeNode root) {
+            StringBuilder sb = new StringBuilder();
+            Queue<TreeNode> queue = new LinkedList<>();
+            queue.add(root);
+            while (!queue.isEmpty()){
+                int size = queue.size();
+                for (int i = 0; i < size; i++) {
+                    TreeNode node = queue.poll();
+                    if (node == null){
+                        sb.append(NULL).append(SEP);
+                        continue;
+                    }
+                    sb.append(node.val).append(SEP);
+                    queue.add(node.left);
+                    queue.add(node.right);
+                }
+            }
+            return sb.toString();
+        }
+
+        // Decodes your encoded data to tree.
+        public TreeNode deserialize(String data) {
+            if (data.isEmpty()){
+                return null;
+            }
+            String[] nodes = data.split(SEP);
+            // 第一个元素就是 root 的值
+            if (NULL.equals(nodes[0])){
+                return null;
+            }
+            TreeNode root = new TreeNode(Integer.parseInt(nodes[0]));
+            // 队列 q 记录父节点，将 root 加入队列
+            Queue<TreeNode> q = new LinkedList<>();
+            q.offer(root);
+            for (int i = 1; i < nodes.length; ) {
+                // 队列中存的都是父节点
+                TreeNode parent = q.poll();
+                if (parent == null){
+                    continue;
+                }
+                // 父节点对应的左侧子节点的值
+                String left = nodes[i++];
+                if (!left.equals(NULL)) {
+                    parent.left = new TreeNode(Integer.parseInt(left));
+                    q.offer(parent.left);
+                } else {
+                    parent.left = null;
+                }
+                // 父节点对应的右侧子节点的值
+                String right = nodes[i++];
+                if (!right.equals(NULL)) {
+                    parent.right = new TreeNode(Integer.parseInt(right));
+                    q.offer(parent.right);
+                } else {
+                    parent.right = null;
+                }
+            }
             return root;
         }
     }
