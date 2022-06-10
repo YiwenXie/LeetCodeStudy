@@ -176,7 +176,7 @@ public class Solution {
     }
 
     /**
-     * 判断链表是否包含环
+     * 141.判断链表是否包含环
      */
     boolean hasCycle(ListNode head) {
         ListNode slow = head;
@@ -193,7 +193,7 @@ public class Solution {
 
     /**
      *
-     * 如果链表中含有环，如何计算这个环的起点？
+     * 142.如果链表中含有环，如何计算这个环的起点？
      */
     ListNode detectCycle(ListNode head) {
         ListNode slow = head;
