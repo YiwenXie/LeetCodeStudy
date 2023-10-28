@@ -5,7 +5,7 @@ package SkillCategory.array.BinarySearch;
  * @description
  * @date 2023/10/25 22:06
  */
-public class Num278FirstBadVersion {
+public class Easy278FirstBadVersion {
 
     /**
      * 1 <= bad <= n <= 231 - 1

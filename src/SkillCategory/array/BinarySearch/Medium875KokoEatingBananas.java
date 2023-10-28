@@ -5,7 +5,7 @@ package SkillCategory.array.BinarySearch;
  * @description
  * @date 2023/10/26 22:59
  */
-public class Num875KokoEatingBananas {
+public class Medium875KokoEatingBananas {
 
     /**
      * 1 <= piles.length <= 104, piles.length <= h <= 109, 1 <= piles[i] <= 109

@@ -7,10 +7,10 @@ import java.util.Arrays;
  * @description
  * @date 2023/10/28 15:59
  */
-public class Num378KthSmallestElementInASortedMatrix {
+public class Medium378KthSmallestElementInASortedMatrix {
 
     public static void main(String[] args) {
-        Num378KthSmallestElementInASortedMatrix kthSmallest = new Num378KthSmallestElementInASortedMatrix();
+        Medium378KthSmallestElementInASortedMatrix kthSmallest = new Medium378KthSmallestElementInASortedMatrix();
         int[][] matrix = new int[][]{{1, 5, 9}, {10, 11, 13}, {12, 13, 15}};
         int k = 8;
         System.out.println("matrix案例输入:" + Arrays.deepToString(matrix));
