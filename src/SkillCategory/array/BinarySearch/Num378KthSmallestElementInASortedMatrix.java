@@ -1,11 +1,23 @@
 package SkillCategory.array.BinarySearch;
 
+import java.util.Arrays;
+
 /**
  * @author Yiwen Xie
  * @description
  * @date 2023/10/28 15:59
  */
 public class Num378KthSmallestElementInASortedMatrix {
+
+    public static void main(String[] args) {
+        Num378KthSmallestElementInASortedMatrix kthSmallest = new Num378KthSmallestElementInASortedMatrix();
+        int[][] matrix = new int[][]{{1, 5, 9}, {10, 11, 13}, {12, 13, 15}};
+        int k = 8;
+        System.out.println("matrix案例输入:" + Arrays.deepToString(matrix));
+        System.out.println("k案例输入:" + k);
+        int kth = kthSmallest.kthSmallest(matrix, k);
+        System.out.println("测试结果:" + kth);
+    }
 
     /**
      * n == matrix.length == matrix[i].length
@@ -26,7 +38,8 @@ public class Num378KthSmallestElementInASortedMatrix {
         int right = matrix[matrix.length - 1][matrix[0].length - 1] + 1;
         while (left < right) {
             int mid = left + (right - left) / 2;
-            // 找到一个最小的count使得这个表达式成立
+            // f(matrix, mid)返回在m左边的数有多少个，
+            // 找到一个最小的count使得count>=k
             if (f(matrix, mid) >= k) {
                 right = mid;
             } else {
@@ -42,10 +55,11 @@ public class Num378KthSmallestElementInASortedMatrix {
         for (int[] nums : matrix
         ) {
             BinarySearchTemplate template = new BinarySearchTemplate();
-            // 这里就是在计数比m要大的最小的数有多少
-            // 返回行下标用于累加
+            // 这里就是在计数在m左边的数有多少
+            // 返回行下标用于累加（返回m所在下标，就是m左边的数有多少）
             count += template.upperBound(nums, m, 0, nums.length);
         }
+        // 返回在m左边的数有多少个
         return count;
     }
 }

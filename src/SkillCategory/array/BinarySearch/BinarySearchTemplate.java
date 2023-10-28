@@ -58,6 +58,7 @@ public class BinarySearchTemplate {
 
     /**
      * first index of i, such that A[i] >= x
+     * 寻找x的左边界
      */
     public int lowerBound(int[] nums, int target, int left, int right) {
         while (left < right) {
@@ -73,6 +74,7 @@ public class BinarySearchTemplate {
 
     /**
      * first index of i, such that A[i] > x
+     * 也就是在x左边的数有多少个
      */
     public int upperBound(int[] nums, int target, int left, int right) {
         while (left < right) {
