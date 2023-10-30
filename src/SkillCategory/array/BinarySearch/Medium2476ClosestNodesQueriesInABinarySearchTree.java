@@ -38,7 +38,7 @@ public class Medium2476ClosestNodesQueriesInABinarySearchTree {
     }
 
     /**
-     * 二叉搜索数，左中右的前序遍历下来就是从小到大排序好的
+     * 二叉搜索数，左中右的中序遍历下来就是从小到大排序好的
      *
      * @param root
      * @param list
