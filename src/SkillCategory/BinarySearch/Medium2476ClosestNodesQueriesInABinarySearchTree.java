@@ -1,4 +1,4 @@
-package SkillCategory.array.BinarySearch;
+package SkillCategory.BinarySearch;
 
 import SkillCategory.tree.TreeNode;
 
