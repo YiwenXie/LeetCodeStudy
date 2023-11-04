@@ -8,6 +8,7 @@ package SkillCategory.BinarySearch;
 public class Hard2141MaximumRunningTimeOfNComputers {
 
     /**
+     * Solution: Binary Search + Check
      * Time complexity: O(Slogn) where S = sum(batteries)
      * Space complexity: O(1)
      *
@@ -17,6 +18,7 @@ public class Hard2141MaximumRunningTimeOfNComputers {
      */
     public long maxRunTime(int n, int[] batteries) {
         long left = 1;
+        // every battery which can support all computer simultaneously power sum
         long right = 0;
         for (int battery : batteries
         ) {
@@ -26,13 +28,14 @@ public class Hard2141MaximumRunningTimeOfNComputers {
         while (left < right) {
             long mid = left + (right - left) / 2;
             //  check the total battery powers T = sum(min(m, batteries[i])), if T >= m * n,
-            //  it means there is a way (doesn’t need to figure out how) to run n computers for m minutes by fully unitize those batteries.
+            //  it means there is a way to run n computers for m minutes by fully unitize those batteries.
             // Proof: If T >= m*n holds, there are two cases:
             //    1.There are only n batteries, can not swap, but each of them has power >= m.
             //    2.At least one of the batteries have power less than m,
             //      but there are more than n batteries and total power is sufficient, we can swap them with others.
             // smallest m that does not fit.
-            if (n * mid > f(batteries, mid)) {
+            long T = f(batteries, mid);
+            if (n * mid > T) {
                 right = mid;
             } else {
                 left = mid + 1;
@@ -43,14 +46,15 @@ public class Hard2141MaximumRunningTimeOfNComputers {
 
     /**
      * @param batteries
-     * @param mid       need to required minutes
-     * @return sum(min ( m, batteries[i]))
+     * @param mid       minutes of all computers run time simultaneously
+     * @return all required battery power sum(min ( m, batteries[i]))
      */
     public long f(int[] batteries, long mid) {
         long time = 0;
         for (int battery : batteries
         ) {
-            // minutes that every battery can run one computer
+            // must assure all computers use different battery in every minute
+            // that required battery power less than total time mid
             time += Math.min(battery, mid);
         }
         return time;
