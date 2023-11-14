@@ -38,8 +38,8 @@ public class Medium378KthSmallestElementInASortedMatrix {
         int right = matrix[matrix.length - 1][matrix[0].length - 1] + 1;
         while (left < right) {
             int mid = left + (right - left) / 2;
-            // f(matrix, mid)返回在m左边的数有多少个，
-            // 找到一个最小的count使得count>=k
+            // f(matrix, mid)返回不大于m的数有多少
+            // 找到一个最小的mid使得f(matrix, mid)即mid排在第几>=k
             if (f(matrix, mid) >= k) {
                 right = mid;
             } else {
@@ -54,12 +54,22 @@ public class Medium378KthSmallestElementInASortedMatrix {
         int count = 0;
         for (int[] nums : matrix
         ) {
-            BinarySearchTemplate template = new BinarySearchTemplate();
-            // 这里就是在计数在m左边的数有多少
-            // 返回行下标用于累加（返回m所在下标，就是m左边的数有多少）
-            count += template.upperBound(nums, m, 0, nums.length);
+            // 不大于m的数有多少
+            count += upperBound(nums, m, 0, nums.length);
         }
-        // 返回在m左边的数有多少个
         return count;
+    }
+
+    public int upperBound(int[] nums, int target, int left, int right) {
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] > target) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        // 返回 ≤ target的数有多少，即mid = left - 1，然后长度/元素个数 = index + 1 = left - 1 + 1 = left
+        return left;
     }
 }
