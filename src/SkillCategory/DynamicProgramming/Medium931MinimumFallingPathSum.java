@@ -87,4 +87,30 @@ public class Medium931MinimumFallingPathSum {
         }
         return result;
     }
+
+    public int minFallingPathSum3(int[][] matrix) {
+        int n = matrix.length;
+        int[][] dp = new int[n + 1][n + 1];
+        for (int i = 1; i < n + 1; i++) {
+            Arrays.fill(dp[i], Integer.MAX_VALUE);
+        }
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j < n + 1; j++) {
+                if (i == 1) {
+                    dp[i][j] = matrix[i - 1][j - 1];
+                } else {
+                    if (j + 1 >= n + 1) {
+                        dp[i][j] = matrix[i - 1][j - 1] + Math.min(dp[i - 1][j - 1], dp[i - 1][j]);
+                    } else {
+                        dp[i][j] = matrix[i - 1][j - 1] + Math.min(dp[i - 1][j - 1], Math.min(dp[i - 1][j], dp[i - 1][j + 1]));
+                    }
+                }
+            }
+        }
+        int result = Integer.MAX_VALUE;
+        for (int i = 1; i < n + 1; i++) {
+            result = Math.min(dp[n][i], result);
+        }
+        return result;
+    }
 }

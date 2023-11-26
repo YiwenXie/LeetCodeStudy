@@ -34,7 +34,7 @@ public class Hard354RussianDollEnvelopes {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < i; j++) {
                 // focus on height dimensions, find the longest increasing subsequence for height
-                if (envelopes[i][1] > envelopes[j][1]) {
+                if (envelopes[i][0] > envelopes[j][0] && envelopes[i][1] > envelopes[j][1]) {
                     dp[i] = Math.max(dp[i], dp[j] + 1);
                 }
             }
