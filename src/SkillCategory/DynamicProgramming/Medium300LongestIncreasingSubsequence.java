@@ -22,6 +22,8 @@ public class Medium300LongestIncreasingSubsequence {
         int[] dp = new int[nums.length];
         // fill dp initial value 1 because shortest subsequence length is 1 that means contains itself
         Arrays.fill(dp, 1);
+        // definite final result variable
+        int result = Integer.MIN_VALUE;
         // first for to set dp[i]'s result
         for (int i = 0; i < n; i++) {
             // second for to get dp[i]'s final solution
@@ -36,13 +38,8 @@ public class Medium300LongestIncreasingSubsequence {
                     dp[i] = Math.max(dp[i], dp[j] + 1);
                 }
             }
-        }
-        // definite final result variable
-        int result = Integer.MIN_VALUE;
-        for (int value : dp
-        ) {
             // get longest subsequence length
-            result = Math.max(value, result);
+            result = Math.max(dp[i], result);
         }
         return result;
     }
