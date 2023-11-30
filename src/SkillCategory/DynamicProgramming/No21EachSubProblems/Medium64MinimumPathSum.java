@@ -1,4 +1,4 @@
-package SkillCategory.DynamicProgramming;
+package SkillCategory.DynamicProgramming.No21EachSubProblems;
 
 import java.util.Arrays;
 
