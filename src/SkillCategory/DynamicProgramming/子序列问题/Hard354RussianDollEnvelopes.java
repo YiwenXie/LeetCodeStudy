@@ -1,4 +1,4 @@
-package SkillCategory.DynamicProgramming;
+package SkillCategory.DynamicProgramming.子序列问题;
 
 import java.util.Arrays;
 
