@@ -86,11 +86,11 @@ public class Medium72EditDistance {
         int[][] dp = new int[m + 1][n + 1];
         // create base case
         for (int i = 1; i < m + 1; i++) {
-            // the maximum edit num that s1[0..i] to s2[0] is i
+            // the minimum edit num that s1[0..i] to s2[0] is i
             dp[i][0] = i;
         }
         for (int j = 1; j < n + 1; j++) {
-            // the maximum edit num that s1[0] to s2[0..j] is j
+            // the minimum edit num that s1[0] to s2[0..j] is j
             dp[0][j] = j;
         }
         // start at 1

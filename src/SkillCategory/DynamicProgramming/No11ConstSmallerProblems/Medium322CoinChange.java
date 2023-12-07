@@ -1,4 +1,4 @@
-package SkillCategory.DynamicProgramming;
+package SkillCategory.DynamicProgramming.No11ConstSmallerProblems;
 
 import java.util.Arrays;
 
