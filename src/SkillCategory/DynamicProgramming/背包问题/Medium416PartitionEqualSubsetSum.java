@@ -149,9 +149,14 @@ public class Medium416PartitionEqualSubsetSum {
         int[] dp = new int[sum + 1];
         // base case
         dp[0] = 0;
+        // 如果使用一维dp数组，物品遍历的for循环放在外层，
+        // 遍历背包的for循环放在内层，且内层for循环倒叙遍历！
         for (int i = 0; i < n; i++) {
             for (int j = sum; j >= nums[i]; j--) {
                 dp[j] = Math.max(dp[j], dp[j - nums[i]] + nums[i]);
+                //剪枝一下，每一次完成內層的for-loop，立即檢查是否dp[target] == target，優化時間複雜度（26ms -> 20ms）
+                if (dp[sum] == sum)
+                    return true;
             }
         }
         // when backpack's capacity is sum, backpack can or cannot be filled?
