@@ -45,7 +45,7 @@ public class Medium416PartitionEqualSubsetSum {
      * @param nums
      * @return
      */
-    public boolean canPartition2(int[] nums) {
+    public boolean canPartition1(int[] nums) {
         int n = nums.length;
         // declare a variable that represents nums array' sum
         int sum = 0;
@@ -96,7 +96,7 @@ public class Medium416PartitionEqualSubsetSum {
      * @param nums
      * @return
      */
-    public boolean canPartition3(int[] nums) {
+    public boolean canPartition2(int[] nums) {
         int n = nums.length;
         // declare a variable that represents nums array' sum
         int sum = 0;
@@ -125,7 +125,48 @@ public class Medium416PartitionEqualSubsetSum {
     }
 
     /**
-     * Solution: DP backpack
+     * Solution: DP backpack one dimensional array
+     * Time Complexity: O(n\*sum)
+     * Space Complexity: O(sum)
+     *
+     * @param nums
+     * @return
+     */
+    public boolean canPartition3(int[] nums) {
+        int n = nums.length;
+        // declare a variable that represents nums array' sum
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += nums[i];
+        }
+        // if sum is odd not divided by 2, it cannot be divided into two subset that value is equal
+        if (sum % 2 != 0) {
+            return false;
+        }
+        // sum variable is represents the divided subset sum
+        sum = sum / 2;
+        // dp[j] represents when backpack's capacity is j, the maximum value that backpack can be filled
+        int[] dp = new int[sum + 1];
+        // base case
+        for (int i = sum; i >= nums[0]; i--) {
+            dp[i] = nums[0];
+        }
+        // 如果使用一维dp数组，物品遍历的for循环放在外层，
+        // 遍历背包的for循环放在内层，且内层for循环倒叙遍历！
+        for (int i = 1; i < n; i++) {
+            for (int j = sum; j >= nums[i]; j--) {
+                dp[j] = Math.max(dp[j], dp[j - nums[i]] + nums[i]);
+                //剪枝一下，每一次完成內層的for-loop，立即檢查是否dp[target] == target，優化時間複雜度（26ms -> 20ms）
+                if (dp[sum] == sum)
+                    return true;
+            }
+        }
+        // when backpack's capacity is sum, backpack can or cannot be filled?
+        return dp[sum] == sum;
+    }
+
+    /**
+     * Solution: DP backpack two-dimensional array
      * Time Complexity: O(n\*sum)
      * Space Complexity: O(sum)
      *
@@ -146,20 +187,26 @@ public class Medium416PartitionEqualSubsetSum {
         // sum variable is represents the divided subset sum
         sum = sum / 2;
         // dp[j] represents when backpack's capacity is j, the maximum value that backpack can be filled
-        int[] dp = new int[sum + 1];
+        int[][] dp = new int[n][sum + 1];
         // base case
-        dp[0] = 0;
+        for (int i = sum; i >= nums[0]; i--) {
+            dp[0][i] = nums[0];
+        }
         // 如果使用一维dp数组，物品遍历的for循环放在外层，
         // 遍历背包的for循环放在内层，且内层for循环倒叙遍历！
-        for (int i = 0; i < n; i++) {
-            for (int j = sum; j >= nums[i]; j--) {
-                dp[j] = Math.max(dp[j], dp[j - nums[i]] + nums[i]);
+        for (int i = 1; i < n; i++) {
+            for (int j = 1; j <= sum; j++) {
+                if (j < nums[i]) {
+                    dp[i][j] = dp[i - 1][j];
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - nums[i]] + nums[i]);
+                }
                 //剪枝一下，每一次完成內層的for-loop，立即檢查是否dp[target] == target，優化時間複雜度（26ms -> 20ms）
-                if (dp[sum] == sum)
+                if (dp[i][sum] == sum)
                     return true;
             }
         }
         // when backpack's capacity is sum, backpack can or cannot be filled?
-        return dp[sum] == sum;
+        return dp[n - 1][sum] == sum;
     }
 }
