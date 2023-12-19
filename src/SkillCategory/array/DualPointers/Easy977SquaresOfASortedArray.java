@@ -1,4 +1,4 @@
-package SkillCategory.DualPointers;
+package SkillCategory.array.DualPointers;
 
 import java.util.Arrays;
 

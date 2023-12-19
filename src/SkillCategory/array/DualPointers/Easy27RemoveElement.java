@@ -1,4 +1,4 @@
-package SkillCategory.DualPointers;
+package SkillCategory.array.DualPointers;
 
 /**
  * @author Yiwen Xie
