@@ -7,7 +7,7 @@ import java.util.HashMap;
  * @description
  * @date 2023/12/21 19:00
  */
-public class Easy383RansomNote {
+public class Easy383_RansomNote {
     /**
      * Solution: hashtable
      *
@@ -55,8 +55,7 @@ public class Easy383RansomNote {
         for (char c : ransomNote.toCharArray()) {
             hash[c - 'a']--;
         }
-        for (int count : hash
-        ) {
+        for (int count : hash) {
             if (count < 0) {
                 return false;
             }

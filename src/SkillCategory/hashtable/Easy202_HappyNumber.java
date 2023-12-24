@@ -8,7 +8,7 @@ import java.util.Set;
  * @description
  * @date 2023/12/19 20:19
  */
-public class Easy202HappyNumber {
+public class Easy202_HappyNumber {
     public boolean isHappy(int n) {
         String[] nums = String.valueOf(n).split("");
         int sum = 0;
@@ -71,11 +71,11 @@ public class Easy202HappyNumber {
      */
     public boolean isHappy3(int n) {
         int slow = n;
-        int fast = getNext(n);
-        while (fast != 1 && slow != fast) {
-            slow = getNext(n);
-            fast = getNext(getNext(n));
-        }
-        return fast == 1;
+        int fast = n;
+        do {
+            slow = getNext(slow);
+            fast = getNext(getNext(fast));
+        } while (slow != fast);
+        return slow == 1;
     }
 }
