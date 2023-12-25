@@ -5,7 +5,7 @@ package SkillCategory.DynamicProgramming.背包问题;
  * @description
  * @date 2023/12/10 14:54
  */
-public class Medium1049LastStoneWeightII {
+public class Medium1049_LastStoneWeightII {
 
     /**
      * Solution: DP one dimensional array
