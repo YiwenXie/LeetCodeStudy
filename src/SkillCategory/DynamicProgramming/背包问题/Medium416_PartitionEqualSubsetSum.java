@@ -5,7 +5,7 @@ package SkillCategory.DynamicProgramming.背包问题;
  * @description
  * @date 2023/12/9 9:24
  */
-public class Medium416PartitionEqualSubsetSum {
+public class Medium416_PartitionEqualSubsetSum {
     /**
      * Solution: Prefix sum
      * 72 / 141 个通过的测试用例

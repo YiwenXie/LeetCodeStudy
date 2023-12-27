@@ -1,6 +1,6 @@
 package SkillCategory.DynamicProgramming.背包问题;
 
-public class Medium474OnesAndZeroes {
+public class Medium474_OnesAndZeroes {
     public int findMaxForm(String[] strs, int m, int n) {
         // backpack have two-dimensional weight
         int[][] dp = new int[m + 1][n + 1];
