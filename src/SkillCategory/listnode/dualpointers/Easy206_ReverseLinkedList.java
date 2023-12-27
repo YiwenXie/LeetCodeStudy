@@ -7,7 +7,7 @@ import SkillCategory.listnode.ListNode;
  * @description
  * @date 2023/12/12 18:56
  */
-public class Easy206ReverseLinkedList {
+public class Easy206_ReverseLinkedList {
     /**
      * Solution: Dual Pointers
      * Time complexity: O(n)
