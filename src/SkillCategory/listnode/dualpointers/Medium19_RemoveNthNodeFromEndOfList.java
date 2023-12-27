@@ -2,7 +2,7 @@ package SkillCategory.listnode.dualpointers;
 
 import SkillCategory.listnode.ListNode;
 
-public class Medium19RemoveNthNodeFromEndOfList {
+public class Medium19_RemoveNthNodeFromEndOfList {
     public ListNode removeNthFromEnd(ListNode head, int n) {
         // delete Nth from end need to find N+1th from end
         // set virtual head node
