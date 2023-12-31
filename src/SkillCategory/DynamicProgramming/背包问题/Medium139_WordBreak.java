@@ -114,6 +114,7 @@ public class Medium139_WordBreak {
         int n = s.length();
         // dp[i] represents s.subString.length == i
         boolean[] dp = new boolean[n + 1];
+        // 必须初始化为0，否则答案会一直为false
         dp[0] = true;
         for (int i = 1; i < n + 1; i++) {
             for (String word : wordDict) {

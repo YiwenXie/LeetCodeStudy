@@ -16,6 +16,7 @@ public class Medium151_ReverseWordsInAString {
      * @return
      */
     public String reverseWords(String s) {
+        s = s.trim();
         String[] strings = s.split(" ");
         StringBuilder sb = new StringBuilder();
         for (int i = strings.length - 1; i >= 0; i--) {

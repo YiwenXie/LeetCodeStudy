@@ -34,7 +34,7 @@ public class MaxQueue {
     }
 
     public int pop_front() {
-        if (q.isEmpty()) {
+        if (q.isEmpty() || d.isEmpty()) {
             return -1;
         }
         int ans = q.poll();
