@@ -7,7 +7,7 @@ import java.util.Arrays;
  * @description
  * @date 2023/12/10 14:24
  */
-public class Easy977SquaresOfASortedArray {
+public class Easy977_SquaresOfASortedArray {
     /**
      * Solution: Brute force
      * Time complexity: O(n + logn)
@@ -41,12 +41,10 @@ public class Easy977SquaresOfASortedArray {
             int a = nums[left] * nums[left];
             int b = nums[right] * nums[right];
             if (a >= b) {
-                result[p] = a;
-                p--;
+                result[p--] = a;
                 left++;
             } else {
-                result[p] = b;
-                p--;
+                result[p--] = b;
                 right--;
             }
         }
