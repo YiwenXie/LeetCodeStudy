@@ -4,7 +4,8 @@ import java.util.*;
 
 public class Hard239_SlidingWindowMaximum {
     /**
-     * Solution: priority queue exceed limit time
+     * Solution: priority queue
+     * Result: exceed limit time
      * @param nums
      * @param k
      * @return
@@ -38,7 +39,7 @@ public class Hard239_SlidingWindowMaximum {
             maxQueue.push(num);
             if (maxQueue.size == k) {
                 res[count++] = maxQueue.getMaxValue();
-                maxQueue.popFirst();
+                maxQueue.pop();
             }
         }
         return res;
@@ -83,7 +84,7 @@ public class Hard239_SlidingWindowMaximum {
             size++;
         }
 
-        public void popFirst() {
+        public void pop() {
             if (deque.isEmpty() || queue.isEmpty()) {
                 return;
             }
@@ -92,6 +93,7 @@ public class Hard239_SlidingWindowMaximum {
             if (value == deque.peekFirst()) {
                 deque.pollFirst();
             }
+            queue.poll();
             size--;
         }
     }
