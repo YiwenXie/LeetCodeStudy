@@ -1,11 +1,11 @@
-package SkillCategory.BinarySearch;
+package SkillCategory.array.BinarySearch;
 
 /**
  * @author Yiwen Xie
  * @description 69. Sqrt(x)
  * @date 2023/10/25 21:52
  */
-public class Easy69Sqrt {
+public class Easy69_Sqrt {
 
     public static void main(String[] args) {
         // Integer类取值和int 类型取值一致，取值范围是从-2147483648 至2147483647(-2^31至2^31-1) ，包括-2147483648 和2147483647这两个数字。

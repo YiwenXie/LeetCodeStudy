@@ -1,11 +1,11 @@
-package SkillCategory.BinarySearch;
+package SkillCategory.array.BinarySearch;
 
 /**
  * @author Yiwen Xie
  * @description
  * @date 2023/11/3 20:55
  */
-public class Hard2141MaximumRunningTimeOfNComputers {
+public class Hard2141_MaximumRunningTimeOfNComputers {
 
     /**
      * Solution: Binary Search + Check

@@ -1,4 +1,4 @@
-package SkillCategory.BinarySearch;
+package SkillCategory.array.BinarySearch;
 
 /**
  * @author Yiwen Xie

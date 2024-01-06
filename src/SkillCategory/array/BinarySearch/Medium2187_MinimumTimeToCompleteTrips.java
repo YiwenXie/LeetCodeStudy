@@ -1,11 +1,11 @@
-package SkillCategory.BinarySearch;
+package SkillCategory.array.BinarySearch;
 
 /**
  * @author Yiwen Xie
  * @description
  * @date 2023/11/3 20:35
  */
-public class Medium2187MinimumTimeToCompleteTrips {
+public class Medium2187_MinimumTimeToCompleteTrips {
 
     /**
      * Time complexity: O(nlogm), where m ~= 1e15

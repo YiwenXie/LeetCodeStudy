@@ -1,11 +1,11 @@
-package SkillCategory.BinarySearch;
+package SkillCategory.array.BinarySearch;
 
 /**
  * @author Yiwen Xie
  * @description
  * @date 2023/10/28 21:20
  */
-public class Easy35SearchInsertPosition {
+public class Easy35_SearchInsertPosition {
     public int searchInsert(int[] nums, int target) {
         int left = 0;
         int right = nums.length;

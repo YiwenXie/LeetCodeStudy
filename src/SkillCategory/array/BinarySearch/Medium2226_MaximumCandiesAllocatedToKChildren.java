@@ -1,11 +1,11 @@
-package SkillCategory.BinarySearch;
+package SkillCategory.array.BinarySearch;
 
 /**
  * @author Yiwen Xie
  * @description
  * @date 2023/11/1 19:37
  */
-public class Medium2226MaximumCandiesAllocatedToKChildren {
+public class Medium2226_MaximumCandiesAllocatedToKChildren {
     /**
      * Solution:  Binary Search
      * Time complexity: O(nlogm) where n is number of piles, m is sum(candies) / k.

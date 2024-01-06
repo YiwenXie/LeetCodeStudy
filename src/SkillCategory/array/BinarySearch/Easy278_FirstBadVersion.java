@@ -1,11 +1,11 @@
-package SkillCategory.BinarySearch;
+package SkillCategory.array.BinarySearch;
 
 /**
  * @author Yiwen Xie
  * @description
  * @date 2023/10/25 22:06
  */
-public class Easy278FirstBadVersion {
+public class Easy278_FirstBadVersion {
 
     /**
      * 1 <= bad <= n <= 231 - 1

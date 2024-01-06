@@ -1,11 +1,11 @@
-package SkillCategory.BinarySearch;
+package SkillCategory.array.BinarySearch;
 
 /**
  * @author Yiwen Xie
  * @description
  * @date 2023/10/24 22:08
  */
-public class Medium2560HouseRobberIV {
+public class Medium2560_HouseRobberIV {
 
     /**
      * 1 <= nums.length <= 105

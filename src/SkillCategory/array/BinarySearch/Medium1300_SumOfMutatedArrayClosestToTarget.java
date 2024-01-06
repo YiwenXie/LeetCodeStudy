@@ -1,4 +1,4 @@
-package SkillCategory.BinarySearch;
+package SkillCategory.array.BinarySearch;
 
 import java.util.Arrays;
 
@@ -7,10 +7,10 @@ import java.util.Arrays;
  * @description
  * @date 2023/11/10 21:57
  */
-public class Medium1300SumOfMutatedArrayClosestToTarget {
+public class Medium1300_SumOfMutatedArrayClosestToTarget {
 
     public static void main(String[] args) {
-        Medium1300SumOfMutatedArrayClosestToTarget closestToTarget = new Medium1300SumOfMutatedArrayClosestToTarget();
+        Medium1300_SumOfMutatedArrayClosestToTarget closestToTarget = new Medium1300_SumOfMutatedArrayClosestToTarget();
         int[] arr = new int[]{4, 9, 3};
         int target = 10;
         System.out.println("arr案例输入:" + Arrays.toString(arr));

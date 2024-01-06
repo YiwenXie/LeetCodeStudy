@@ -2,7 +2,7 @@ package SkillCategory.Sort;
 
 import java.util.Random;
 
-public class Medium912_SortAnArray {
+public class Medium912_SortAnArray_FastSort {
 
     public int[] sortArray(int[] nums) {
         shuffle(nums);

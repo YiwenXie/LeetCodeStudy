@@ -1,11 +1,11 @@
-package SkillCategory.BinarySearch;
+package SkillCategory.array.BinarySearch;
 
 /**
  * @author Yiwen Xie
  * @description
  * @date 2023/10/26 22:59
  */
-public class Medium875KokoEatingBananas {
+public class Medium875_KokoEatingBananas {
 
     /**
      * 1 <= piles.length <= 104, piles.length <= h <= 109, 1 <= piles[i] <= 109

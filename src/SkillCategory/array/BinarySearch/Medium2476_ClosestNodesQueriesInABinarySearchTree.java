@@ -1,4 +1,4 @@
-package SkillCategory.BinarySearch;
+package SkillCategory.array.BinarySearch;
 
 import SkillCategory.tree.TreeNode;
 
@@ -10,7 +10,7 @@ import java.util.List;
  * @description
  * @date 2023/10/30 20:00
  */
-public class Medium2476ClosestNodesQueriesInABinarySearchTree {
+public class Medium2476_ClosestNodesQueriesInABinarySearchTree {
     /**
      * @param root
      * @param queries

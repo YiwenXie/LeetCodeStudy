@@ -1,4 +1,4 @@
-package SkillCategory.BinarySearch;
+package SkillCategory.array.BinarySearch;
 
 import java.util.Arrays;
 
@@ -7,7 +7,7 @@ import java.util.Arrays;
  * @description
  * @date 2023/10/31 21:41
  */
-public class Easy2389LongestSubsequenceWithLimitedSum {
+public class Easy2389_LongestSubsequenceWithLimitedSum {
     /**
      * Solution: Sort + PrefixSum + Binary Search
      * Time complexity: O(nlogn + mlogn)

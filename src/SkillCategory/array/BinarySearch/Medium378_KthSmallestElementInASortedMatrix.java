@@ -1,4 +1,4 @@
-package SkillCategory.BinarySearch;
+package SkillCategory.array.BinarySearch;
 
 import java.util.Arrays;
 
@@ -7,10 +7,10 @@ import java.util.Arrays;
  * @description
  * @date 2023/10/28 15:59
  */
-public class Medium378KthSmallestElementInASortedMatrix {
+public class Medium378_KthSmallestElementInASortedMatrix {
 
     public static void main(String[] args) {
-        Medium378KthSmallestElementInASortedMatrix kthSmallest = new Medium378KthSmallestElementInASortedMatrix();
+        Medium378_KthSmallestElementInASortedMatrix kthSmallest = new Medium378_KthSmallestElementInASortedMatrix();
         int[][] matrix = new int[][]{{1, 5, 9}, {10, 11, 13}, {12, 13, 15}};
         int k = 8;
         System.out.println("matrix案例输入:" + Arrays.deepToString(matrix));
