@@ -113,10 +113,10 @@ public class Medium416_PartitionEqualSubsetSum {
         boolean[] dp = new boolean[sum + 1];
         // base case
         dp[0] = true;
-        for (int i = 0; i < n; i++) {
+        for (int num : nums) {
             for (int j = sum; j >= 0; j--) {
-                if (j - nums[i] >= 0) {
-                    dp[j] = dp[j] || dp[j - nums[i]];
+                if (j - num >= 0) {
+                    dp[j] = dp[j] || dp[j - num];
                 }
             }
         }
@@ -148,14 +148,14 @@ public class Medium416_PartitionEqualSubsetSum {
         // dp[j] represents when backpack's capacity is j, the maximum value that backpack can be filled
         int[] dp = new int[sum + 1];
         // base case
-        for (int i = sum; i >= nums[0]; i--) {
-            dp[i] = nums[0];
-        }
+//        for (int i = sum; i >= nums[0]; i--) {
+//            dp[i] = nums[0];
+//        }
         // 如果使用一维dp数组，物品遍历的for循环放在外层，
         // 遍历背包的for循环放在内层，且内层for循环倒叙遍历！
-        for (int i = 1; i < n; i++) {
-            for (int j = sum; j >= nums[i]; j--) {
-                dp[j] = Math.max(dp[j], dp[j - nums[i]] + nums[i]);
+        for (int num : nums) {
+            for (int j = sum; j >= num; j--) {
+                dp[j] = Math.max(dp[j], dp[j - num] + num);
                 //剪枝一下，每一次完成內層的for-loop，立即檢查是否dp[target] == target，優化時間複雜度（26ms -> 20ms）
                 if (dp[sum] == sum)
                     return true;
