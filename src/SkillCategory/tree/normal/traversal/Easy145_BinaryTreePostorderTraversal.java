@@ -1,4 +1,4 @@
-package SkillCategory.tree.normal.basic;
+package SkillCategory.tree.normal.traversal;
 
 import SkillCategory.tree.TreeNode;
 
