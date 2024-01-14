@@ -25,14 +25,14 @@ public class Medium146_LRUCache {
         // key -> Node(key, val)
         private HashMap<Integer, Node> map;
         // Node(k1, v1) <-> Node(k2, v2)...
-        private DoubleList cache;
+        private NodeList cache;
         // 最大容量
         private int cap;
 
         public LRUCache(int capacity) {
             this.cap = capacity;
             map = new HashMap<>();
-            cache = new DoubleList();
+            cache = new NodeList();
 
         }
 
@@ -42,7 +42,7 @@ public class Medium146_LRUCache {
             }
             // 将该数据提升为最近使用的
             makeRecently(key);
-            return map.get(key).value;
+            return map.get(key).val;
         }
 
         public void put(int key, int value) {
@@ -53,7 +53,7 @@ public class Medium146_LRUCache {
                 addRecently(key, value);
                 return;
             }
-            if (cap == cache.size()) {
+            if (cap == cache.size) {
                 // 删除最久未使用的元素
                 removeLeastRecently();
             }
@@ -102,6 +102,58 @@ public class Medium146_LRUCache {
             // 同时别忘了从 map 中删除它的 key
             int deletedKey = deletedNode.key;
             map.remove(deletedKey);
+        }
+
+        class NodeList {
+            private Node head;
+            private Node tail;
+            public int size;
+
+            public NodeList() {
+                this.head = new Node();
+                this.tail = new Node();
+                this.size = 0;
+                head.next = tail;
+                tail.pre = head;
+            }
+
+            public void addLast(Node node) {
+                node.pre = tail.pre;
+                node.next = tail;
+                tail.pre.next = node;
+                tail.pre = node;
+                size++;
+            }
+
+            public Node removeFirst() {
+                if (head.next == tail) {
+                    return null;
+                }
+                Node node = head.next;
+                remove(node);
+                return node;
+            }
+
+            public void remove(Node node) {
+                node.pre.next = node.next;
+                node.next.pre = node.pre;
+                size--;
+            }
+        }
+
+        class Node {
+            public int key;
+            public int val;
+            private Node pre;
+            private Node next;
+
+            public Node() {
+            }
+
+            public Node(int key, int val) {
+                this.key = key;
+                this.val = val;
+            }
         }
     }
 
