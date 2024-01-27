@@ -1,4 +1,4 @@
-package SkillCategory.listnode.dualpointers;
+package SkillCategory.listnode.reverse;
 
 import SkillCategory.listnode.ListNode;
 
