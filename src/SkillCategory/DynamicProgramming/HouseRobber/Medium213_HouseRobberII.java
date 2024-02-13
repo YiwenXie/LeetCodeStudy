@@ -9,12 +9,14 @@ public class Medium213_HouseRobberII {
 
     public int rob(int[] nums) {
         int n = nums.length;
-        if (n == 2) {
-            return Math.max(nums[0], nums[1]);
+        if (n == 1) {
+            return nums[0];
         }
         // start 0, end n - 2 考虑是否偷第一间房，但绝对不偷最后一间房
         // start 1, end n - 1 决定不偷第一间房，但考虑是否偷最后一间房
-        return Math.max(toRob(nums, 0, n - 2), toRob(nums, 1, n - 1));
+//        return Math.max(toRob(nums, 0, n - 2), toRob(nums, 1, n - 1));
+        // constant optimal
+        return Math.max(toRob2(nums, 0, n - 2), toRob2(nums, 1, n - 1));
     }
 
     private int toRob(int[] nums, int start, int end) {
@@ -28,5 +30,19 @@ public class Medium213_HouseRobberII {
             dp[i] = Math.max(dp[i - 2] + nums[i], dp[i - 1]);
         }
         return dp[end];
+    }
+
+    private int toRob2(int[] nums, int start, int end) {
+        if (start >= end) {
+            return nums[start];
+        }
+        int a = nums[start];
+        int b = Math.max(nums[start], nums[start + 1]);
+        for (int i = start + 2; i <= end; i++) {
+            int c = Math.max(a + nums[i], b);
+            a = b;
+            b = c;
+        }
+        return b;
     }
 }
