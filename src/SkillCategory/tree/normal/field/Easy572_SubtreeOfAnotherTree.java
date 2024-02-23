@@ -17,8 +17,10 @@ public class Easy572_SubtreeOfAnotherTree {
         if (root == null) {
             return false;
         }
-        return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot) ||
-                isSameTree(root, subRoot);
+        if (isSameTree(root, subRoot)) {
+            return true;
+        }
+        return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
     }
 
     private boolean isSameTree(TreeNode p, TreeNode q) {

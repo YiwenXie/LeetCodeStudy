@@ -5,7 +5,7 @@ package SkillCategory.DynamicProgramming.子序列问题;
  * @description
  * @date 2023/12/3 9:14
  */
-public class Medium53MaximumSubarray {
+public class Medium53_MaximumSubarray {
 
     /**
      * Solution: slide window
