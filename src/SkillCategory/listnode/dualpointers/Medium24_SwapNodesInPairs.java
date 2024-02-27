@@ -2,7 +2,7 @@ package SkillCategory.listnode.dualpointers;
 
 import SkillCategory.listnode.ListNode;
 
-public class Medium24SwapNodesInPairs {
+public class Medium24_SwapNodesInPairs {
     public ListNode swapPairs(ListNode head) {
         ListNode firstNode = null;
         ListNode secondNode = null;
