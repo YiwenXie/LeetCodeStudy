@@ -1,4 +1,4 @@
-package SkillCategory.string.SildeWindow;
+package SkillCategory.SildeWindow;
 
 import java.util.HashMap;
 
