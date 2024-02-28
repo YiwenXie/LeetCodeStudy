@@ -1,4 +1,4 @@
-package SkillCategory.array.SlidingWindow;
+package SkillCategory.SildeWindow;
 
 /**
  * @author Yiwen Xie
