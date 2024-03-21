@@ -1,4 +1,4 @@
-package SkillCategory.dataconstructdesing.queue;
+package SkillCategory.DataStructureDesign.queue;
 
 import java.util.LinkedList;
 

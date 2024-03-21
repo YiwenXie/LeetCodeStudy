@@ -1,4 +1,4 @@
-package SkillCategory.dataconstructdesing.stackandqueue;
+package SkillCategory.DataStructureDesign.stackandqueue;
 
 import java.util.Deque;
 import java.util.LinkedList;

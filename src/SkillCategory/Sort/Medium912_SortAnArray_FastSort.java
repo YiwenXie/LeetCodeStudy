@@ -14,6 +14,9 @@ public class Medium912_SortAnArray_FastSort {
         Random random = new Random();
         int n = nums.length;
         for (int i = 0; i < n; i++) {
+            // need [i, n - 1]
+            // random.nextInt(n - i) = [0, n - i - 1]
+            // i + random.nextInt(n - i) = i + [0, n - i - 1] = [i, n - 1]
             int j = i + random.nextInt(n - i);
             swap(nums, i, j);
         }
@@ -43,24 +46,24 @@ public class Medium912_SortAnArray_FastSort {
         int j = hi;
         // to make nums[lo, i) <= pivot < nums(j, hi]
         while (i <= j) {
-            // when end, nums[i] > pivot
-            while (i < hi && nums[i] <= pivot) {
+            // when end, nums[i] >= pivot
+            while (i < hi && nums[i] < pivot) {
                 i++;
             }
-            // when end, nums[j] <= pivot
-            while (j > lo && nums[j] > pivot) {
+            // when end, nums[j] < pivot
+            while (j > lo && nums[j] >= pivot) {
                 j--;
             }
             if (i >= j) {
                 break;
             }
-            // when two end, nums[j] <= pivot < nums[i]
+            // when two end, nums[j] < pivot <= nums[i]
             // so need to swap nums[j] and nums[i]
-            // to make nums[lo, i) <= pivot < nums(j, hi]
+            // to make nums[lo, i) < pivot <= nums[j, hi]
             swap(nums, i, j);
         }
-        // when end, i > j or i >= j
-        // need to mark put p to right position
+        // when end i >= j, nums[j] < pivot
+        // to make nums[lo + 1, i] <= pivot <= nums[j, hi]
         swap(nums, lo, j);
         // p's final position
         return j;

@@ -1,4 +1,4 @@
-package SkillCategory.dataconstructdesing;
+package SkillCategory.DataStructureDesign;
 
 import SkillCategory.listnode.ListNode;
 

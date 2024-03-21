@@ -1,4 +1,4 @@
-package SkillCategory.dataconstructdesing.trie;
+package SkillCategory.DataStructureDesign.trie;
 
 import java.util.LinkedList;
 import java.util.List;

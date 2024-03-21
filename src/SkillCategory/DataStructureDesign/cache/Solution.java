@@ -1,4 +1,4 @@
-package SkillCategory.dataconstructdesing.cache;
+package SkillCategory.DataStructureDesign.cache;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;

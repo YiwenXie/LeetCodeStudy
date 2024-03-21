@@ -1,4 +1,4 @@
-package SkillCategory.dataconstructdesing.stack;
+package SkillCategory.DataStructureDesign.stack;
 
 import java.util.HashMap;
 import java.util.Stack;

@@ -1,4 +1,4 @@
-package SkillCategory.dataconstructdesing.trie;
+package SkillCategory.DataStructureDesign.trie;
 
 /**
  * @author ywxie

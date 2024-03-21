@@ -56,4 +56,21 @@ public class Medium114_FlattenBinaryTreeToLinkedList {
         }
         return root;
     }
+
+    public void flatten3(TreeNode root) {
+        TreeNode cur = root;
+        while (cur != null) {
+            if (cur.left != null) {
+                TreeNode next = cur.left;
+                TreeNode pre = next;
+                while (pre.right != null) {
+                    pre = pre.right;
+                }
+                pre.right = cur.right;
+                cur.right = next;
+                cur.left = null;
+            }
+            cur = cur.right;
+        }
+    }
 }

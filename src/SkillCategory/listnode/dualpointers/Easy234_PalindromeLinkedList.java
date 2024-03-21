@@ -37,4 +37,26 @@ public class Easy234_PalindromeLinkedList {
         }
         return pre;
     }
+
+    public boolean isPalindrome2(ListNode head) {
+        if (head == null || head.next == null) {
+            return true;
+        }
+        ListNode fast = head;
+        ListNode slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        ListNode p1 = reverse(slow);
+        ListNode p2 = head;
+        while (p1 != null) {
+            if (p1.val != p2.val) {
+                return false;
+            }
+            p1 = p1.next;
+            p2 = p2.next;
+        }
+        return true;
+    }
 }

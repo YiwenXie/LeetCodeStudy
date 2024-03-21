@@ -86,11 +86,11 @@ public class SortSolution {
     public void fastSort(int[] nums, int lo, int hi){
         /****** 前序遍历位置 ******/
         // 通过交换元素构建分界点 p
-        int p = partition(nums, lo, hi);
-        /************************/
-
-        fastSort(nums, lo, p - 1);
-        fastSort(nums, p + 1, hi);
+//        int p = partition(nums, lo, hi);
+//        /************************/
+//
+//        fastSort(nums, lo, p - 1);
+//        fastSort(nums, p + 1, hi);
     }
 
     /**
@@ -109,7 +109,7 @@ public class SortSolution {
 
         /****** 后序位置 ******/
         // 合并 nums[lo..mid] 和 nums[mid+1..hi]
-        merge(nums, lo, mid, hi);
+//        merge(nums, lo, mid, hi);
         /*********************/
     }
 
