@@ -15,7 +15,7 @@ public class Medium912_SortAnArray_MergeSort {
         }
         int mid = lo + (hi - lo) / 2;
         mergeSort(nums, lo, mid);
-        mergeSort(nums, mid, hi);
+        mergeSort(nums, mid + 1, hi);
         toMerge(nums, lo, mid, hi);
     }
 
