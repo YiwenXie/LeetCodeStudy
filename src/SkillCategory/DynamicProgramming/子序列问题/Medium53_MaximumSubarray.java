@@ -122,4 +122,31 @@ public class Medium53_MaximumSubarray {
         }
         return res;
     }
+
+    /**
+     * Solution: Greedy
+     * 局部最优：当前“连续和”为负数的时候立刻放弃，从下一个元素重新计算“连续和”，因为负数加上下一个元素 “连续和”只会越来越小。
+     * 全局最优：选取最大“连续和”
+     * 局部最优的情况下，并记录最大的“连续和”，可以推出全局最优。
+     * Time complexity: O(n)
+     * Space complexity: O(1)
+     *
+     * @param nums
+     * @return
+     */
+    public int maxSubArray5(int[] nums) {
+        int n = nums.length;
+        int result = Integer.MIN_VALUE;
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += nums[i];
+            if (sum > result) {
+                result = sum;
+            }
+            if (sum <= 0) {
+                sum = 0;
+            }
+        }
+        return result;
+    }
 }
