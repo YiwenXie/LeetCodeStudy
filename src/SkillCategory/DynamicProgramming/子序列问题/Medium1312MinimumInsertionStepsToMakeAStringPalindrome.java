@@ -65,8 +65,6 @@ public class Medium1312MinimumInsertionStepsToMakeAStringPalindrome {
         // problem trans to insert letter to s1 or s2 that make s2 equals to s1
         int[][] dp = new int[n + 1][n + 1];
         String s2 = new StringBuilder(s).reverse().toString();
-        // base case
-
         for (int i = 1; i < n + 1; i++) {
             for (int j = 1; j < n + 1; j++) {
                 if (s.charAt(i - 1) == s2.charAt(j - 1)) {
@@ -78,5 +76,26 @@ public class Medium1312MinimumInsertionStepsToMakeAStringPalindrome {
         }
         int lcs = dp[n][n];
         return n - lcs;
+    }
+
+    /**
+     * 仿照516，变更dp的定义
+     *
+     * @param s
+     * @return
+     */
+    public int minInsertions3(String s) {
+        int n = s.length();
+        int[][] dp = new int[n][n];
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = i + 1; j < n; j++) {
+                if (s.charAt(i) == s.charAt(j)) {
+                    dp[i][j] = dp[i + 1][j - 1];
+                } else {
+                    dp[i][j] = Math.min(dp[i + 1][j], dp[i][j - 1]) + 1;
+                }
+            }
+        }
+        return dp[0][n - 1];
     }
 }

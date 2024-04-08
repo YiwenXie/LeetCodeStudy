@@ -49,7 +49,6 @@ public class Easy222_CountCompleteTreeNodes {
 
         if (leftHeight == rightHeight) {
             return (2 << leftHeight) - 1;
-//            return (int) (Math.pow(2, leftHeight) - 1);
         }
         return countNodes2(root.left) + countNodes2(root.right) + 1;
     }
