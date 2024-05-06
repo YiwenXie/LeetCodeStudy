@@ -7,7 +7,7 @@ import java.util.Arrays;
  * @description
  * @date 2023/11/10 21:23
  */
-public class Medium322CoinChange {
+public class Medium322_CoinChange {
 
     /**
      * Solution: DP

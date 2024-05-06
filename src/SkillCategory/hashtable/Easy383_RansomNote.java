@@ -62,4 +62,20 @@ public class Easy383_RansomNote {
         }
         return true;
     }
+
+    public boolean canConstruct3(String ransomNote, String magazine) {
+        int[] hash = new int[26];
+        for (char c : ransomNote.toCharArray()) {
+            hash[c - 'a']++;
+        }
+        for (char c : magazine.toCharArray()) {
+            hash[c - 'a']--;
+        }
+        for (int i : hash) {
+            if (i > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

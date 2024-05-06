@@ -41,4 +41,39 @@ public class Medium494_TargetSum {
         }
         return dp[left];
     }
+
+    /**
+     * Solution: backtracking
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    int count = 0;
+
+    public int findTargetSumWays2(int[] nums, int target) {
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+        if (Math.abs(target) > sum) {
+            return 0;
+        }
+        if (Math.abs((sum + target)) % 2 != 0) {
+            return 0;
+        }
+        int left = Math.abs(sum + target) / 2;
+        recursion(0, 0, left, nums);
+        return count;
+    }
+
+    private void recursion(int startIndex, int sum, int target, int[] nums) {
+        if (sum == target) {
+            count++;
+            return;
+        }
+        for (int i = startIndex; i < nums.length && sum + nums[i] <= target; i++) {
+            recursion(i + 1, sum + nums[i], target, nums);
+        }
+    }
 }
