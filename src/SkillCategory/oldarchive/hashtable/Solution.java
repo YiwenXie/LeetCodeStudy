@@ -1,4 +1,4 @@
-package DataStructureCategory.hashtable;
+package SkillCategory.oldarchive.hashtable;
 
 import java.util.*;
 import java.util.stream.Collectors;

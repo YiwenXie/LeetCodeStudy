@@ -1,7 +1,5 @@
 package SkillCategory.array.DualPointers;
 
-import DataStructureCategory.listnode.ListNode;
-
 /**
  * @author ywxie
  * @date 2022/4/19 16:31

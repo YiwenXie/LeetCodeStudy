@@ -1,4 +1,4 @@
-package DataStructureCategory.tree.normal;
+package SkillCategory.oldarchive.tree.normal;
 
 import java.util.*;
 
@@ -944,7 +944,8 @@ public class TreeNode {
      */
     String SEP = ",";
     String NULL = "#";
-    // Encodes a DataStructureCategory.tree to a single string.
+
+    // Encodes a SkillCategory.DataStructureCategory.tree to a single string.
     public String serialize(TreeNode root) {
         StringBuilder sb = new StringBuilder();
         serializeHelper(root, sb);
@@ -961,7 +962,7 @@ public class TreeNode {
         serializeHelper(node.right, new StringBuilder(sb));
     }
 
-    // Decodes your encoded data to DataStructureCategory.tree.
+    // Decodes your encoded data to SkillCategory.DataStructureCategory.tree.
     public TreeNode deserialize(String data) {
         if (data.isEmpty()){
             return null;

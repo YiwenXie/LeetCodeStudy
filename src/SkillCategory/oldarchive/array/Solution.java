@@ -1,4 +1,4 @@
-package DataStructureCategory.array;
+package SkillCategory.oldarchive.array;
 
 /**
  * @author ywxie

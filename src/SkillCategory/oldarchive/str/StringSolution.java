@@ -1,4 +1,4 @@
-package DataStructureCategory.str;
+package SkillCategory.oldarchive.str;
 
 import java.util.Arrays;
 

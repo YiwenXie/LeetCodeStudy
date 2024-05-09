@@ -1,4 +1,4 @@
-package DataStructureCategory.stackandqueue;
+package SkillCategory.oldarchive.stackandqueue;
 
 import java.util.*;
 
