@@ -61,4 +61,26 @@ public class Medium790DominoAndTrominoTiling {
         }
         return (int) dp[n];
     }
+
+    public int numTilings3(int n) {
+        int[][] dp = new int[n + 1][4];
+        // i col is not filled
+        dp[0][0] = 0;
+        // i col 1st row is filled
+        dp[0][1] = 0;
+        // i col 2nd row is filled
+        dp[0][2] = 0;
+        // i col is filled
+        dp[0][3] = 1;
+        for (int i = 1; i <= n; i++) {
+            // [|][] can fit this sistuation
+            dp[i][0] = (dp[i - 1][3]) % MOD;
+            // [|][-] and [-][-] need i - 1 [] and [_]
+            dp[i][1] = (dp[i - 1][0] + dp[i - 1][2]) % MOD;
+            // [|][_] and [_][_] need i - 1 [] and [-]
+            dp[i][2] = (dp[i - 1][0] + dp[i - 1][1]) % MOD;
+            dp[i][3] = (((dp[i - 1][0] + dp[i - 1][1]) % MOD + dp[i - 1][2]) % MOD + dp[i - 1][3]) % MOD;
+        }
+        return dp[n][3];
+    }
 }

@@ -102,11 +102,13 @@ public class Medium72EditDistance {
                     dp[i][j] = dp[i - 1][j - 1];
                 } else {
                     // insert operation
-                    // insert j letter to s1's i index before => s1[i + 1] = s2[j] => continue to compare s1[i] and s2[j - 1]
+                    // word2删除一个元素，那么就是以下标i - 1为结尾的word1 与 j-2为结尾的word2的最近编辑距离 再加上一个操作。
+                    // insert s2[j - 1] letter to s1[i - 1] => need s1[i - 1]..s2[j - 2] + insert operation
                     // => dp[i][j - 1] + 1
                     int a = dp[i][j - 1] + 1;
                     // delete operation
-                    // delete i letter to s1 in i index => s1[i] not exit => continue to compare s1[i - 1] and s2[j]
+                    // word1删除一个元素，那么就是以下标i - 2为结尾的word1 与 j-1为结尾的word2的最近编辑距离 再加上一个操作。
+                    // delete s1[i - 1] letter => need s1[i - 2]..s2[j - 1] + deleted operation
                     // => dp[i - 1][j] + 1
                     int b = dp[i - 1][j] + 1;
                     // replace operation

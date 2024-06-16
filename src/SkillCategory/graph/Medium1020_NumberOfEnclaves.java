@@ -5,7 +5,6 @@ import java.util.Queue;
 
 public class Medium1020_NumberOfEnclaves {
 
-    boolean[][] visited;
     int result;
 
     /**
@@ -19,7 +18,6 @@ public class Medium1020_NumberOfEnclaves {
     public int numEnclaves(int[][] grid) {
         int rowSize = grid.length;
         int colSize = grid[0].length;
-        visited = new boolean[rowSize][colSize];
         for (int i = 0; i < rowSize; i++) {
             if (grid[i][0] == 1) {
                 dfs(i, 0, grid);
